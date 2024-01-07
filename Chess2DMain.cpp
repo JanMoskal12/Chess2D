@@ -11,6 +11,8 @@
 #include <wx/msgdlg.h>
 
 //(*InternalHeaders(Chess2DDialog)
+#include <wx/bitmap.h>
+#include <wx/image.h>
 #include <wx/intl.h>
 #include <wx/string.h>
 //*)
@@ -42,6 +44,7 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 }
 
 //(*IdInit(Chess2DDialog)
+const long Chess2DDialog::ID_BITMAPBUTTON1 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(Chess2DDialog,wxDialog)
@@ -52,7 +55,18 @@ END_EVENT_TABLE()
 Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 {
     //(*Initialize(Chess2DDialog)
+    wxFlexGridSizer* FlexGridSizer1;
+    wxGridSizer* GridSizer1;
+
     Create(parent, id, _("wxWidgets app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
+    FlexGridSizer1 = new wxFlexGridSizer(0, 1, 0, 0);
+    GridSizer1 = new wxGridSizer(0, 8, -4, -4);
+    BitmapButton1 = new wxBitmapButton(this, ID_BITMAPBUTTON1, wxBitmap(wxImage(_T("images\\sB.jpg"))), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BITMAPBUTTON1"));
+    GridSizer1->Add(BitmapButton1, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
+    FlexGridSizer1->Add(GridSizer1, 1, wxALL|wxEXPAND, 5);
+    SetSizer(FlexGridSizer1);
+    FlexGridSizer1->Fit(this);
+    FlexGridSizer1->SetSizeHints(this);
     //*)
 }
 

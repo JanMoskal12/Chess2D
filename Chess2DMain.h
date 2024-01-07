@@ -11,7 +11,9 @@
 #define CHESS2DMAIN_H
 
 //(*Headers(Chess2DDialog)
+#include <wx/bmpbuttn.h>
 #include <wx/dialog.h>
+#include <wx/sizer.h>
 //*)
 
 class Chess2DDialog: public wxDialog
@@ -29,9 +31,11 @@ class Chess2DDialog: public wxDialog
         //*)
 
         //(*Identifiers(Chess2DDialog)
+        static const long ID_BITMAPBUTTON1;
         //*)
 
         //(*Declarations(Chess2DDialog)
+        wxBitmapButton* BitmapButton1;
         //*)
 
         DECLARE_EVENT_TABLE()
