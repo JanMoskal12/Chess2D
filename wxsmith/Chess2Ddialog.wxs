@@ -11,7 +11,7 @@
 					<hgap>-4</hgap>
 					<object class="sizeritem">
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTON1" variable="BitmapButton1" member="yes">
-							<bitmap>images\sB.jpg</bitmap>
+							<bitmap>images\Pieces\brB.png</bitmap>
 							<style>0</style>
 						</object>
 						<flag>wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>

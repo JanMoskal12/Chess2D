@@ -3167,7 +3167,7 @@
 1697140154 c:\cb_dodatki\wxwidgets-3.2.2.1-mono64\include\wx\univ\theme.h
 	"wx/string.h"
 
-1704660343 c:\users\jan\desktop\projekty\chess2d\chess2dmain.h
+1704661168 c:\users\jan\desktop\projekty\chess2d\chess2dmain.h
 	<wx/bmpbuttn.h>
 	<wx/dialog.h>
 	<wx/sizer.h>
@@ -3268,7 +3268,7 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1704660343 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
+1704663253 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/bitmap.h>

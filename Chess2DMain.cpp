@@ -61,13 +61,63 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     Create(parent, id, _("wxWidgets app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
     FlexGridSizer1 = new wxFlexGridSizer(0, 1, 0, 0);
     GridSizer1 = new wxGridSizer(0, 8, -4, -4);
-    BitmapButton1 = new wxBitmapButton(this, ID_BITMAPBUTTON1, wxBitmap(wxImage(_T("images\\sB.jpg"))), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BITMAPBUTTON1"));
+    BitmapButton1 = new wxBitmapButton(this, ID_BITMAPBUTTON1, wxBitmap(wxImage(_T("images\\Pieces\\brB.png"))), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BITMAPBUTTON1"));
     GridSizer1->Add(BitmapButton1, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
     FlexGridSizer1->Add(GridSizer1, 1, wxALL|wxEXPAND, 5);
     SetSizer(FlexGridSizer1);
     FlexGridSizer1->Fit(this);
     FlexGridSizer1->SetSizeHints(this);
     //*)
+    board[0] = BitmapButton1;
+    board[1] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bnD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[2] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bbB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[3] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bqD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[4] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bkB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[5] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bbD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[6] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bnB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[7] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/brD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+
+
+    for(int j = 0; j < 8; j++){
+            if((j)%2 == 0){
+                board[8+j] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bpD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+            }else{
+                board[8+j] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bpB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+
+            }
+    }
+
+
+    for(int i = 2; i < 6; i++){
+        for(int j = 0; j < 8; j++){
+            if((i+j)%2 == 0){
+                board[8*i+j] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/B.jpg"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+            }else{
+                board[8*i+j] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/D.jpg"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+            }
+        }
+    }
+
+
+    for(int j = 0; j < 8; j++){
+        if((j)%2 != 0){
+            board[48+j] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wpD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+        }else{
+            board[48+j] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wpB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+
+        }
+    }
+
+    board[56] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wrD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[57] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wnB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[58] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wbD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[59] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wqB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[60] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wkD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[61] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wbB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[62] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wnD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+    board[63] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wrB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+
+
 }
 
 Chess2DDialog::~Chess2DDialog()
