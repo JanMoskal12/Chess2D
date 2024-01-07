@@ -7,12 +7,14 @@
 			<object class="sizeritem">
 				<object class="wxGridSizer" variable="GridSizer1" member="no">
 					<cols>8</cols>
+					<rows>8</rows>
 					<vgap>-4</vgap>
 					<hgap>-4</hgap>
 					<object class="sizeritem">
 						<object class="wxBitmapButton" name="ID_BITMAPBUTTON1" variable="BitmapButton1" member="yes">
 							<bitmap>images\Pieces\brB.png</bitmap>
 							<style>0</style>
+							<handler function="OnBitmapButton1Click" entry="EVT_BUTTON" />
 						</object>
 						<flag>wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
 						<option>1</option>

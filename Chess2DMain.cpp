@@ -60,13 +60,15 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
     Create(parent, id, _("wxWidgets app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
     FlexGridSizer1 = new wxFlexGridSizer(0, 1, 0, 0);
-    GridSizer1 = new wxGridSizer(0, 8, -4, -4);
+    GridSizer1 = new wxGridSizer(8, 8, -4, -4);
     BitmapButton1 = new wxBitmapButton(this, ID_BITMAPBUTTON1, wxBitmap(wxImage(_T("images\\Pieces\\brB.png"))), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BITMAPBUTTON1"));
     GridSizer1->Add(BitmapButton1, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
     FlexGridSizer1->Add(GridSizer1, 1, wxALL|wxEXPAND, 5);
     SetSizer(FlexGridSizer1);
     FlexGridSizer1->Fit(this);
     FlexGridSizer1->SetSizeHints(this);
+
+    Connect(ID_BITMAPBUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Chess2DDialog::OnBitmapButton1Click);
     //*)
     board[0] = BitmapButton1;
     board[1] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bnD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
@@ -117,8 +119,22 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     board[62] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wnD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
     board[63] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/wrB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
 
+    for(int i = 0;i < 8; i++){
+        for(int j = 0; j < 8; j++){
+        if(i == 0 && j == 0){
+           j++;
+        }
+
+        GridSizer1->Add(board[8*i+j], 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+        Connect(board[8*i+j]->GetId(),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Chess2DDialog::OnBitmapButton1Click);
+
+
+        }
+
+    }
 
 }
+
 
 Chess2DDialog::~Chess2DDialog()
 {
@@ -135,4 +151,8 @@ void Chess2DDialog::OnAbout(wxCommandEvent& event)
 {
     wxString msg = wxbuildinfo(long_f);
     wxMessageBox(msg, _("Welcome to..."));
+}
+
+void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event)
+{
 }

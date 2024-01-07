@@ -28,6 +28,7 @@ class Chess2DDialog: public wxDialog
         //(*Handlers(Chess2DDialog)
         void OnQuit(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
+        void OnBitmapButton1Click(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(Chess2DDialog)
