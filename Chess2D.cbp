@@ -72,6 +72,7 @@
 		<Unit filename="include/Knight.h" />
 		<Unit filename="include/Queen.h" />
 		<Unit filename="include/Rook.h" />
+		<Unit filename="include/pawn.h" />
 		<Unit filename="include/piece.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
@@ -81,6 +82,7 @@
 		<Unit filename="src/Knight.cpp" />
 		<Unit filename="src/Queen.cpp" />
 		<Unit filename="src/Rook.cpp" />
+		<Unit filename="src/pawn.cpp" />
 		<Unit filename="src/piece.cpp" />
 		<Unit filename="wxsmith/Chess2Ddialog.wxs" />
 		<Extensions>

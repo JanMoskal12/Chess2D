@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+using std::string;
+
 class Piece
 {
     public:

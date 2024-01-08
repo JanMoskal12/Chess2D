@@ -1610,10 +1610,12 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1704742877 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
+1704744979 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/log.h>
+	"pawn.h"
+	"piece.h"
 	<wx/bitmap.h>
 	<wx/image.h>
 	<wx/intl.h>
@@ -3334,30 +3336,42 @@
 1704742877 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\piece.cpp
 	"piece.h"
 
-1704744424 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\piece.h
+1704745074 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\piece.h
 	<iostream>
 
-1704744837 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\queen.cpp
+1704744982 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\queen.cpp
 	"Queen.h"
 
-1704744809 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\queen.h
+1704744982 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\queen.h
 	"piece.h"
 
-1704744837 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\knight.cpp
+1704744982 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\knight.cpp
 	"Knight.h"
 
-1704744809 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\knight.h
+1704744982 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\knight.h
 	"piece.h"
 
-1704744837 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\king.cpp
+1704744982 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\king.cpp
 	"King.h"
 
-1704744809 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\king.h
+1704744982 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\king.h
 	"piece.h"
 
-1704744837 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\bishop.cpp
+1704744982 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\bishop.cpp
 	"Bishop.h"
 
-1704744809 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\bishop.h
+1704744982 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\bishop.h
 	"piece.h"
+
+1704744979 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\pawn.h
+	"piece.h"
+
+1704744982 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\rook.cpp
+	"Rook.h"
+
+1704744982 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\rook.h
+	"piece.h"
+
+1704744979 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\pawn.cpp
+	"pawn.h"
 
