@@ -67,12 +67,12 @@
 		<Unit filename="Chess2DApp.h" />
 		<Unit filename="Chess2DMain.cpp" />
 		<Unit filename="Chess2DMain.h" />
-		<Unit filename="include/pawn.h" />
+		<Unit filename="include/Queen.h" />
 		<Unit filename="include/piece.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
-		<Unit filename="src/pawn.cpp" />
+		<Unit filename="src/Queen.cpp" />
 		<Unit filename="src/piece.cpp" />
 		<Unit filename="wxsmith/Chess2Ddialog.wxs" />
 		<Extensions>
