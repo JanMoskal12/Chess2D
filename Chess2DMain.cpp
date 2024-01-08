@@ -70,6 +70,15 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
     Connect(ID_BITMAPBUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Chess2DDialog::OnBitmapButton1Click);
     //*)
+
+    images[0] = wxBitmap(wxImage("images/B.jpg"));
+    images[1] = wxBitmap(wxImage("images/D.jpg"));
+
+
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------
     board[0] = BitmapButton1;
     board[1] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bnD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
     board[2] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bbB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
