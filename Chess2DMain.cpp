@@ -9,6 +9,7 @@
 
 #include "Chess2DMain.h"
 #include <wx/msgdlg.h>
+#include <wx/log.h>
 
 //(*InternalHeaders(Chess2DDialog)
 #include <wx/bitmap.h>
@@ -83,16 +84,20 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     images[9] = wxBitmap(wxImage(_("images/Pieces/bqD.png")));
     images[10] = wxBitmap(wxImage(_("images/Pieces/bkB.png")));
     images[11] = wxBitmap(wxImage(_("images/Pieces/bkD.png")));
-    images[12] = wxBitmap(wxImage(_("images/Pieces/wrB.png")));
-    images[13] = wxBitmap(wxImage(_("images/Pieces/wrD.png")));
-    images[14] = wxBitmap(wxImage(_("images/Pieces/wnB.png")));
-    images[15] = wxBitmap(wxImage(_("images/Pieces/wnD.png")));
-    images[16] = wxBitmap(wxImage(_("images/Pieces/wbB.png")));
-    images[17] = wxBitmap(wxImage(_("images/Pieces/wbD.png")));
-    images[18] = wxBitmap(wxImage(_("images/Pieces/wqB.png")));
-    images[19] = wxBitmap(wxImage(_("images/Pieces/wqD.png")));
-    images[20] = wxBitmap(wxImage(_("images/Pieces/wkB.png")));
-    images[21] = wxBitmap(wxImage(_("images/Pieces/wkD.png")));
+    images[12] = wxBitmap(wxImage(_("images/Pieces/bpB.png")));
+    images[13] = wxBitmap(wxImage(_("images/Pieces/bpD.png")));
+    images[14] = wxBitmap(wxImage(_("images/Pieces/wrB.png")));
+    images[15] = wxBitmap(wxImage(_("images/Pieces/wrD.png")));
+    images[16] = wxBitmap(wxImage(_("images/Pieces/wnB.png")));
+    images[17] = wxBitmap(wxImage(_("images/Pieces/wnD.png")));
+    images[18] = wxBitmap(wxImage(_("images/Pieces/wbB.png")));
+    images[19] = wxBitmap(wxImage(_("images/Pieces/wbD.png")));
+    images[20] = wxBitmap(wxImage(_("images/Pieces/wqB.png")));
+    images[21] = wxBitmap(wxImage(_("images/Pieces/wqD.png")));
+    images[22] = wxBitmap(wxImage(_("images/Pieces/wkB.png")));
+    images[23] = wxBitmap(wxImage(_("images/Pieces/wkD.png")));
+    images[24] = wxBitmap(wxImage(_("images/Pieces/wpB.png")));
+    images[25] = wxBitmap(wxImage(_("images/Pieces/wpD.png")));
 
 
 
@@ -161,7 +166,11 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
         }
 
     }
-
+    auto temp = board[63]->GetId();
+    board[63]->SetId(board[62]->GetId());
+    board[62]->SetId(temp);
+    wxWindowID buttonid = board[63]->GetId();
+    wxLogMessage("%d", buttonid);
 }
 
 
