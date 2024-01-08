@@ -1610,7 +1610,7 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1704663964 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
+1704703734 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/bitmap.h>

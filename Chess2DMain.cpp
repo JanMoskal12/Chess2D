@@ -73,6 +73,26 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
     images[0] = wxBitmap(wxImage("images/B.jpg"));
     images[1] = wxBitmap(wxImage("images/D.jpg"));
+    images[2] = wxBitmap(wxImage(_("images/Pieces/brB.png")));
+    images[3] = wxBitmap(wxImage(_("images/Pieces/brD.png")));
+    images[4] = wxBitmap(wxImage(_("images/Pieces/bnB.png")));
+    images[5] = wxBitmap(wxImage(_("images/Pieces/bnD.png")));
+    images[6] = wxBitmap(wxImage(_("images/Pieces/bbB.png")));
+    images[7] = wxBitmap(wxImage(_("images/Pieces/bbD.png")));
+    images[8] = wxBitmap(wxImage(_("images/Pieces/bqB.png")));
+    images[9] = wxBitmap(wxImage(_("images/Pieces/bqD.png")));
+    images[10] = wxBitmap(wxImage(_("images/Pieces/bkB.png")));
+    images[11] = wxBitmap(wxImage(_("images/Pieces/bkD.png")));
+    images[12] = wxBitmap(wxImage(_("images/Pieces/wrB.png")));
+    images[13] = wxBitmap(wxImage(_("images/Pieces/wrD.png")));
+    images[14] = wxBitmap(wxImage(_("images/Pieces/wnB.png")));
+    images[15] = wxBitmap(wxImage(_("images/Pieces/wnD.png")));
+    images[16] = wxBitmap(wxImage(_("images/Pieces/wbB.png")));
+    images[17] = wxBitmap(wxImage(_("images/Pieces/wbD.png")));
+    images[18] = wxBitmap(wxImage(_("images/Pieces/wqB.png")));
+    images[19] = wxBitmap(wxImage(_("images/Pieces/wqD.png")));
+    images[20] = wxBitmap(wxImage(_("images/Pieces/wkB.png")));
+    images[21] = wxBitmap(wxImage(_("images/Pieces/wkD.png")));
 
 
 
