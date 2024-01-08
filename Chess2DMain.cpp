@@ -99,10 +99,6 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     images[24] = wxBitmap(wxImage(_("images/Pieces/wpB.png")));
     images[25] = wxBitmap(wxImage(_("images/Pieces/wpD.png")));
 
-
-
-
-
     //---------------------------------------------------------------------------------------------------------------------------------------
     board[0] = BitmapButton1;
     board[1] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bnD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);

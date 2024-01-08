@@ -3268,9 +3268,10 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1704701446 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
+1704740338 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
+	<wx/log.h>
 	<wx/bitmap.h>
 	<wx/image.h>
 	<wx/intl.h>
