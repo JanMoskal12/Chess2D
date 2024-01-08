@@ -15,6 +15,7 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add directory="$(#wx)/lib/gcc_lib/mswu" />
+					<Add directory="include" />
 				</Compiler>
 				<ResourceCompiler>
 					<Add directory="$(#wx)/lib/gcc_lib/mswu" />
@@ -66,9 +67,13 @@
 		<Unit filename="Chess2DApp.h" />
 		<Unit filename="Chess2DMain.cpp" />
 		<Unit filename="Chess2DMain.h" />
+		<Unit filename="include/pawn.h" />
+		<Unit filename="include/piece.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
+		<Unit filename="src/pawn.cpp" />
+		<Unit filename="src/piece.cpp" />
 		<Unit filename="wxsmith/Chess2Ddialog.wxs" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

@@ -3268,10 +3268,12 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1704740338 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
+1704744693 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/log.h>
+	"pawn.h"
+	"piece.h"
 	<wx/bitmap.h>
 	<wx/image.h>
 	<wx/intl.h>
@@ -3319,5 +3321,12 @@
 1704743776 source:c:\users\jan\desktop\projekty\chess2d\src\piece.cpp
 	"piece.h"
 
-1704742423 c:\users\jan\desktop\projekty\chess2d\include\piece.h
+1704744372 c:\users\jan\desktop\projekty\chess2d\include\piece.h
+
+1704743726 source:c:\users\jan\desktop\projekty\chess2d\src\pawn.cpp
+	"pawn.h"
+
+1704744720 c:\users\jan\desktop\projekty\chess2d\include\pawn.h
+	<iostream>
+	"piece.h"
 

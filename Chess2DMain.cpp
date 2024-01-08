@@ -10,6 +10,8 @@
 #include "Chess2DMain.h"
 #include <wx/msgdlg.h>
 #include <wx/log.h>
+#include "pawn.h"
+#include "piece.h"
 
 //(*InternalHeaders(Chess2DDialog)
 #include <wx/bitmap.h>
@@ -71,6 +73,9 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
     Connect(ID_BITMAPBUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Chess2DDialog::OnBitmapButton1Click);
     //*)
+
+    Piece* Pawn1;
+    Pawn1 = new Pawn(true, false);
 
     images[0] = wxBitmap(wxImage("images/B.jpg"));
     images[1] = wxBitmap(wxImage("images/D.jpg"));

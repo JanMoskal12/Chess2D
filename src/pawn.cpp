@@ -1,7 +1,6 @@
 #include "pawn.h"
 
-Pawn::Pawn(bool _color, bool _moved, string _type):Piece(_color, _moved){
-    type = _type;
+Pawn::Pawn(bool _color, bool _moved):Piece(_color, _moved){
 }
 
 Pawn::~Pawn(){
