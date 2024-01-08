@@ -1,8 +1,8 @@
 #include "Queen.h"
 
-Queen::Queen(bool _color, bool _moved, string _type):Piece(_color, _moved)
+Queen::Queen(bool _color, bool _moved):Piece(_color, _moved)
 {
-    type = _type;
+
 }
 
 Queen::~Queen()
