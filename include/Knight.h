@@ -3,7 +3,7 @@
 
 #include "piece.h"
 
-class Knight : Piece
+class Knight : public Piece
 {
     public:
         Knight(bool _color, bool _moved);

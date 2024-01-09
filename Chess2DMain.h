@@ -19,7 +19,7 @@
 class Chess2DDialog: public wxDialog
 {
     public:
-
+        friend class Board;
         Chess2DDialog(wxWindow* parent,wxWindowID id = -1);
         virtual ~Chess2DDialog();
 
@@ -40,8 +40,7 @@ class Chess2DDialog: public wxDialog
         //*)
 
         DECLARE_EVENT_TABLE()
-        wxBitmapButton *board[64];
-        wxBitmap images[26];
+
 };
 
 #endif // CHESS2DMAIN_H

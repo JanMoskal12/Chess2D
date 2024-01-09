@@ -4,7 +4,7 @@
 
 #include "piece.h"
 
-class Bishop : Piece
+class Bishop : public Piece
 {
     public:
         Bishop(bool _color, bool _moved);

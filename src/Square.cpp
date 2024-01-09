@@ -1,10 +1,11 @@
 #include "Square.h"
 
-Square::Square(int _col, int _row, bool _backgroundColor, Piece* _piece = nullptr){
+Square::Square(int _col, int _row, bool _backgroundColor, Piece* _piece, wxBitmap* _button){
     col = _col;
     row = _row;
     backgroundColor = _backgroundColor;
     piece = _piece;
+    button = _button;
 }
 
 Square::~Square(){
@@ -28,4 +29,8 @@ Piece* Square::getPiece(){
 
 void Square::setPiece(Piece* _piece){
     piece = _piece;
+}
+
+wxBitmap* Square::getButton(){
+    return button;
 }

@@ -5,7 +5,7 @@
 
 
 
-class Queen : Piece
+class Queen : public Piece
 {
     public:
         Queen(bool _color, bool _moved);

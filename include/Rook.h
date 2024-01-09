@@ -4,7 +4,7 @@
 
 #include "piece.h"
 
-class Rook : Piece
+class Rook : public Piece
 {
     public:
         Rook(bool _color, bool _moved);

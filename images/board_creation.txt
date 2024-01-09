@@ -4,6 +4,7 @@
             for(int j = 0; j < 8; j++){
 		
                 squares[i][j] = new Square(i, j, board[i][j]);
+
             }
              
          }
@@ -17,3 +18,10 @@ TODO:	 class Board
 
 	square1.piece = nullptr;
 	square.piece = pieces[1] // new Pawn()
+
+
+dostanie id: auto temp = board[63]->GetId();
+    board[63]->SetId(board[62]->GetId());
+    board[62]->SetId(temp);
+    wxWindowID buttonid = board[63]->GetId();
+    wxLogMessage("%d", buttonid);

@@ -9,15 +9,18 @@
 class Square
 {
     public:
-        Square(int _col, int _row, bool _backgroundColor, Piece* _piece);
+        friend class Board;
+        Square(int _col, int _row, bool _backgroundColor, Piece* _piece, wxBitmap* _button);
         ~Square();
         int getCol();
         int getRow();
+        wxBitmap* getButton();
         bool getBackgroundColor();
         Piece* getPiece();
         void setPiece(Piece* _piece);
 
     protected:
+        wxBitmap* button;
         Piece* piece = nullptr;
         int col;
         int row;

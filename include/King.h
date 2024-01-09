@@ -2,7 +2,7 @@
 #define KING_H
 #include "piece.h"
 
-class King : Piece
+class King : public Piece
 {
     public:
         King(bool _color, bool _moved);
