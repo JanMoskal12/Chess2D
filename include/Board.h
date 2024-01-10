@@ -1,9 +1,10 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include "../Chess2DMain.h"
+#include <../Chess2DMain.h>
+#include <wx/wx.h>
+#include <wx/bmpbuttn.h>
 #include "Square.h"
-
 #include "pawn.h"
 #include "Rook.h"
 #include "Knight.h"
@@ -20,8 +21,6 @@ class Board
     protected:
 
     private:
-        wxBitmapButton *board[64];
-        wxBitmap images[26];
         Piece** pieces;
         Square** squares;
 

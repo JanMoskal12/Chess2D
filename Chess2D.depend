@@ -3170,7 +3170,7 @@
 1697140154 c:\cb_dodatki\wxwidgets-3.2.2.1-mono64\include\wx\univ\theme.h
 	"wx/string.h"
 
-1704752001 c:\users\jan\desktop\projekty\chess2d\chess2dmain.h
+1704884306 c:\users\jan\desktop\projekty\chess2d\chess2dmain.h
 	<wx/bmpbuttn.h>
 	<wx/dialog.h>
 	<wx/sizer.h>
@@ -3271,7 +3271,7 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1704744693 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
+1704884421 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/log.h>
@@ -3378,37 +3378,37 @@
 1704745184 source:c:\users\jan\desktop\projekty\chess2d\src\bishop.cpp
 	"Bishop.h"
 
-1704745184 c:\users\jan\desktop\projekty\chess2d\include\bishop.h
+1704802947 c:\users\jan\desktop\projekty\chess2d\include\bishop.h
 	"piece.h"
 
 1704745184 source:c:\users\jan\desktop\projekty\chess2d\src\king.cpp
 	"King.h"
 
-1704745184 c:\users\jan\desktop\projekty\chess2d\include\king.h
+1704802947 c:\users\jan\desktop\projekty\chess2d\include\king.h
 	"piece.h"
 
 1704745184 source:c:\users\jan\desktop\projekty\chess2d\src\knight.cpp
 	"Knight.h"
 
-1704745184 c:\users\jan\desktop\projekty\chess2d\include\knight.h
+1704802947 c:\users\jan\desktop\projekty\chess2d\include\knight.h
 	"piece.h"
 
 1704745184 source:c:\users\jan\desktop\projekty\chess2d\src\queen.cpp
 	"Queen.h"
 
-1704745184 c:\users\jan\desktop\projekty\chess2d\include\queen.h
+1704802947 c:\users\jan\desktop\projekty\chess2d\include\queen.h
 	"piece.h"
 
 1704745184 source:c:\users\jan\desktop\projekty\chess2d\src\rook.cpp
 	"Rook.h"
 
-1704745184 c:\users\jan\desktop\projekty\chess2d\include\rook.h
+1704802947 c:\users\jan\desktop\projekty\chess2d\include\rook.h
 	"piece.h"
 
-1704751876 source:c:\users\jan\desktop\projekty\chess2d\src\square.cpp
+1704884222 source:c:\users\jan\desktop\projekty\chess2d\src\square.cpp
 	"Square.h"
 
-1704751835 c:\users\jan\desktop\projekty\chess2d\include\square.h
+1704884204 c:\users\jan\desktop\projekty\chess2d\include\square.h
 	"../Chess2DMain.h"
 	<wx/wx.h>
 	<wx/bmpbuttn.h>

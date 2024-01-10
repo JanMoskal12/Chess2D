@@ -40,7 +40,8 @@ class Chess2DDialog: public wxDialog
         //*)
 
         DECLARE_EVENT_TABLE()
-
+        wxBitmapButton* board[64];
+        wxBitmap images[26];
 };
 
 #endif // CHESS2DMAIN_H
