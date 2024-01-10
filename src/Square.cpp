@@ -1,10 +1,14 @@
 #include "Square.h"
 
-Square::Square(int _col, int _row, bool _backgroundColor, Piece* _piece){
+
+extern wxBitmapButton* board[64];
+
+Square::Square(int _col, int _row, bool _backgroundColor, Piece* _piece, wxBitmapButton* _button){
     col = _col;
     row = _row;
     backgroundColor = _backgroundColor;
     piece = _piece;
+    button = _button;
 }
 
 Square::~Square(){

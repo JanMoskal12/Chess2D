@@ -1,7 +1,7 @@
 #ifndef SQUARE_H
 #define SQUARE_H
 
-#include "../Chess2DMain.h"
+
 #include <wx/wx.h>
 #include <wx/bmpbuttn.h>
 #include "piece.h"
@@ -10,7 +10,7 @@ class Square
 {
     public:
         friend class Board;
-        Square(int _col, int _row, bool _backgroundColor, Piece* _piece);
+        Square(int _col, int _row, bool _backgroundColor, Piece* _piece, wxBitmapButton* _button);
         ~Square();
         int getCol();
         int getRow();
@@ -23,6 +23,7 @@ class Square
         int col;
         int row;
         bool backgroundColor;
+        wxBitmapButton* button;
 };
 
 #endif // SQUARE_H

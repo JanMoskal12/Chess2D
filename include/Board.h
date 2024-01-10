@@ -1,7 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include <../Chess2DMain.h>
+
 #include <wx/wx.h>
 #include <wx/bmpbuttn.h>
 #include "Square.h"

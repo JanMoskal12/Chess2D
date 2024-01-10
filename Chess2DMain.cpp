@@ -10,8 +10,8 @@
 #include "Chess2DMain.h"
 #include <wx/msgdlg.h>
 #include <wx/log.h>
-#include "pawn.h"
-#include "piece.h"
+#include "Board.h"
+
 
 //(*InternalHeaders(Chess2DDialog)
 #include <wx/bitmap.h>
@@ -45,6 +45,9 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 
     return wxbuild;
 }
+
+wxBitmapButton* board[64];
+wxBitmap images[26];
 
 //(*IdInit(Chess2DDialog)
 const long Chess2DDialog::ID_BITMAPBUTTON1 = wxNewId();
@@ -162,6 +165,8 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
         }
     }
+
+    Board _board;
 }
 
 

@@ -1,0 +1,12 @@
+pieces[0] = new Pawn(0 , 0);
+            pieces[1] = new Rook(0 , 0);
+            pieces[2] = new Knight(0 , 0);
+            pieces[3] = new Bishop(0 , 0);
+            pieces[4] = new Queen(0 , 0);
+            pieces[5] = new King(0 , 0);
+            pieces[6] = new Pawn(1 , 0);
+            pieces[7] = new Rook(1 , 0);
+            pieces[8] = new Knight(1 , 0);
+            pieces[9] = new Bishop(1 , 0);
+            pieces[10] = new Queen(1 , 0);
+            pieces[11] = new King(1 , 0);

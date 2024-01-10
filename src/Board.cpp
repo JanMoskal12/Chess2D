@@ -1,5 +1,7 @@
 #include "Board.h"
 
+extern wxBitmapButton* board[64];
+
 Board::Board()
 {
 
@@ -17,9 +19,9 @@ Board::Board()
          for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 if((i+j)%2 == 0){
-                    squares[8*i + j] = new Square(i, j , true, nullptr);
+                    squares[8*i + j] = new Square(i, j , true, nullptr, board[8*i+j]);
                 }else{
-                    squares[8*i + j] = new Square(i, j , false, nullptr);
+                    squares[8*i + j] = new Square(i, j , false, nullptr,board[8*i+j]);
                 }
 
             }
@@ -42,9 +44,31 @@ Board::Board()
             pieces[10] = new Queen(1 , 0);
             pieces[11] = new King(1 , 0);
 
-            for(int i = 0; i < 4; i++){
-                squares[2*i + 8];
+            //Pawns
+            for(int i = 0; i < 8; i++){
+                squares[i + 8]->setPiece(pieces[0]);
+                squares[i + 48]->setPiece(pieces[6]);
             }
+
+            //Pieces
+
+                squares[0]->setPiece(pieces[1]);
+                squares[1]->setPiece(pieces[2]);
+                squares[2]->setPiece(pieces[3]);
+                squares[3]->setPiece(pieces[4]);
+                squares[4]->setPiece(pieces[5]);
+                squares[5]->setPiece(pieces[3]);
+                squares[6]->setPiece(pieces[2]);
+                squares[7]->setPiece(pieces[1]);
+                squares[56]->setPiece(pieces[7]);
+                squares[57]->setPiece(pieces[8]);
+                squares[58]->setPiece(pieces[9]);
+                squares[59]->setPiece(pieces[10]);
+                squares[60]->setPiece(pieces[11]);
+                squares[61]->setPiece(pieces[9]);
+                squares[62]->setPiece(pieces[8]);
+                squares[63]->setPiece(pieces[7]);
+
 
 }
 
