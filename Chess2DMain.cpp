@@ -108,8 +108,8 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     images[1][8] = wxBitmap(wxImage(_T("images/Pieces/wbD.png")));
     images[1][9] = wxBitmap(wxImage(_T("images/Pieces/wqB.png")));
     images[1][10] = wxBitmap(wxImage(_T("images/Pieces/wqD.png")));
-    images[1][12] = wxBitmap(wxImage(_T("images/Pieces/wkD.png")));
     images[1][11] = wxBitmap(wxImage(_T("images/Pieces/wkB.png")));
+    images[1][12] = wxBitmap(wxImage(_T("images/Pieces/wkD.png")));
 
     board[0][0] = BitmapButton1;
     board[0][1] = new wxBitmapButton(this, wxNewId(), images[0][6], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
@@ -171,12 +171,9 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
     }
 
-     Board _ss(0);
-    _insanity = new Board(0);
-    _ss.squares[0][0]->getButton()->SetBitmap(images[0][0]);
-    _ss.squares[0][1]->getButton()->SetBitmap(images[0][0]);
-    _insanity->squares[0][1]->getButton()->SetBitmap(images[1][0]);
-    _insanity->squares[0][0]->getButton()->SetBitmap(images[1][0]);
+     Board _ss(1);
+    _insanity = new Board(1);
+
 }
 
 
@@ -195,9 +192,17 @@ void Chess2DDialog::OnAbout(wxCommandEvent& event){
 }
 
 void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
-    wxLogMessage("%s", "h");
-    auto wynik =_insanity->squares[0][0]->getPiece();
-
-    board[_insanity->squares[0][0]->getCol()][_insanity->squares[0][0]->getRow()]->SetBitmap(images[0][0]);
+    counter++;
+    int nrBB = event.GetId() - 100;
+    if(counter%2 != 0){
+        _insanity->clickedSquare = _insanity->squares[nrBB/8][nrBB%8];
+    }
+    if(counter%2 == 0){
+        _insanity->destination = _insanity->squares[nrBB/8][nrBB%8];
+        _insanity->destination->setPiece(_insanity->clickedSquare->getPiece());
+        _insanity->destination->getButton()->SetBitmap(images[_insanity->clickedSquare->getPiece()->getColor()][_insanity->clickedSquare->getPiece()->getTypeInt()+1-_insanity->destination->getBackgroundColor()]);
+        _insanity->clickedSquare->setPiece(nullptr);
+        _insanity->clickedSquare->getButton()->SetBitmap(images[_insanity->clickedSquare->getBackgroundColor()][0]);
+    }
 
 }

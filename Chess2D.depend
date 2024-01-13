@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1704658080 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dapp.cpp
+1705186873 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dapp.cpp
 	"Chess2DApp.h"
 	"Chess2DMain.h"
 	<wx/image.h>
@@ -1509,7 +1509,7 @@
 1697475091 c:\users\szymo\onedrive\pulpit\szymon\studia\programowanie\wxwidgets\wxwidgets-3.2.2.1-mono64\wxwidgets-3.2.2.1-mono64\include\wx\univ\theme.h
 	"wx/string.h"
 
-1705179819 c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.h
+1705186875 c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.h
 	"Square.h"
 	"Board.h"
 	<wx/bmpbuttn.h>
@@ -1612,10 +1612,11 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1705179869 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
+1705188425 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/log.h>
+	"Square.h"
 	<wx/bitmap.h>
 	<wx/image.h>
 	<wx/intl.h>
@@ -4406,10 +4407,10 @@
 
 1697140152 c:\cb_dodatki\wxwidgets-3.2.2.1-mono64\include\wx\qt\mdi.h
 
-1705167320 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\square.cpp
+1705186875 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\square.cpp
 	"Square.h"
 
-1705167320 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\square.h
+1705187437 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\square.h
 	<wx/wx.h>
 	<wx/bmpbuttn.h>
 	"Piece.h"
@@ -5407,10 +5408,10 @@
 
 1697475090 c:\users\szymo\onedrive\pulpit\szymon\studia\programowanie\wxwidgets\wxwidgets-3.2.2.1-mono64\wxwidgets-3.2.2.1-mono64\include\wx\qt\mdi.h
 
-1705166782 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\board.cpp
+1705187437 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\board.cpp
 	"Board.h"
 
-1705179554 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\board.h
+1705186875 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\board.h
 	<wx/wx.h>
 	<wx/bmpbuttn.h>
 	"Square.h"

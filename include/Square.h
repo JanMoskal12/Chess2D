@@ -10,7 +10,7 @@ class Square
 {
     public:
         friend class Board;
-        Square(int _col, int _row, bool _backgroundColor, wxBitmapButton* _button, Piece* _piece = nullptr);
+        Square(int _row, int _col, bool _backgroundColor, wxBitmapButton* _button, Piece* _piece = nullptr);
         ~Square();
         int getCol();
         int getRow();
