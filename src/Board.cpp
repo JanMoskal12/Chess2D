@@ -3,7 +3,7 @@
 extern wxBitmapButton* board[8][8];
 extern wxBitmap images[2][13];
 
-Board::Board()
+Board::Board(int i)
 {
 
          for(int i = 0; i < 8; i++){

@@ -10,7 +10,7 @@
 #include "Chess2DMain.h"
 #include <wx/msgdlg.h>
 #include <wx/log.h>
-
+#include "Square.h"
 
 
 //(*InternalHeaders(Chess2DDialog)
@@ -48,8 +48,6 @@ wxString wxbuildinfo(wxbuildinfoformat format){
  // Declaration of board and images
 wxBitmapButton* board[8][8];
 wxBitmap images[2][13];
-Board* _board = new Board();
-
 
 
  //Counting
@@ -173,8 +171,12 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
     }
 
-
-
+     Board _ss(0);
+    _insanity = new Board(0);
+    _ss.squares[0][0]->getButton()->SetBitmap(images[0][0]);
+    _ss.squares[0][1]->getButton()->SetBitmap(images[0][0]);
+    _insanity->squares[0][1]->getButton()->SetBitmap(images[1][0]);
+    _insanity->squares[0][0]->getButton()->SetBitmap(images[1][0]);
 }
 
 
@@ -193,25 +195,9 @@ void Chess2DDialog::OnAbout(wxCommandEvent& event){
 }
 
 void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
-/*
-  counter++;
-  //Id of clicked bitmap button
-  int nrBB = event.GetId() - 100;
-  //_board.squares[nrBB/8][nrBB%8]
+    wxLogMessage("%s", "h");
+    auto wynik =_insanity->squares[0][0]->getPiece();
 
-
-  if(counter%2 != 0){
-    clickedSquare = _board.squares[nrBB/8][nrBB%8];
-    return;
-  }
-  if(counter%2 == 0){
-
-
-
-    return;
-  }
-*/
-
-//_board->squares[0][0]->getButton()->SetBitmap(images[1][7]);
+    board[_insanity->squares[0][0]->getCol()][_insanity->squares[0][0]->getRow()]->SetBitmap(images[0][0]);
 
 }

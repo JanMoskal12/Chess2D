@@ -33,6 +33,7 @@ Piece* Square::getPiece(){
 void Square::setPiece(Piece* _piece){
     piece = _piece;
 }
+
 wxBitmapButton* Square::getButton(){
     return button;
 }

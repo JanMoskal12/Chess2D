@@ -15,7 +15,7 @@
 class Board
 {
     public:
-        Board();
+        Board(int i);
         ~Board();
 
         Square* clickedSquare;
