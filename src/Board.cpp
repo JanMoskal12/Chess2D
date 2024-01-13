@@ -1,80 +1,80 @@
 #include "Board.h"
 
-extern wxBitmapButton* board[64];
-extern wxBitmap* images[26];
+extern wxBitmapButton* board[8][8];
+extern wxBitmap* images[2][13];
 
 Board::Board()
 {
 
-         squares = new Square*[64];
+         squares = new Square*[8][8];
 
          for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
-                if((i+j)%2 == 0){
-                    squares[8*i + j] = new Square(i, j , true, board[8*i+j]);
+                if((i+j) % 2 == 0){
+                    squares[i][j] = new Square(i, j , true, board[i][j]);
                 }else{
-                    squares[8*i + j] = new Square(i, j , false, board[8*i+j]);
+                    squares[i][j] = new Square(i, j , false, board[i][j]);
                 }
-
             }
-
          }
 
 
-	        pieces = new Piece*[12];
+	        pieces = new Piece*[2][6];
 
-            pieces[0] = new Pawn(false);
-            pieces[1] = new Rook(false);
-            pieces[2] = new Knight(false);
-            pieces[3] = new Bishop(false);
-            pieces[4] = new Queen(false);
-            pieces[5] = new King(false);
-            pieces[6] = new Pawn(true);
-            pieces[7] = new Rook(true);
-            pieces[8] = new Knight(true);
-            pieces[9] = new Bishop(true);
-            pieces[10] = new Queen(true);
-            pieces[11] = new King(true);
+            pieces[0][0] = new Pawn(false);
+            pieces[0][1] = new Rook(false);
+            pieces[0][2] = new Knight(false);
+            pieces[0][3] = new Bishop(false);
+            pieces[0][4] = new Queen(false);
+            pieces[0][5] = new King(false);
+            pieces[1][0] = new Pawn(true);
+            pieces[1][1] = new Rook(true);
+            pieces[1][2] = new Knight(true);
+            pieces[1][3] = new Bishop(true);
+            pieces[1][4] = new Queen(true);
+            pieces[1][5] = new King(true);
 
             //Pawns
             for(int i = 0; i < 8; i++){
-                squares[i + 8]->setPiece(pieces[0]);
-                squares[i + 48]->setPiece(pieces[6]);
+                squares[1][i]->setPiece(pieces[0][0]);
+                squares[6][i]->setPiece(pieces[1][0]);
             }
 
-            //Pieces
-
-                squares[0]->setPiece(pieces[1]);
-                squares[1]->setPiece(pieces[2]);
-                squares[2]->setPiece(pieces[3]);
-                squares[3]->setPiece(pieces[4]);
-                squares[4]->setPiece(pieces[5]);
-                squares[5]->setPiece(pieces[3]);
-                squares[6]->setPiece(pieces[2]);
-                squares[7]->setPiece(pieces[1]);
-                squares[56]->setPiece(pieces[7]);
-                squares[57]->setPiece(pieces[8]);
-                squares[58]->setPiece(pieces[9]);
-                squares[59]->setPiece(pieces[10]);
-                squares[60]->setPiece(pieces[11]);
-                squares[61]->setPiece(pieces[9]);
-                squares[62]->setPiece(pieces[8]);
-                squares[63]->setPiece(pieces[7]);
+            //Other Pieces
+                squares[0][0]->setPiece(pieces[0][1]);
+                squares[0][1]->setPiece(pieces[0][2]);
+                squares[0][2]->setPiece(pieces[0][3]);
+                squares[0][3]->setPiece(pieces[0][4]);
+                squares[0][4]->setPiece(pieces[0][5]);
+                squares[0][5]->setPiece(pieces[0][3]);
+                squares[0][6]->setPiece(pieces[0][2]);
+                squares[0][7]->setPiece(pieces[0][1]);
+                squares[7][0]->setPiece(pieces[1][1]);
+                squares[7][1]->setPiece(pieces[1][2]);
+                squares[7][2]->setPiece(pieces[1][3]);
+                squares[7][3]->setPiece(pieces[1][4]);
+                squares[7][4]->setPiece(pieces[1][5]);
+                squares[7][5]->setPiece(pieces[1][3]);
+                squares[7][6]->setPiece(pieces[1][2]);
+                squares[7][7]->setPiece(pieces[1][1]);
 
 
 }
 
 Board::~Board()
 {
-    for(int i = 0 ; i <12 ; i++){
-        delete pieces[i];
+    for(int i = 0 ; i < 2 ; i++){
+        for(int j = 0; j < 6; j++){
+            delete pieces[i][j];
+        }
     }
     delete[] pieces;
 
-    for(int i = 0 ; i <64 ; i++){
-        delete squares[i];
+
+    for(int i = 0 ; i < 8 ; i++){
+        for(int j = 0; j < 8; j++){
+            delete squares[i][j];
+        }
     }
     delete[] squares;
-
-
 }
