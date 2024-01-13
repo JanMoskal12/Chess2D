@@ -11,8 +11,10 @@ class Pawn: public Piece
         Pawn(bool _color, bool _moved = false);
         ~Pawn();
         string getType();
+        int getTypeInt();
 
     private:
+        int TypeInt = 1;
         string type = "Pawn";
 };
 

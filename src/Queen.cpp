@@ -10,6 +10,10 @@ Queen::~Queen()
     //dtor
 }
 
-string Queen :: getType(){
+string Queen::getType(){
     return type;
+}
+
+int Queen::getTypeInt(){
+    return TypeInt;
 }

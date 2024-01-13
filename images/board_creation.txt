@@ -25,3 +25,11 @@ dostanie id: auto temp = board[63]->GetId();
     board[62]->SetId(temp);
     wxWindowID buttonid = board[63]->GetId();
     wxLogMessage("%d", buttonid);
+
+_board.squares[1][0]->getButton()->SetBitmap(images[0][0]);
+    _board.squares[1][0]->setPiece(nullptr);
+    _board.squares[3][0]->getButton()->SetBitmap(images[0][2]);
+    _board.squares[3][0]->setPiece(_board.pieces[0][0]);
+
+    auto test = _board.squares[3][0]->getPiece()->getColor();
+    wxLogMessage("%d", test);

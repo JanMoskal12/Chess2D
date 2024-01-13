@@ -9,6 +9,8 @@
 
 #ifndef CHESS2DMAIN_H
 #define CHESS2DMAIN_H
+#include "Square.h"
+#include "Board.h"
 
 //(*Headers(Chess2DDialog)
 #include <wx/bmpbuttn.h>
@@ -22,6 +24,7 @@ class Chess2DDialog: public wxDialog
     public:
         Chess2DDialog(wxWindow* parent,wxWindowID id = -1);
         virtual ~Chess2DDialog();
+
 
     private:
 
@@ -40,6 +43,7 @@ class Chess2DDialog: public wxDialog
         //*)
 
         DECLARE_EVENT_TABLE()
+
 
 };
 

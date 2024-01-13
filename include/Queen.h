@@ -11,11 +11,13 @@ class Queen : public Piece
         Queen(bool _color, bool _moved = false);
         ~Queen();
         string getType();
+        int getTypeInt();
 
     protected:
 
     private:
-        string type;
+        int TypeInt = 9;
+        string type = "Queen";
 };
 
 #endif // QUEEN_H

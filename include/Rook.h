@@ -10,10 +10,12 @@ class Rook : public Piece
         Rook(bool _color, bool _moved = false);
         ~Rook();
         string getType();
+        int getTypeInt();
 
     protected:
 
     private:
+         int TypeInt = 3;
         string type = "Rook";
 };
 

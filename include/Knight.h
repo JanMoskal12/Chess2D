@@ -9,10 +9,12 @@ class Knight : public Piece
         Knight(bool _color, bool _moved = false);
         ~Knight();
         string getType();
+        int getTypeInt();
 
     protected:
 
     private:
+        int TypeInt = 5;
         string type ="Knight";
 };
 #endif // KNIGHT_H

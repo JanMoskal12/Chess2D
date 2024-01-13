@@ -13,3 +13,7 @@ Knight::~Knight()
 string Knight :: getType(){
     return type;
 }
+
+int Knight::getTypeInt(){
+    return TypeInt;
+}

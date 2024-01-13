@@ -1509,7 +1509,9 @@
 1697475091 c:\users\szymo\onedrive\pulpit\szymon\studia\programowanie\wxwidgets\wxwidgets-3.2.2.1-mono64\wxwidgets-3.2.2.1-mono64\include\wx\univ\theme.h
 	"wx/string.h"
 
-1705163378 c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.h
+1705179819 c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.h
+	"Square.h"
+	"Board.h"
 	<wx/bmpbuttn.h>
 	<wx/dialog.h>
 	<wx/sizer.h>
@@ -1610,11 +1612,10 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1705163148 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
+1705179869 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/log.h>
-	"Board.h"
 	<wx/bitmap.h>
 	<wx/image.h>
 	<wx/intl.h>
@@ -3334,43 +3335,43 @@
 1705149433 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\piece.cpp
 	"Piece.h"
 
-1705149433 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\piece.h
+1705172972 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\piece.h
 	<iostream>
 
-1704744982 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\queen.cpp
+1705173818 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\queen.cpp
 	"Queen.h"
 
-1705149433 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\queen.h
+1705173278 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\queen.h
 	"Piece.h"
 
-1704744982 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\knight.cpp
+1705173818 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\knight.cpp
 	"Knight.h"
 
-1705149433 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\knight.h
+1705173278 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\knight.h
 	"Piece.h"
 
-1704744982 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\king.cpp
+1705173818 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\king.cpp
 	"King.h"
 
-1705149433 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\king.h
+1705173278 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\king.h
 	"Piece.h"
 
-1705149433 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\bishop.cpp
+1705173818 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\bishop.cpp
 	"Bishop.h"
 
-1705149433 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\bishop.h
+1705173278 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\bishop.h
 	"Piece.h"
 
-1705149433 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\pawn.h
+1705173278 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\pawn.h
 	"Piece.h"
 
-1704744982 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\rook.cpp
+1705173818 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\rook.cpp
 	"Rook.h"
 
-1705149433 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\rook.h
+1705173278 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\rook.h
 	"Piece.h"
 
-1705149433 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\pawn.cpp
+1705173818 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\pawn.cpp
 	"Pawn.h"
 
 1705146293 source:c:\users\jan\desktop\projekty\chess2d\src\bishop.cpp
@@ -4404,10 +4405,10 @@
 
 1697140152 c:\cb_dodatki\wxwidgets-3.2.2.1-mono64\include\wx\qt\mdi.h
 
-1705149433 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\square.cpp
+1705167320 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\square.cpp
 	"Square.h"
 
-1705149433 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\square.h
+1705167320 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\square.h
 	<wx/wx.h>
 	<wx/bmpbuttn.h>
 	"Piece.h"
@@ -5405,10 +5406,10 @@
 
 1697475090 c:\users\szymo\onedrive\pulpit\szymon\studia\programowanie\wxwidgets\wxwidgets-3.2.2.1-mono64\wxwidgets-3.2.2.1-mono64\include\wx\qt\mdi.h
 
-1705164031 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\board.cpp
+1705166782 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\board.cpp
 	"Board.h"
 
-1705164031 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\board.h
+1705179554 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\board.h
 	<wx/wx.h>
 	<wx/bmpbuttn.h>
 	"Square.h"

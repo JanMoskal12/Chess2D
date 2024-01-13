@@ -8,10 +8,12 @@ class King : public Piece
         King(bool _color, bool _moved = false);
         ~King();
         string getType();
+        int getTypeInt();
 
     protected:
 
     private:
+        int TypeInt = 11;
         string type = "King";
 };
 

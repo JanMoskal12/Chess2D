@@ -6,7 +6,6 @@ extern wxBitmap images[2][13];
 Board::Board()
 {
 
-
          for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
                 if((i+j) % 2 == 0){
@@ -16,8 +15,6 @@ Board::Board()
                 }
             }
          }
-
-
 
 
             pieces[0][0] = new Pawn(false);

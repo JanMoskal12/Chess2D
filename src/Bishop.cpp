@@ -9,3 +9,7 @@ Bishop::~Bishop(){
 string Bishop:: getType(){
     return type;
 }
+
+int Bishop::getTypeInt(){
+    return TypeInt;
+}

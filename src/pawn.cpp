@@ -9,3 +9,7 @@ Pawn::~Pawn(){
 string Pawn::getType(){
     return type;
 }
+
+int Pawn::getTypeInt(){
+    return TypeInt;
+}

@@ -13,3 +13,7 @@ Rook::~Rook()
 string Rook:: getType(){
     return type;
 }
+
+int Rook::getTypeInt(){
+    return TypeInt;
+}

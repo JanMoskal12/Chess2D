@@ -13,8 +13,11 @@ class Piece
         bool getColor();
         bool getMoved();
         void setMoved();
+        virtual string getType()=0;
+        virtual int getTypeInt()=0;
 
     protected:
+        string type;
         bool color;
         bool moved;
 };

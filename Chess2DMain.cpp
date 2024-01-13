@@ -10,7 +10,7 @@
 #include "Chess2DMain.h"
 #include <wx/msgdlg.h>
 #include <wx/log.h>
-#include "Board.h"
+
 
 
 //(*InternalHeaders(Chess2DDialog)
@@ -48,8 +48,12 @@ wxString wxbuildinfo(wxbuildinfoformat format){
  // Declaration of board and images
 wxBitmapButton* board[8][8];
 wxBitmap images[2][13];
+Board* _board = new Board();
 
 
+
+ //Counting
+int counter=0;
 
 //(*IdInit(Chess2DDialog)
 const long Chess2DDialog::ID_BITMAPBUTTON1 = wxNewId();
@@ -81,7 +85,6 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
 
     { // ChessBoard Display
-    images[1][0] = wxBitmap(wxImage("images/B.jpg"));
     images[0][0] = wxBitmap(wxImage("images/D.jpg"));
     images[0][1] = wxBitmap(wxImage(_T("images/Pieces/bpB.png")));
     images[0][2] = wxBitmap(wxImage(_T("images/Pieces/bpD.png")));
@@ -96,6 +99,7 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     images[0][11] = wxBitmap(wxImage(_T("images/Pieces/bkB.png")));
     images[0][12] = wxBitmap(wxImage(_T("images/Pieces/bkD.png")));
 
+    images[1][0] = wxBitmap(wxImage("images/B.jpg"));
     images[1][1] = wxBitmap(wxImage(_T("images/Pieces/wpB.png")));
     images[1][2] = wxBitmap(wxImage(_T("images/Pieces/wpD.png")));
     images[1][3] = wxBitmap(wxImage(_T("images/Pieces/wrB.png")));
@@ -139,9 +143,9 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
     for(int j = 0; j < 8; j++){
         if((j)%2 != 0){
-            board[6][j] = new wxBitmapButton(this, wxNewId(), images[0][1], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+            board[6][j] = new wxBitmapButton(this, wxNewId(), images[1][2], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
         }else{
-            board[6][j] = new wxBitmapButton(this, wxNewId(), images[0][2], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+            board[6][j] = new wxBitmapButton(this, wxNewId(), images[1][1], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
 
         }
     }
@@ -166,9 +170,10 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
         }
     }
+
     }
 
-    Board _board;
+
 
 }
 
@@ -188,4 +193,25 @@ void Chess2DDialog::OnAbout(wxCommandEvent& event){
 }
 
 void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
+/*
+  counter++;
+  //Id of clicked bitmap button
+  int nrBB = event.GetId() - 100;
+  //_board.squares[nrBB/8][nrBB%8]
+
+
+  if(counter%2 != 0){
+    clickedSquare = _board.squares[nrBB/8][nrBB%8];
+    return;
+  }
+  if(counter%2 == 0){
+
+
+
+    return;
+  }
+*/
+
+//_board->squares[0][0]->getButton()->SetBitmap(images[1][7]);
+
 }

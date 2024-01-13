@@ -18,11 +18,13 @@ class Board
         Board();
         ~Board();
 
-    protected:
-
-    private:
+        Square* clickedSquare;
+        Square* destination;
         Piece* pieces[2][6];
         Square* squares[8][8];
+
+    private:
+
 
 };
 

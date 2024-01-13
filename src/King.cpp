@@ -13,3 +13,6 @@ King::~King()
 string King :: getType(){
     return type;
 }
+int King::getTypeInt(){
+    return TypeInt;
+}

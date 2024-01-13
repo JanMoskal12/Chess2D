@@ -17,6 +17,7 @@ class Square
         bool getBackgroundColor();
         Piece* getPiece();
         void setPiece(Piece* _piece);
+        wxBitmapButton* getButton();
 
     protected:
         Piece* piece;

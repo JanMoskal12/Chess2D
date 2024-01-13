@@ -10,8 +10,10 @@ class Bishop : public Piece
         Bishop(bool _color, bool _moved = false);
         ~Bishop();
         string getType();
+        int getTypeInt();
 
     private:
+        int TypeInt = 7;
         string type = "Bishop";
 };
 
