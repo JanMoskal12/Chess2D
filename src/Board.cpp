@@ -1,12 +1,11 @@
 #include "Board.h"
 
 extern wxBitmapButton* board[8][8];
-extern wxBitmap* images[2][13];
+extern wxBitmap images[2][13];
 
 Board::Board()
 {
 
-         squares = new Square*[8][8];
 
          for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
@@ -19,7 +18,7 @@ Board::Board()
          }
 
 
-	        pieces = new Piece*[2][6];
+
 
             pieces[0][0] = new Pawn(false);
             pieces[0][1] = new Rook(false);
@@ -33,6 +32,8 @@ Board::Board()
             pieces[1][3] = new Bishop(true);
             pieces[1][4] = new Queen(true);
             pieces[1][5] = new King(true);
+
+
 
             //Pawns
             for(int i = 0; i < 8; i++){
@@ -63,18 +64,5 @@ Board::Board()
 
 Board::~Board()
 {
-    for(int i = 0 ; i < 2 ; i++){
-        for(int j = 0; j < 6; j++){
-            delete pieces[i][j];
-        }
-    }
-    delete[] pieces;
 
-
-    for(int i = 0 ; i < 8 ; i++){
-        for(int j = 0; j < 8; j++){
-            delete squares[i][j];
-        }
-    }
-    delete[] squares;
 }

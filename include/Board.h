@@ -21,8 +21,8 @@ class Board
     protected:
 
     private:
-        Piece** pieces;
-        Square** squares;
+        Piece* pieces[2][6];
+        Square* squares[8][8];
 
 };
 

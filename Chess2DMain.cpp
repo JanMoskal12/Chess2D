@@ -45,10 +45,10 @@ wxString wxbuildinfo(wxbuildinfoformat format){
 }
 
 
-{ // Declaration of board and images
-wxBitmapButton* (board[8][8]);
-wxBitmap (images[2][13]);
-}
+ // Declaration of board and images
+wxBitmapButton* board[8][8];
+wxBitmap images[2][13];
+
 
 
 //(*IdInit(Chess2DDialog)
@@ -169,6 +169,7 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     }
 
     Board _board;
+
 }
 
 
