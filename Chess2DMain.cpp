@@ -119,12 +119,12 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     board[0][7] = new wxBitmapButton(this, wxNewId(), images[0][4], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
 
     for(int j = 0; j < 8; j++){
-            if(j%2 == 0){
-                board[1][j] = new wxBitmapButton(this, wxNewId(),images[0][2] , wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
-            }else{
-                board[1][j] = new wxBitmapButton(this, wxNewId(),images[0][1] , wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+        if(j%2 == 0){
+            board[1][j] = new wxBitmapButton(this, wxNewId(),images[0][2] , wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+        }else{
+            board[1][j] = new wxBitmapButton(this, wxNewId(),images[0][1] , wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
 
-            }
+        }
     }
 
     for(int i = 2; i < 6; i++){
@@ -157,11 +157,11 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
     for(int i = 0;i < 8; i++){
         for(int j = 0; j < 8; j++){
-        if(i + j == 0){
-            j++;
-        }
-        GridSizer1->Add(board[i][j], 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-        Connect(board[i][j]->GetId(),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Chess2DDialog::OnBitmapButton1Click);
+            if(i + j == 0){
+                j++;
+            }
+            GridSizer1->Add(board[i][j], 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+            Connect(board[i][j]->GetId(),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Chess2DDialog::OnBitmapButton1Click);
 
 
         }
