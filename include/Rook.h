@@ -2,12 +2,12 @@
 #define ROOK_H
 
 
-#include "piece.h"
+#include "Piece.h"
 
 class Rook : public Piece
 {
     public:
-        Rook(bool _color, bool _moved);
+        Rook(bool _color, bool _moved = false);
         ~Rook();
         string getType();
 

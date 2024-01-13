@@ -1,4 +1,4 @@
-#include "piece.h"
+#include "Piece.h"
 
 Piece::Piece(bool _color, bool _moved){
     color = _color;

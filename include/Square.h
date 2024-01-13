@@ -4,13 +4,13 @@
 
 #include <wx/wx.h>
 #include <wx/bmpbuttn.h>
-#include "piece.h"
+#include "Piece.h"
 
 class Square
 {
     public:
         friend class Board;
-        Square(int _col, int _row, bool _backgroundColor, Piece* _piece, wxBitmapButton* _button);
+        Square(int _col, int _row, bool _backgroundColor, wxBitmapButton* _button, Piece* _piece = nullptr);
         ~Square();
         int getCol();
         int getRow();
@@ -19,7 +19,7 @@ class Square
         void setPiece(Piece* _piece);
 
     protected:
-        Piece* piece = nullptr;
+        Piece* piece;
         int col;
         int row;
         bool backgroundColor;

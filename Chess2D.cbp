@@ -71,11 +71,11 @@
 		<Unit filename="include/Board.h" />
 		<Unit filename="include/King.h" />
 		<Unit filename="include/Knight.h" />
+		<Unit filename="include/Pawn.h" />
+		<Unit filename="include/Piece.h" />
 		<Unit filename="include/Queen.h" />
 		<Unit filename="include/Rook.h" />
 		<Unit filename="include/Square.h" />
-		<Unit filename="include/pawn.h" />
-		<Unit filename="include/piece.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>
@@ -83,11 +83,11 @@
 		<Unit filename="src/Board.cpp" />
 		<Unit filename="src/King.cpp" />
 		<Unit filename="src/Knight.cpp" />
+		<Unit filename="src/Pawn.cpp" />
+		<Unit filename="src/Piece.cpp" />
 		<Unit filename="src/Queen.cpp" />
 		<Unit filename="src/Rook.cpp" />
 		<Unit filename="src/Square.cpp" />
-		<Unit filename="src/pawn.cpp" />
-		<Unit filename="src/piece.cpp" />
 		<Unit filename="wxsmith/Chess2Ddialog.wxs" />
 		<Extensions>
 			<lib_finder disable_auto="1" />

@@ -3,7 +3,7 @@
 
 extern wxBitmapButton* board[64];
 
-Square::Square(int _col, int _row, bool _backgroundColor, Piece* _piece, wxBitmapButton* _button){
+Square::Square(int _col, int _row, bool _backgroundColor, wxBitmapButton* _button, Piece* _piece){
     col = _col;
     row = _row;
     backgroundColor = _backgroundColor;

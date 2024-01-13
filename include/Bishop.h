@@ -2,19 +2,18 @@
 #define BISHOP_H
 
 
-#include "piece.h"
+#include "Piece.h"
 
 class Bishop : public Piece
 {
     public:
-        Bishop(bool _color, bool _moved);
+        Bishop(bool _color, bool _moved = false);
         ~Bishop();
         string getType();
-
-    protected:
 
     private:
         string type = "Bishop";
 };
 
 #endif // BISHOP_H
+

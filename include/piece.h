@@ -16,7 +16,7 @@ class Piece
 
     protected:
         bool color;
-        bool moved = false;
+        bool moved;
 };
 
 

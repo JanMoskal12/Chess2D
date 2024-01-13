@@ -5,7 +5,7 @@
 #include <wx/wx.h>
 #include <wx/bmpbuttn.h>
 #include "Square.h"
-#include "pawn.h"
+#include "Pawn.h"
 #include "Rook.h"
 #include "Knight.h"
 #include "Bishop.h"
