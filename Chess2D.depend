@@ -3170,7 +3170,7 @@
 1697140154 c:\cb_dodatki\wxwidgets-3.2.2.1-mono64\include\wx\univ\theme.h
 	"wx/string.h"
 
-1705145258 c:\users\jan\desktop\projekty\chess2d\chess2dmain.h
+1705157499 c:\users\jan\desktop\projekty\chess2d\chess2dmain.h
 	<wx/bmpbuttn.h>
 	<wx/dialog.h>
 	<wx/sizer.h>
@@ -3404,7 +3404,7 @@
 1705148587 c:\users\jan\desktop\projekty\chess2d\include\rook.h
 	"Piece.h"
 
-1705145259 source:c:\users\jan\desktop\projekty\chess2d\src\square.cpp
+1705149217 source:c:\users\jan\desktop\projekty\chess2d\src\square.cpp
 	"Square.h"
 
 1705149211 c:\users\jan\desktop\projekty\chess2d\include\square.h
@@ -5431,6 +5431,6 @@
 	"Queen.h"
 	"King.h"
 
-1705148157 source:c:\users\jan\desktop\projekty\chess2d\src\board.cpp
+1705149217 source:c:\users\jan\desktop\projekty\chess2d\src\board.cpp
 	"Board.h"
 

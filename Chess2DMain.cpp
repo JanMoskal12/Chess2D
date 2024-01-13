@@ -24,30 +24,32 @@
 enum wxbuildinfoformat {
     short_f, long_f };
 
-wxString wxbuildinfo(wxbuildinfoformat format)
-{
+wxString wxbuildinfo(wxbuildinfoformat format){
     wxString wxbuild(wxVERSION_STRING);
 
-    if (format == long_f )
-    {
-#if defined(__WXMSW__)
-        wxbuild << _T("-Windows");
-#elif defined(__UNIX__)
-        wxbuild << _T("-Linux");
-#endif
+    if (format == long_f ){
+        #if defined(__WXMSW__)
+                wxbuild << _T("-Windows");
+        #elif defined(__UNIX__)
+                wxbuild << _T("-Linux");
+        #endif
 
-#if wxUSE_UNICODE
-        wxbuild << _T("-Unicode build");
-#else
-        wxbuild << _T("-ANSI build");
-#endif // wxUSE_UNICODE
+        #if wxUSE_UNICODE
+                wxbuild << _T("-Unicode build");
+        #else
+                wxbuild << _T("-ANSI build");
+        #endif // wxUSE_UNICODE
     }
 
     return wxbuild;
 }
 
-wxBitmapButton* board[64];
-wxBitmap images[26];
+
+{ // Declaration of board and images
+wxBitmapButton* board[8][8];
+wxBitmap images[2][13];
+}
+
 
 //(*IdInit(Chess2DDialog)
 const long Chess2DDialog::ID_BITMAPBUTTON1 = wxNewId();
@@ -77,9 +79,11 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     Connect(ID_BITMAPBUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Chess2DDialog::OnBitmapButton1Click);
     //*)
 
-    images[0] = wxBitmap(wxImage("images/B.jpg"));
-    images[1] = wxBitmap(wxImage("images/D.jpg"));
-    images[2] = wxBitmap(wxImage(_("images/Pieces/brB.png")));
+
+    { // ChessBoard Display
+    images[1][0] = wxBitmap(wxImage("images/B.jpg"));
+    images[0][0] = wxBitmap(wxImage("images/D.jpg"));
+    images[0][1] = wxBitmap(wxImage(_("images/Pieces/brB.png")));
     images[3] = wxBitmap(wxImage(_("images/Pieces/brD.png")));
     images[4] = wxBitmap(wxImage(_("images/Pieces/bnB.png")));
     images[5] = wxBitmap(wxImage(_("images/Pieces/bnD.png")));
@@ -104,7 +108,6 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     images[24] = wxBitmap(wxImage(_("images/Pieces/wpB.png")));
     images[25] = wxBitmap(wxImage(_("images/Pieces/wpD.png")));
 
-    //---------------------------------------------------------------------------------------------------------------------------------------
     board[0] = BitmapButton1;
     board[1] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bnD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
     board[2] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bbB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
@@ -113,7 +116,6 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     board[5] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bbD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
     board[6] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/bnB.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
     board[7] = new wxBitmapButton(this, wxNewId(), wxBitmap(wxImage(_T("images/Pieces/brD.png"))), wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
-
 
     for(int j = 0; j < 8; j++){
             if((j)%2 == 0){
@@ -124,7 +126,6 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
             }
     }
 
-
     for(int i = 2; i < 6; i++){
         for(int j = 0; j < 8; j++){
             if((i+j)%2 == 0){
@@ -134,7 +135,6 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
             }
         }
     }
-
 
     for(int j = 0; j < 8; j++){
         if((j)%2 != 0){
@@ -165,28 +165,25 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
         }
     }
+    }
 
     Board _board;
 }
 
 
-Chess2DDialog::~Chess2DDialog()
-{
+Chess2DDialog::~Chess2DDialog(){
     //(*Destroy(Chess2DDialog)
     //*)
 }
 
-void Chess2DDialog::OnQuit(wxCommandEvent& event)
-{
+void Chess2DDialog::OnQuit(wxCommandEvent& event){
     Close();
 }
 
-void Chess2DDialog::OnAbout(wxCommandEvent& event)
-{
+void Chess2DDialog::OnAbout(wxCommandEvent& event){
     wxString msg = wxbuildinfo(long_f);
     wxMessageBox(msg, _("Welcome to..."));
 }
 
-void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event)
-{
+void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
 }

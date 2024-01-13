@@ -1,6 +1,7 @@
 #include "Board.h"
 
 extern wxBitmapButton* board[64];
+extern wxBitmap* images[26];
 
 Board::Board()
 {
