@@ -3,6 +3,7 @@
 extern wxBitmapButton* board[8][8];
 extern wxBitmap images[2][13];
 
+
 Board::Board(int i)
 {
 
@@ -63,3 +64,4 @@ Board::~Board()
 {
 
 }
+
