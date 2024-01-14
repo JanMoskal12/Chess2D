@@ -1,0 +1,7 @@
+C++: 
+   -dokumentacja 
+   -usunięcie pointerów
+   -poprawki wygladowe
+   -dodaj if w pierwszym klinknięciu, który będzie sprawdzał czy kliknięty Square ma w sobie Piecea, jak nie to Counter-- (sugestia) 
+   -przemyśleć samą grę (konkretnie elementy związane z logiką poruszania się szachowania, remisowania, dodatkowe)
+   -w Board dodac zmienna typu Square przechowująca pozycję króla
