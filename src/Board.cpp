@@ -65,3 +65,27 @@ Board::~Board()
 
 }
 
+void Board::swapSquares(){
+    this->destination->setPiece(this->clickedSquare->getPiece());
+    this->destination->getButton()->SetBitmap(images[this->clickedSquare->getPiece()->getColor()][this->clickedSquare->getPiece()->getTypeInt()+1-this->destination->getBackgroundColor()]);
+    this->clickedSquare->setPiece(nullptr);
+    this->clickedSquare->getButton()->SetBitmap(images[this->clickedSquare->getBackgroundColor()][0]);
+}
+
+bool Board::sameSquare(){
+    return (this->destination == this->clickedSquare);
+}
+
+void Board::setDestination(int _nrBB){
+    this->destination = this->squares[_nrBB/8][_nrBB%8];
+}
+
+void Board::setClickedSquare(int _nrBB){
+    this->clickedSquare = this->squares[_nrBB/8][_nrBB%8];
+}
+
+bool Board::isPiece(){
+   return !(this->clickedSquare->getPiece() == nullptr);
+}
+
+

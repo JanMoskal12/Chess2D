@@ -52,6 +52,7 @@ wxBitmap images[2][13];
 
  //Counting
 int counter=1;
+int whiteOrBlack = 1;
 
 //(*IdInit(Chess2DDialog)
 const long Chess2DDialog::ID_BITMAPBUTTON1 = wxNewId();
@@ -198,34 +199,33 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
     //1st click
     if(counter%2 != 0){
         //Saving clicked square for later
-        _insanity->clickedSquare = _insanity->squares[nrBB/8][nrBB%8];
+        _insanity->setClickedSquare(nrBB);
+            //Checking if clicked square is empty
+            if(!(_insanity->isPiece())){
+                return;
+            }
+            if(_insanity->clickedSquare->getPiece()->getColor() != whiteOrBlack){
+                return;
+            }
         counter++;
         return;
     }
 
     //2nd click
     if(counter%2 == 0){
-        //Checking if clicked square is empty
-        if(_insanity->clickedSquare->getPiece() == nullptr){
+        _insanity->setDestination(nrBB);
+        //Checking if we clicked the same square twice
+        if(_insanity->sameSquare() ){
             counter--;
         }else{
-            _insanity->destination = _insanity->squares[nrBB/8][nrBB%8];
-
-            //Checking if we clicked the same square twice
-            if(_insanity->destination == _insanity->clickedSquare){
-                counter--;
-                return;
-            }else{
-                //Moving Piece
-                _insanity->destination->setPiece(_insanity->clickedSquare->getPiece());
-                _insanity->destination->getButton()->SetBitmap(images[_insanity->clickedSquare->getPiece()->getColor()][_insanity->clickedSquare->getPiece()->getTypeInt()+1-_insanity->destination->getBackgroundColor()]);
-                _insanity->clickedSquare->setPiece(nullptr);
-                _insanity->clickedSquare->getButton()->SetBitmap(images[_insanity->clickedSquare->getBackgroundColor()][0]);
-                counter++;
-            }
+            //Moving Piece
+            _insanity->swapSquares();
+            counter++;
+            whiteOrBlack = (whiteOrBlack + 1)%2;
+            wxLogMessage("%d", whiteOrBlack);
             return;
         }
 
-}
+    }
 
 }

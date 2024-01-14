@@ -18,6 +18,13 @@ class Board
         Board(int i);
         ~Board();
 
+
+        void setClickedSquare(int _nrBB);
+        void setDestination(int _nrBB);
+        void swapSquares();
+        bool sameSquare();
+        bool isPiece();
+
         Square* clickedSquare;
         Square* destination;
         Piece* pieces[2][6];
