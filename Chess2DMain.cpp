@@ -173,7 +173,8 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     }
 
      Board _ss(1);
-    _insanity = new Board(1);
+    _B= new Board(1);
+
 
 }
 
@@ -199,12 +200,9 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
     //1st click
     if(counter%2 != 0){
         //Saving clicked square for later
-        _insanity->setClickedSquare(nrBB);
-            //Checking if clicked square is empty
-            if(!(_insanity->isPiece())){
-                return;
-            }
-            if(_insanity->clickedSquare->getPiece()->getColor() != whiteOrBlack){
+        _B->setClickedSquare(nrBB);
+            //Checking if clicked square is empty or is good color moving
+            if(!(_B->isClickedPiece()) || (_B->clickedSquare->getPiece()->getColor() != whiteOrBlack)){
                 return;
             }
         counter++;
@@ -213,19 +211,31 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
 
     //2nd click
     if(counter%2 == 0){
-        _insanity->setDestination(nrBB);
-        //Checking if we clicked the same square twice
-        if(_insanity->sameSquare() ){
+        _B->setDestination(nrBB);
+        //Checking if we clicked pieces with same color
+        if(_B->isDestinationPiece() && _B->isSameColor()){
             counter--;
         }else{
             //Moving Piece
-            _insanity->swapSquares();
+            _B->swapSquares();
+            //Checking if clicked piece is a king and then in case it was the king we store his new location for later
+            if(_B->isKing()){
+                if(whiteOrBlack%2 == 1){
+                   _B->whiteKing = _B->destination;
+                    wxLogMessage("Biały król sie poruszył");
+                    auto test = _B->isKingInCheck(_B->whiteKing);
+                    wxLogMessage("%d",test);
+                }else{
+                    _B->blackKing = _B->destination;
+                    wxLogMessage("Czarny król sie poruszył");
+                }
+            }
             counter++;
             whiteOrBlack = (whiteOrBlack + 1)%2;
-            wxLogMessage("%d", whiteOrBlack);
             return;
         }
 
     }
 
 }
+

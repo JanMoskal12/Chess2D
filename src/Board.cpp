@@ -57,6 +57,8 @@ Board::Board(int i)
                 squares[7][6]->setPiece(pieces[1][2]);
                 squares[7][7]->setPiece(pieces[1][1]);
 
+                whiteKing = squares[7][4];
+                blackKing = squares[0][4];
 
 }
 
@@ -72,10 +74,6 @@ void Board::swapSquares(){
     this->clickedSquare->getButton()->SetBitmap(images[this->clickedSquare->getBackgroundColor()][0]);
 }
 
-bool Board::sameSquare(){
-    return (this->destination == this->clickedSquare);
-}
-
 void Board::setDestination(int _nrBB){
     this->destination = this->squares[_nrBB/8][_nrBB%8];
 }
@@ -84,8 +82,22 @@ void Board::setClickedSquare(int _nrBB){
     this->clickedSquare = this->squares[_nrBB/8][_nrBB%8];
 }
 
-bool Board::isPiece(){
+bool Board::isClickedPiece(){
    return !(this->clickedSquare->getPiece() == nullptr);
 }
 
+bool Board::isDestinationPiece(){
+   return !(this->destination->getPiece() == nullptr);
+}
 
+bool Board::isSameColor(){
+    return (this->clickedSquare->getPiece()->getColor() == this->destination->getPiece()->getColor());
+}
+
+ bool Board::isKing(){
+    return ((this->blackKing == this->clickedSquare) + (this->whiteKing == this->clickedSquare));
+ }
+
+ bool Board::isKingInCheck(Square* king){
+    return ( king == this->whiteKing);
+ }

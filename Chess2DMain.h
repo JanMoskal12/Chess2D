@@ -43,7 +43,7 @@ class Chess2DDialog: public wxDialog
         //*)
 
         DECLARE_EVENT_TABLE()
-        Board* _insanity;
+        Board* _B;
 
 
 };

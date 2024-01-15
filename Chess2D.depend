@@ -1509,7 +1509,7 @@
 1697475091 c:\users\szymo\onedrive\pulpit\szymon\studia\programowanie\wxwidgets\wxwidgets-3.2.2.1-mono64\wxwidgets-3.2.2.1-mono64\include\wx\univ\theme.h
 	"wx/string.h"
 
-1705186875 c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.h
+1705341572 c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.h
 	"Square.h"
 	"Board.h"
 	<wx/bmpbuttn.h>
@@ -1612,7 +1612,7 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1705246623 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
+1705341363 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/log.h>
@@ -5408,10 +5408,10 @@
 
 1697475090 c:\users\szymo\onedrive\pulpit\szymon\studia\programowanie\wxwidgets\wxwidgets-3.2.2.1-mono64\wxwidgets-3.2.2.1-mono64\include\wx\qt\mdi.h
 
-1705246613 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\board.cpp
+1705341363 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\board.cpp
 	"Board.h"
 
-1705246613 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\board.h
+1705341363 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\board.h
 	<wx/wx.h>
 	<wx/bmpbuttn.h>
 	"Square.h"
