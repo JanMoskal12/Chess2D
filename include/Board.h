@@ -22,9 +22,14 @@ class Board
         void setClickedSquare(int _nrBB);
         void setDestination(int _nrBB);
         void swapSquares();
-        bool sameSquare();
-        bool isPiece();
+        bool isClickedPiece();
+        bool isDestinationPiece();
+        bool isSameColor();
+        bool isKing();
+        bool isKingInCheck(Square* king);
 
+        Square* whiteKing;
+        Square* blackKing;
         Square* clickedSquare;
         Square* destination;
         Piece* pieces[2][6];
