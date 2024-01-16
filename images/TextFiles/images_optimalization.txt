@@ -1,0 +1,1 @@
+// Przykład przypisania obrazka białego piona do przycisku board[i][j] = new wxBitmapButton(this, wxNewId(), images[0][1], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator); 

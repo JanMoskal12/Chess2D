@@ -1,0 +1,262 @@
+---
+title: "Chess2D Documentation"
+format: html
+editor: visual
+---
+
+# Problem zagadnienia
+
+### **Opis**
+
+Projekt zakłada stworzenie gry w szachy dla dwóch graczy, potencjalnie z opcją gry z komputerem. Kod oparty jest na bibliotece wxWidgets, a interfejs użytkownika wykorzystuje siatkę **`wxBitmapButton`** z obrazkami figur połączonymi z kolorem tła.
+
+### **Implementacja**
+
+W pliku Chess2DMain.cpp znajduje się implementacja okna głównego gry. Interfejs użytkownika oparty jest na hierarchii klas wxWidgets, gdzie główne okno (**`wxDialog`**) tworzy instancję klasy **`Chess2DDialog`**, a ta z kolei korzysta z różnych elementów wxWidgets, takich jak **`wxFlexGridSizer`** i **`wxGridSizer`**, aby zorganizować siatkę przycisków.
+
+#### Struktura Interfejsu
+
+-   **Chess2D** (Główne okno)
+
+    -   **wxDialog** (Podstawowa klasa dialogowa)
+
+        -   **Chess2DDialog** (Właściwa klasa obsługująca logikę gry)
+
+            -   **wxFlexGridSizer** (Elastyczna siatka)
+
+                -   **wxGridSizer** (Siatka z podziałem na wiersze i kolumny)
+
+                    -   **wxBitmapButton** (Przyciski reprezentujące pola szachownicy)
+
+### Użycie Obrazków
+
+Do wyświetlania figur na przyciskach (**`wxBitmapButton`**), używamy zestawu dwudziestu sześciu obrazków, reprezentujących figury szachowe. Dwa puste pola (czarne i białe) oraz sześć różnych typów figur (pion, wieża, skoczek, goniec, hetman, król) w dwóch kolorach (biały i czarny) na dwóch tłach (jasnym, ciemnym).
+
+Pliki obrazków figur zostały nazwane zgodnie z ustaloną konwencją. Każda nazwa pliku składa się z trzech liter:
+
+1.  **Pierwsza litera:** Określa kolor figury (**`w`** - biały, **`b`** - czarny).
+
+2.  **Druga litera:** Oznacza rodzaj figury, zgodny z pierwszymi literami ich nazw (np. **`p`** - pion, **`r`** - wieża, **`n`** - skoczek).
+
+3.  **Trzecia litera:** Informuje o kolorze pola, na którym figura stoi (`B` - jasne, `D` - ciemne).
+
+##### Przykłady:
+
+| Kolor figury | Figura | Kolor pola | Przykład nazwy pliku | Opis                      |
+|---------------|---------------|---------------|---------------|---------------|
+| `w`          | `p`    | `B`        | `wpB.png`            | Biały pion, jasne pole    |
+| `b`          | `r`    | `D`        | `brD.png`            | Czarna wieża, ciemne pole |
+
+## Tablice obiektów:
+
+#### Struktura Tablicy **`board[8][8]`**
+
+Tablica **`board`** została zdefiniowana jako dwuwymiarowa tablica BitmapButtonów (**`wxBitmapButton`**) o rozmiarze 8x8. Każdy element tej tablicy reprezentuje jedno pole z wyświetloną figurą i tłem na szachownicy i zawiera przycisk do interakcji z użytkownikiem.
+
+-   **Struktura Elementu Tablicy:**
+
+    -   Każdy element tablicy **`board[i][j]`** to obiekt typu **`wxBitmapButton`**.
+
+    -   Elementy tablicy są rozmieszczone w sposób odpowiadający szachownicy, gdzie **`i`** reprezentuje numer wiersza (0-7), a **`j`** numer kolumny (0-7).
+
+-   **Obrazy Figur:**
+
+    -   Każdy przycisk (**`wxBitmapButton`**) w tablicy **`board`** jest powiązany z konkretnym obrazkiem reprezentującym figurę szachową na danym polu (lub puste pole).
+
+    -   Obrazki figur są wczytywane i przypisywane odpowiednim przyciskom na podstawie ich koloru, typu i tła (początkowe parametry).
+
+### **Struktura Tablicy `images[2][13]`**
+
+Tablica **`images`** została zdefiniowana jako dwuwymiarowa tablica **`wxBitmap`** o rozmiarze 2x13. Jest to tablica, w której przechowywane są obrazy figur szachowych używane do wyświetlania na przyciskach **`wxBitmapButton`** na szachownicy.
+
+-   **Struktura Elementu Tablicy:**
+
+    -   Każdy element tablicy **`images[i][j]`** to obiekt typu **`wxBitmap`**.
+
+    -   Indeks **`i`** reprezentuje kolor figury (1 - biały, 0 - czarny).
+
+    -   Indeks **`j`** reprezentuje typ figury z danym tłem (podzielne przez dwa oznaczają pola z ciemnym tłem) , gdzie:
+
+        -   0 - puste pole (tło),
+
+        -   1-2 - pionek ,
+
+        -   3-4 - wieża,
+
+        -   5-6 - skoczek,
+
+        -   7-8 - goniec
+
+        -   9-10 - hetman,
+
+        -   11-12 - król.
+
+-   **Ścieżki do Obrazków:**
+
+    -   Obrazy są wczytywane z katalogu "images" na podstawie ustalonej konwencji nazewniczej. Każdy obrazek jest zidentyfikowany przez trzy litery w nazwie, które odpowiadają kolorowi figury, jej typowi oraz kolorowi tła.
+
+-   **Przykładowe Indeksowanie:**
+
+    -   Poniżej znajduje się przykładowe indeksowanie tablicy **`images`** dla białego piona:
+
+-   **Wykorzystanie w Praktyce:**
+
+    -   Tablica **`images`** jest używana do przypisywania odpowiednich obrazków do przycisków **`wxBitmapButton`** w tablicy **`board`**, reprezentujących figury na szachownicy.
+
+-   **Przykład Kodu:**
+
+    -   Poniżej znajduje się przykładowy fragment kodu, ilustrujący użycie tablicy **`images`** do przypisywania obrazków do przycisków:
+
+Tablica **`images`** umożliwia łatwe zarządzanie obrazkami figur szachowych w grze i zapewnia spójność wizualną na szachownicy.
+
+### **Struktura Tablicy `pieces[2][6]`**
+
+Tablica **`pieces`** została zdefiniowana jako dwuwymiarowa tablica wskaźników do obiektów klasy **`Piece`** o rozmiarze 2x6. Jest to tablica, w której przechowywane są obiekty reprezentujące różne typy figur szachowych w dwóch kolorach: białym i czarnym.
+
+#### Struktura Elementu Tablicy:
+
+Każdy element tablicy **`pieces[i][j]`** to wskaźnik do obiektu klasy **`Piece`**.
+
+-   Indeks **`i`** reprezentuje kolor figury (1 - biały, 0 - czarny).
+
+-   Indeks **`j`** reprezentuje typ figury, gdzie:
+
+    -   0 - pionek,
+
+    -   1 - wieża,
+
+    -   2 - skoczek,
+
+    -   3 - goniec,
+
+    -   4 - hetman,
+
+    -   5 - król.
+
+#### Użycie w Praktyce:
+
+Tablica **`pieces`** umożliwia łatwe zarządzanie różnymi typami figur szachowych w grze. W kodzie można odwoływać się do konkretnych figur na szachownicy, używając elementów tej tablicy. Stanowi strukturę pomocniczą do składowania informacji o figurach szachowych w grze.
+
+### **Struktura Tablicy `squares[8][8]`**
+
+Tablica **`squares`** została zdefiniowana jako dwuwymiarowa tablica wskaźników do obiektów typu **`Square`** o rozmiarze 8x8, reprezentująca pola szachownicy. Każdy element tej tablicy to obiekt **`Square`**, który przechowuje informacje o polu oraz figurze na tym polu.
+
+#### Struktura Elementu Tablicy:
+
+Każdy element tablicy **`squares[i][j]`** to obiekt typu **`Square`**.
+
+-   Indeks **`i`** reprezentuje numer wiersza na szachownicy (0-7).
+
+-   Indeks **`j`** reprezentuje numer kolumny na szachownicy (0-7).
+
+#### Struktura Klasy **`Square`**:
+
+Klasa **`Square`** zawiera informacje o polu na szachownicy, takie jak kolor pola, wiersz i kolumne pola, obecność konkretnej figury, oraz referencję do obiektu **`wxBitmapButton`**, który jest przypisany do danego pola.
+
+#### Użycie w Praktyce:
+
+Tablica **`squares`** służy do dostępu do konkretnych obiektów **`Square`** reprezentujących pola na szachownicy. Mogą być one modyfikowane, aby przechowywać informacje o obecności figury oraz reagować na interakcję użytkownika. Stanowi strukturę pomocniczą do łatwego zarządzania polami szachownicy w grze.
+
+# Struktura klas
+
+Projekt składa się z kilku klas, które są ze sobą powiązane w celu zorganizowania logiki gry w szachy. Poniżej przedstawiona jest struktura klas, ich relacje oraz krótkie opisy.
+
+1.  **Chess2DDialog**: Główna klasa projektu, dziedzicząca po **`wxDialog`**, reprezentująca okno gry w szachy. Odpowiada za obsługę interfejsu użytkownika i inicjalizację gry.
+
+2.  **Board**: Klasa reprezentująca szachownicę. Odpowiada za logikę gry, przechowuje obiekty klasy **`Square`** reprezentujące pola na szachownicy.
+
+3.  **Square**: Klasa reprezentująca pole na szachownicy. Zawiera informacje o kolorze pola, wierszu i kolumnie pola, obecności figury oraz referencję do przycisku **`wxBitmapButton`**.
+
+4.  **Piece**: Klasa abstrakcyjna, będąca bazą dla konkretnych rodzajów figurek szachowych. Zawiera podstawowe metody i pola, takie jak identyfikator, kolor, czy ruchy możliwe dla danej figury.
+
+5.  **Pawn, Rook, Knight, Bishop, Queen, King**: Klasy dziedziczące po klasie **`Piece`**, reprezentujące poszczególne rodzaje figurek szachowych. Każda z tych klas implementuje pola z informacjami na temat danej figury.
+
+#### Relacje między klasami:
+
+-   **Chess2DDialog** zawiera obiekt klasy **`Board`**, który odpowiada za logikę gry i przechowuje informacje o szachownicy.
+
+-   Klasa **`Board`** zarządza tablicą obiektów **`Square`** reprezentujących pola na szachownicy.
+
+-   Każdy obiekt **`Square`** zawiera referencję do obiektu **`wxBitmapButton`** oraz informacje o obecności figury (obiekt **`Piece`**).
+
+-   Klasy **`Pawn`**, **`Rook`**, **`Knight`**, **`Bishop`**, **`Queen`**, **`King`** dziedziczą po klasie **`Piece`** i zawierają specyficzne implementacje metod związanych z ich ruchami.
+
+Ta struktura klas pozwala na uporządkowanie kodu, zapewniając modularność i łatwość rozbudowy gry.
+
+# Szczegóły konkretnych klas:
+
+1.  **Chess2DDialog**
+
+    Klasa **`Chess2DDialog`** odgrywa kluczową rolę w inicjalizacji gry w szachy. Poniżej przedstawiono jej kluczowe elementy:
+
+    -   **Dziedziczenie**: Klasa dziedziczy po **`wxDialog`**, co oznacza, że jest to okno dialogowe w bibliotece wxWidgets.
+
+    -   **Konstruktor**: W konstruktorze klasy tworzony jest obiekt klasy **`Board`**, który będzie reprezentować szachownicę w grze.
+
+    -   **Tworzenie Board**: W klasie **`Chess2DDialog`** znajduje się kod inicjalizujący obiekt klasy **`Board`**, który będzie zarządzał logiką gry. Tworzenie szachownicy i jej umieszczenie w oknie dialogowym jest kluczowe dla dalszego przebiegu gry.
+
+    -   **Obsługa Zdarzeń**: Może zawierać obsługę zdarzeń związanych z interakcją użytkownika na poziomie dialogu, np. przycisków czy menu.
+
+2.  **Board**
+
+    Klasa **`Board`** jest centralnym punktem logiki gry, zarządzającym szachownicą. Poniżej przedstawiono kluczowe elementy tej klasy:
+
+    -   **Inicjalizacja**: W konstruktorze klasy **`Board`** inicjalizowane są wszystkie pola na szachownicy, tworzone są obiekty klasy **`Square`** reprezentujące poszczególne pola.
+
+    -   **Tworzenie Pól**: Klasa **`Board`** zawiera tablicę obiektów **`Square`**, reprezentujących pola na szachownicy.
+
+    -   **Rozmieszczenie Figur**: Zawiera kod odpowiedzialny za ustawienie początkowego rozmieszczenia figur na szachownicy.
+
+    -   **Logika Ruchu**: Klasa **`Board`** implementuje logikę ruchu figur, sprawdzając, czy dany ruch jest zgodny z zasadami gry w szachy.
+
+    -   **Obsługa Zdarzeń Szachownicy**: Odpowiada za obsługę zdarzeń związanych z interakcją użytkownika na poziomie szachownicy, takich jak kliknięcia na pola.
+
+    -   **Przekazywanie Informacji do GUI**: Po wykonaniu ruchu, klasa **`Board`** przekazuje informacje o aktualnym stanie gry do interfejsu użytkownika, aby ten mógł odpowiednio zaktualizować widok.
+
+3.  **Square**
+
+    Klasa **`Square`** reprezentuje pojedyncze pole na szachownicy. Poniżej przedstawiono kluczowe elementy tej klasy:
+
+    -   **Kolor Pola**: Przechowuje informację o kolorze pola na szachownicy (jasne/ciemne).
+
+    -   **Wierz i Kolumna Pola:** Przechowuje informację o wierszu i kolumnie pola na szachownicy
+
+    -   **Obecność Figury**: Zawiera referencję do obiektu klasy **`Piece`** reprezentującego figurę. Jeśli pole jest puste, wartość ta to nullptr.
+
+    -   **Przycisk `wxBitmapButton`**: Przechowuje referencję do przycisku, który jest powiązany z danym polem na szachownicy.
+
+    -   **Aktualizacja Widoku**: Zawiera metody do aktualizacji widoku danego pola na szachownicy w zależności od jego stanu - zmiana obrazka na przycisku w zależności od obecności figury.
+
+4.  **Piece**
+
+    Klasa **`Piece`** stanowi abstrakcję dla poszczególnych rodzajów figurek (piona, wieży, skoczka, gońca, hetmana, króla).
+
+    -   **Konstruktor**: Klasa posiada konstruktor, który inicjuje kolor figury oraz informację o tym, czy figura wykonała ruch.
+
+    -   **Destruktor**: Klasa posiada wirtualny destruktor, co jest istotne, gdy figury są dziedziczone i używane polimorficznie.
+
+    -   **Metody Dostępowe**:
+
+        -   **`bool getColor()`**: Zwraca kolor figury (true - biały, false - czarny).
+
+        -   **`bool getMoved()`**: Zwraca informację o tym, czy figura wykonała ruch.
+
+        -   **`void setMoved()`**: Ustawia informację, że figura wykonała ruch.
+
+    -   **Metody Wirtualne**:
+
+        -   **`virtual string getType()=0`**: Jest to metoda czysto wirtualna, zwracająca typ figury jako string. Każda konkretna figura dziedzicząca po **`Piece`** będzie musiała dostarczyć własną implementację.
+
+        -   **`virtual int getTypeInt()=0`**: Jest to metoda czysto wirtualna, zwracająca typ figury jako wartość liczbową (przydatna do indeksowania naszych tablic). Wymaga implementacji w klasach potomnych.
+
+    Klasa **`Piece`** zapewnia ogólną strukturę i funkcjonalności, a jej metody umożliwiają łatwiejsze indeksowanie w tablicach oraz ogólną identyfikację i zarządzanie typami figurek.
+
+5.  **Pawn, Rook, Knight, Bishop, Queen, King**
+
+    Klasa te dziedziczą po klasie **`Piece`** i reprezentują konkretne figury w grze. Poniżej przedstawiono kluczowe elementy tech klas:
+
+    -   **Pierwszy Ruch**: Posiada informację o tym, czy figura wykonała swój pierwszy ruch w grze. To istotne np. dla reguły pierwszego ruchu piona.
+
+    -   **Typ Figury**: Posiada informację (string) o typie konkretnej figury, która zwracana jest przez getType().
+
+    -   **TypInt Figury:** Posiada informację (int) o typie konkretnej figury, która zwracana jest przez getTypeInt() (przydatne do indeksowania naszych tablic).
