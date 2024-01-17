@@ -32,6 +32,8 @@ class Board
         int whereIsKing();
         void whereICanMove();
         bool isInSetOfMoves();
+        bool pawnPieceInFront();
+        void pawnMovesButNothingIsInFront();
       //bool isKingInCheck(Square* king);
 
         std::set<int> setOfMoves;

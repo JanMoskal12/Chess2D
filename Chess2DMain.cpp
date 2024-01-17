@@ -212,12 +212,15 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
     //2nd click
     if(counter%2 == 0){
         _B->setDestination(nrBB);
+
         //Checking if we clicked pieces with same color
-        _B->whereICanMove();
         if(_B->isDestinationPiece() && _B->isSameColor()){
             counter--;
             return;
         }
+
+        _B->whereICanMove();
+
         if(!_B->isInSetOfMoves()){
             counter--;
             return;

@@ -127,37 +127,74 @@ int Board::whereIsKing(){
 void Board::whereICanMove(){
     int _col = this->clickedSquare->getCol();
     int _row = this->clickedSquare->getRow();
+    this->setOfMoves.clear();
     switch(this->clickedSquare->getPiece()->getTypeInt()){
         case 1:
-            for(int i = 0; i < 3; i++){
+            if(this->pawnPieceInFront()){
+                return;
+            }
+            this->pawnMovesButNothingIsInFront();
+
+
+            break;
+        case 3:
+            for(int i = 0; i < 8; i++){
+                    this->setOfMoves.insert(8*i + _col);
+                    this->setOfMoves.insert(8*_row + i);
+            }
+            break;
+        case 5:
+
+
+            break;
+        case 7:
+            for(int i = 1; i < 8; i++){
+                    if((_row)- i >=0 && _col-i >=0){
+                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i -i);
+                    }
+                    if((_row)- i >=0 && _col+i <=7){
+                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i +i);
+                    }
+                    if((_row)+ i <=7 && _col+i <=7){
+                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i +i);
+                    }
+                    if((_row)+i <=7 && _col-i >=0){
+                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i -i);
+                    }
+            }
+            break;
+        case 9:
+            for(int i = 1; i < 8; i++){
+                    if((_row)- i >=0 && _col-i >=0){
+                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i -i);
+                    }
+                    if((_row)- i >=0 && _col+i <=7){
+                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i +i);
+                    }
+                    if((_row)+ i <=7 && _col+i <=7){
+                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i +i);
+                    }
+                    if((_row)+i <=7 && _col-i >=0){
+                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i -i);
+                    }
+            }
+            for(int i = 0; i < 8; i++){
+                    this->setOfMoves.insert(8*i + _col);
+                    this->setOfMoves.insert(8*_row + i);
+            }
+
+            break;
+        case 11:
+           for(int i = 0; i < 3; i++){
                 for(int j = 0; j< 3; j++){
                     if( _row + i == 0  || _row + i == 10 || _col + j == 10  || _col + j  == 0 ){
-                        return;
+
                     }else{
                         this->setOfMoves.insert(8*(_row) + (_col) + 8*i + j - 9);
                     }
                 }
-
-}            break;
-        case 3:
-            break;
-        case 5:
-            break;
-        case 7:
-            break;
-        case 9:
-            break;
-        case 11:
-
-            for(int i = 0; i < 3; i++){
-                for(int j = 0; j< 3; j++){
-                    if( _row + i - 1 == -1  || _row + i - 1 == 8 || _col + j - 1 == -1  || _col + i - 1 == 8 ){
-                    }else{
-                        this->setOfMoves.insert(8*_row + _col + 8*i + j - 9);
-                    }
-                }
-            }
-            break;
+           }
+           break;
 
 
     }
@@ -167,8 +204,48 @@ bool Board::isInSetOfMoves(){
     return (this->setOfMoves.find(8*this->destination->getRow() + this->destination->getCol()) != this->setOfMoves.end());
 }
 
- /*
- bool Board::isKingInCheck(Square* king){
+bool Board::pawnPieceInFront(){
+        return (this->isDestinationPiece());
+}
+void Board::pawnMovesButNothingIsInFront(){
+int _col = this->clickedSquare->getCol();
+int _row = this->clickedSquare->getRow();
+if(this->clickedSquare->getPiece()->getColor() == 1){
+                this->setOfMoves.insert(8*_row + _col - 8);
+            }else{
+                this->setOfMoves.insert(8*_row + _col + 8);
+            }
 
- }
+
+            if(this->clickedSquare->getPiece()->getColor() == 1){
+                if(this->clickedSquare->getRow() == 6){
+                    this->setOfMoves.insert(8*_row + _col - 8*2);
+                }
+            }else{
+                if(this->clickedSquare->getRow() == 1){
+                    this->setOfMoves.insert(8*_row + _col + 8*2);
+                }
+            }
+
+}
+/*
+void Board::pawnTakes(){
+if(this->clickedSquare->getPiece()->getColor() == 1){
+                this->setOfMoves.insert(8*_row + _col - 8);
+            }else{
+                this->setOfMoves.insert(8*_row + _col + 8);
+            }
+
+
+            if(this->clickedSquare->getPiece()->getColor() == 1){
+                if(this->clickedSquare->getRow() == 6){
+                    this->setOfMoves.insert(8*_row + _col - 8*2);
+                }
+            }else{
+                if(this->clickedSquare->getRow() == 1){
+                    this->setOfMoves.insert(8*_row + _col + 8*2);
+                }
+            }
+
+}
 */
