@@ -36,7 +36,7 @@ class Board
         bool pawnPieceInFront();
         void pawnMovesButNothingIsInFront();
         void pawnTakes();
-        void isSomethingBetween();
+        bool isSomethingBetween();
       //bool isKingInCheck(Square* king);
 
         std::set<int> setOfMoves;

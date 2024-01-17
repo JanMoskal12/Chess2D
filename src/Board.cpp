@@ -73,7 +73,6 @@ Board::~Board()
 void Board::swapSquares(){
     this->destination->setPiece(this->clickedSquare->getPiece());
     this->destination->getButton()->SetBitmap(images[this->clickedSquare->getPiece()->getColor()][this->clickedSquare->getPiece()->getTypeInt()+1-this->destination->getBackgroundColor()]);
-    this->destination->getPiece()->setMoved();
     this->clickedSquare->setPiece(nullptr);
     this->clickedSquare->getButton()->SetBitmap(images[this->clickedSquare->getBackgroundColor()][0]);
 }
@@ -136,8 +135,6 @@ void Board::whereICanMove(){
                 return;
             }
             this->pawnMovesButNothingIsInFront();
-
-
             break;
         case 3:
             for(int i = 0; i < 8; i++){
@@ -226,6 +223,7 @@ bool Board::pawnPieceInFront(){
 void Board::pawnMovesButNothingIsInFront(){
 int _col = this->clickedSquare->getCol();
 int _row = this->clickedSquare->getRow();
+
 if(this->clickedSquare->getPiece()->getColor() == 1){
                 this->setOfMoves.insert(8*_row + _col - 8);
             }else{
@@ -233,101 +231,98 @@ if(this->clickedSquare->getPiece()->getColor() == 1){
             }
 
 
-            if(this->clickedSquare->getPiece()->getColor() == 1){
-                if(this->clickedSquare->getRow() == 6){
-                    this->setOfMoves.insert(8*_row + _col - 8*2);
-                }
-            }else{
-                if(this->clickedSquare->getRow() == 1){
-                    this->setOfMoves.insert(8*_row + _col + 8*2);
-                }
-            }
+if(this->clickedSquare->getPiece()->getColor() == 1){
+    if(this->clickedSquare->getRow() == 6){
+        this->setOfMoves.insert(8*_row + _col - 8*2);
+    }
+    }else{
+        if(this->clickedSquare->getRow() == 1){
+            this->setOfMoves.insert(8*_row + _col + 8*2);
+        }
+    }
 
 }
 
 void Board::pawnTakes(){
     int _col = this->clickedSquare->getCol();
     int _row = this->clickedSquare->getRow();
-    if((std::abs(this->destination->getRow()-_row ) == 1) && (std::abs(this->destination->getCol()-_col ) == 1 )){
+    if((this->destination->getRow()-_row  == -1) && (std::abs(this->destination->getCol()-_col ) == 1 ) && this->clickedSquare->getPiece()->getColor() == 1){
+        this->setOfMoves.insert(8*this->destination->getRow() + this->destination->getCol());
+    }
+    if((this->destination->getRow()-_row  == 1) && (std::abs(this->destination->getCol()-_col ) == 1 ) && this->clickedSquare->getPiece()->getColor() == 0){
         this->setOfMoves.insert(8*this->destination->getRow() + this->destination->getCol());
     }
 }
 
 
 
-void Board::isSomethingBetween(){
+bool Board::isSomethingBetween(){
     int _col = this->clickedSquare->getCol();
     int _row = this->clickedSquare->getRow();
+    int wsp_col = - (_col - this->destination->getCol())/abs(_col - this->destination->getCol());
     switch(this->clickedSquare->getPiece()->getTypeInt()){
         case 3:
-            if(_col - this->destination->getCol == 0){
-                for(int row = _row, abs(row -this->destination->getRow()) >0){
-
-                }
-            }
-            break;
-        case 5:
-            for(int i = 0; i < 5; i = i+4){
-                for(int j = 0; j < 3; j = j+2){
-                    if(_row + i <= 10 && _row + i >=2 && _col + j <= 6 && _col + j >=1 ){
-                        this->setOfMoves.insert(8*_row + _col + 8*i + j - 17);
+            if(_col - this->destination->getCol() == 0){
+                for(int row = _row - (_row - this->destination->getRow())/abs(_row - this->destination->getRow()); abs(row - this->destination->getRow()) >0; row = row - (row - this->destination->getRow())/abs(row - this->destination->getRow())){
+                    if(this->squares[row][_col]->getPiece() != nullptr){
+                        return true;
                     }
-                    if(_row + j <= 8 && _row + j >=1 && _col + i <= 10 && _col + i >= 2){
-                        this->setOfMoves.insert(8*_row + _col + 8*j + i - 10);
+                }//70   50
+                return false;
+            }
+            if(_row - this->destination->getRow() == 0){
+                for(int col = _col - (_col - this->destination->getCol())/abs(_col - this->destination->getCol()); abs(col - this->destination->getCol()) >0; col = col - (col - this->destination->getCol())/abs(col - this->destination->getCol())){
+                    if(this->squares[_row][col]->getPiece() != nullptr){
+                       return true;
                     }
                 }
+                return false;
             }
 
-            break;
-        case 7:
-            for(int i = 1; i < 8; i++){
-                    if((_row)- i >=0 && _col-i >=0){
-                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i -i);
-                    }
-                    if((_row)- i >=0 && _col+i <=7){
-                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i +i);
-                    }
-                    if((_row)+ i <=7 && _col+i <=7){
-                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i +i);
-                    }
-                    if((_row)+i <=7 && _col-i >=0){
-                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i -i);
-                    }
-            }
-            break;
-        case 9:
-            for(int i = 1; i < 8; i++){
-                    if((_row)- i >=0 && _col-i >=0){
-                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i -i);
-                    }
-                    if((_row)- i >=0 && _col+i <=7){
-                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i +i);
-                    }
-                    if((_row)+ i <=7 && _col+i <=7){
-                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i +i);
-                    }
-                    if((_row)+i <=7 && _col-i >=0){
-                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i -i);
-                    }
-            }
-            for(int i = 0; i < 8; i++){
-                    this->setOfMoves.insert(8*i + _col);
-                    this->setOfMoves.insert(8*_row + i);
-            }
-
-            break;
-        case 11:
-           for(int i = 0; i < 3; i++){
-                for(int j = 0; j< 3; j++){
-                    if( _row + i == 0  || _row + i == 10 || _col + j == 10  || _col + j  == 0 ){
-
-                    }else{
-                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i + j - 9);
-                    }
-                }
-           }
            break;
+//
+        case 7:
+            for(int wsp = _row - (_row - this->destination->getRow())/abs(_row - this->destination->getRow()); abs(wsp - this->destination->getRow()) >0; wsp = wsp - (wsp - this->destination->getRow())/abs(wsp - this->destination->getRow())){
+                if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
+                       return true;
+                }else{
+                _col = wsp_col + _col;
+                }
+            }
+            return false;
+            break;
+
+        case 9:
+            wsp_col = - (_col - this->destination->getCol())/abs(_col - this->destination->getCol());
+            if(_col - this->destination->getCol() == 0){
+                for(int row = _row - (_row - this->destination->getRow())/abs(_row - this->destination->getRow()); abs(row - this->destination->getRow()) >0; row = row - (row - this->destination->getRow())/abs(row - this->destination->getRow())){
+                    if(this->squares[row][_col]->getPiece() != nullptr){
+                        return true;
+                    }
+                }//70   50
+                return false;
+            }
+            if(_row - this->destination->getRow() == 0){
+                for(int col = _col - (_col - this->destination->getCol())/abs(_col - this->destination->getCol()); abs(col - this->destination->getCol()) >0; col = col - (col - this->destination->getCol())/abs(col - this->destination->getCol())){
+                    if(this->squares[_row][col]->getPiece() != nullptr){
+                       return true;
+                    }
+                }
+                return false;
+            }
+            for(int wsp = _row - (_row - this->destination->getRow())/abs(_row - this->destination->getRow()); abs(wsp - this->destination->getRow()) >0; wsp = wsp - (wsp - this->destination->getRow())/abs(wsp - this->destination->getRow())){
+                if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
+                       return true;
+                }else{
+                _col = wsp_col + _col;
+                }
+            }
+            return false;
+            break;
 
 
+        default:
+            return false;
     }
+return true;
 }

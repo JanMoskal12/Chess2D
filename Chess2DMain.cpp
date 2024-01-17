@@ -226,6 +226,11 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
             return;
         }
 
+        if(_B->isSomethingBetween()){
+            counter--;
+            return;
+        }
+
     //Moving Piece
     _B->swapSquares();
     //Checking if clicked piece is a king and then in case it was the king we store his new location for later
