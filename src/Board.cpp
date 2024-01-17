@@ -1,11 +1,13 @@
 #include "Board.h"
 
+
 extern wxBitmapButton* board[8][8];
 extern wxBitmap images[2][13];
-
+extern int whiteOrBlack;
 
 Board::Board(int i)
 {
+
 
          for(int i = 0; i < 8; i++){
             for(int j = 0; j < 8; j++){
@@ -70,6 +72,7 @@ Board::~Board()
 void Board::swapSquares(){
     this->destination->setPiece(this->clickedSquare->getPiece());
     this->destination->getButton()->SetBitmap(images[this->clickedSquare->getPiece()->getColor()][this->clickedSquare->getPiece()->getTypeInt()+1-this->destination->getBackgroundColor()]);
+    this->destination->getPiece()->setMoved();
     this->clickedSquare->setPiece(nullptr);
     this->clickedSquare->getButton()->SetBitmap(images[this->clickedSquare->getBackgroundColor()][0]);
 }
@@ -98,6 +101,74 @@ bool Board::isSameColor(){
     return ((this->blackKing == this->clickedSquare) + (this->whiteKing == this->clickedSquare));
  }
 
+bool Board::isGoodColorMoving(){
+    return (this->clickedSquare->getPiece()->getColor() == whiteOrBlack);
+}
+
+void Board::wasKingMoving(){
+    if(this->isKing()){
+        if(whiteOrBlack%2 == 1){
+            this->whiteKing = this->destination;
+            //auto test = _B->isKingInCheck(_B->whiteKing);
+            //wxLogMessage("White king moving");
+            return;
+        }
+    this->blackKing = this->destination;
+    //wxLogMessage("Black king moving");
+    }
+}
+int Board::whereIsKing(){
+    if(whiteOrBlack == 1){
+        return (8*this->whiteKing->getRow() + this->whiteKing->getCol());
+    }
+    return (8*this->blackKing->getRow() + this->blackKing->getCol());
+}
+
+void Board::whereICanMove(){
+    int _col = this->clickedSquare->getCol();
+    int _row = this->clickedSquare->getRow();
+    switch(this->clickedSquare->getPiece()->getTypeInt()){
+        case 1:
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j< 3; j++){
+                    if( _row + i == 0  || _row + i == 10 || _col + j == 10  || _col + j  == 0 ){
+                        return;
+                    }else{
+                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i + j - 9);
+                    }
+                }
+
+}            break;
+        case 3:
+            break;
+        case 5:
+            break;
+        case 7:
+            break;
+        case 9:
+            break;
+        case 11:
+
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j< 3; j++){
+                    if( _row + i - 1 == -1  || _row + i - 1 == 8 || _col + j - 1 == -1  || _col + i - 1 == 8 ){
+                    }else{
+                        this->setOfMoves.insert(8*_row + _col + 8*i + j - 9);
+                    }
+                }
+            }
+            break;
+
+
+    }
+}
+
+bool Board::isInSetOfMoves(){
+    return (this->setOfMoves.find(8*this->destination->getRow() + this->destination->getCol()) != this->setOfMoves.end());
+}
+
+ /*
  bool Board::isKingInCheck(Square* king){
-    return ( king == this->whiteKing);
+
  }
+*/

@@ -202,7 +202,7 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
         //Saving clicked square for later
         _B->setClickedSquare(nrBB);
             //Checking if clicked square is empty or is good color moving
-            if(!(_B->isClickedPiece()) || (_B->clickedSquare->getPiece()->getColor() != whiteOrBlack)){
+            if(!(_B->isClickedPiece()) || !(_B->isGoodColorMoving())){
                 return;
             }
         counter++;
@@ -213,29 +213,28 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
     if(counter%2 == 0){
         _B->setDestination(nrBB);
         //Checking if we clicked pieces with same color
+        _B->whereICanMove();
         if(_B->isDestinationPiece() && _B->isSameColor()){
             counter--;
-        }else{
-            //Moving Piece
-            _B->swapSquares();
-            //Checking if clicked piece is a king and then in case it was the king we store his new location for later
-            if(_B->isKing()){
-                if(whiteOrBlack%2 == 1){
-                   _B->whiteKing = _B->destination;
-                    wxLogMessage("Biały król sie poruszył");
-                    auto test = _B->isKingInCheck(_B->whiteKing);
-                    wxLogMessage("%d",test);
-                }else{
-                    _B->blackKing = _B->destination;
-                    wxLogMessage("Czarny król sie poruszył");
-                }
-            }
-            counter++;
-            whiteOrBlack = (whiteOrBlack + 1)%2;
+            return;
+        }
+        if(!_B->isInSetOfMoves()){
+            counter--;
             return;
         }
 
+    //Moving Piece
+    _B->swapSquares();
+    //Checking if clicked piece is a king and then in case it was the king we store his new location for later
+    _B->wasKingMoving();
+    counter++;
+    auto test = _B->whereIsKing();
+    wxLogMessage("%d", test);
+    whiteOrBlack = (whiteOrBlack + 1)%2;
+    return;
     }
 
 }
+
+
 

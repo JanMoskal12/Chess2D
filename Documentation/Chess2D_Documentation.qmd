@@ -43,7 +43,7 @@ Pliki obrazków figur zostały nazwane zgodnie z ustaloną konwencją. Każda na
 ##### Przykłady:
 
 | Kolor figury | Figura | Kolor pola | Przykład nazwy pliku | Opis                      |
-|---------------|---------------|---------------|---------------|---------------|
+|--------------|--------|------------|----------------------|---------------------------|
 | `w`          | `p`    | `B`        | `wpB.png`            | Biały pion, jasne pole    |
 | `b`          | `r`    | `D`        | `brD.png`            | Czarna wieża, ciemne pole |
 

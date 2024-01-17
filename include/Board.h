@@ -11,6 +11,7 @@
 #include "Bishop.h"
 #include "Queen.h"
 #include "King.h"
+#include <set>
 
 class Board
 {
@@ -26,8 +27,14 @@ class Board
         bool isDestinationPiece();
         bool isSameColor();
         bool isKing();
-        bool isKingInCheck(Square* king);
+        bool isGoodColorMoving();
+        void wasKingMoving();
+        int whereIsKing();
+        void whereICanMove();
+        bool isInSetOfMoves();
+      //bool isKingInCheck(Square* king);
 
+        std::set<int> setOfMoves;
         Square* whiteKing;
         Square* blackKing;
         Square* clickedSquare;
