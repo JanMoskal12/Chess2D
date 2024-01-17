@@ -1,6 +1,7 @@
 #include "Board.h"
 
 
+
 extern wxBitmapButton* board[8][8];
 extern wxBitmap images[2][13];
 extern int whiteOrBlack;
@@ -131,6 +132,7 @@ void Board::whereICanMove(){
     switch(this->clickedSquare->getPiece()->getTypeInt()){
         case 1:
             if(this->pawnPieceInFront()){
+                this->pawnTakes();
                 return;
             }
             this->pawnMovesButNothingIsInFront();
@@ -144,7 +146,16 @@ void Board::whereICanMove(){
             }
             break;
         case 5:
-
+            for(int i = 0; i < 5; i = i+4){
+                for(int j = 0; j < 3; j = j+2){
+                    if(_row + i <= 10 && _row + i >=2 && _col + j <= 6 && _col + j >=1 ){
+                        this->setOfMoves.insert(8*_row + _col + 8*i + j - 17);
+                    }
+                    if(_row + j <= 8 && _row + j >=1 && _col + i <= 10 && _col + i >= 2){
+                        this->setOfMoves.insert(8*_row + _col + 8*j + i - 10);
+                    }
+                }
+            }
 
             break;
         case 7:
@@ -207,6 +218,11 @@ bool Board::isInSetOfMoves(){
 bool Board::pawnPieceInFront(){
         return (this->isDestinationPiece());
 }
+
+
+
+
+
 void Board::pawnMovesButNothingIsInFront(){
 int _col = this->clickedSquare->getCol();
 int _row = this->clickedSquare->getRow();
@@ -228,24 +244,90 @@ if(this->clickedSquare->getPiece()->getColor() == 1){
             }
 
 }
-/*
+
 void Board::pawnTakes(){
-if(this->clickedSquare->getPiece()->getColor() == 1){
-                this->setOfMoves.insert(8*_row + _col - 8);
-            }else{
-                this->setOfMoves.insert(8*_row + _col + 8);
-            }
-
-
-            if(this->clickedSquare->getPiece()->getColor() == 1){
-                if(this->clickedSquare->getRow() == 6){
-                    this->setOfMoves.insert(8*_row + _col - 8*2);
-                }
-            }else{
-                if(this->clickedSquare->getRow() == 1){
-                    this->setOfMoves.insert(8*_row + _col + 8*2);
-                }
-            }
-
+    int _col = this->clickedSquare->getCol();
+    int _row = this->clickedSquare->getRow();
+    if((std::abs(this->destination->getRow()-_row ) == 1) && (std::abs(this->destination->getCol()-_col ) == 1 )){
+        this->setOfMoves.insert(8*this->destination->getRow() + this->destination->getCol());
+    }
 }
-*/
+
+
+
+void Board::isSomethingBetween(){
+    int _col = this->clickedSquare->getCol();
+    int _row = this->clickedSquare->getRow();
+    switch(this->clickedSquare->getPiece()->getTypeInt()){
+        case 3:
+            if(_col - this->destination->getCol == 0){
+                for(int row = _row, abs(row -this->destination->getRow()) >0){
+
+                }
+            }
+            break;
+        case 5:
+            for(int i = 0; i < 5; i = i+4){
+                for(int j = 0; j < 3; j = j+2){
+                    if(_row + i <= 10 && _row + i >=2 && _col + j <= 6 && _col + j >=1 ){
+                        this->setOfMoves.insert(8*_row + _col + 8*i + j - 17);
+                    }
+                    if(_row + j <= 8 && _row + j >=1 && _col + i <= 10 && _col + i >= 2){
+                        this->setOfMoves.insert(8*_row + _col + 8*j + i - 10);
+                    }
+                }
+            }
+
+            break;
+        case 7:
+            for(int i = 1; i < 8; i++){
+                    if((_row)- i >=0 && _col-i >=0){
+                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i -i);
+                    }
+                    if((_row)- i >=0 && _col+i <=7){
+                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i +i);
+                    }
+                    if((_row)+ i <=7 && _col+i <=7){
+                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i +i);
+                    }
+                    if((_row)+i <=7 && _col-i >=0){
+                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i -i);
+                    }
+            }
+            break;
+        case 9:
+            for(int i = 1; i < 8; i++){
+                    if((_row)- i >=0 && _col-i >=0){
+                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i -i);
+                    }
+                    if((_row)- i >=0 && _col+i <=7){
+                        this->setOfMoves.insert(8*(_row) + (_col) - 8*i +i);
+                    }
+                    if((_row)+ i <=7 && _col+i <=7){
+                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i +i);
+                    }
+                    if((_row)+i <=7 && _col-i >=0){
+                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i -i);
+                    }
+            }
+            for(int i = 0; i < 8; i++){
+                    this->setOfMoves.insert(8*i + _col);
+                    this->setOfMoves.insert(8*_row + i);
+            }
+
+            break;
+        case 11:
+           for(int i = 0; i < 3; i++){
+                for(int j = 0; j< 3; j++){
+                    if( _row + i == 0  || _row + i == 10 || _col + j == 10  || _col + j  == 0 ){
+
+                    }else{
+                        this->setOfMoves.insert(8*(_row) + (_col) + 8*i + j - 9);
+                    }
+                }
+           }
+           break;
+
+
+    }
+}

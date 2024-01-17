@@ -12,6 +12,7 @@
 #include "Queen.h"
 #include "King.h"
 #include <set>
+#include <cmath>
 
 class Board
 {
@@ -34,6 +35,8 @@ class Board
         bool isInSetOfMoves();
         bool pawnPieceInFront();
         void pawnMovesButNothingIsInFront();
+        void pawnTakes();
+        void isSomethingBetween();
       //bool isKingInCheck(Square* king);
 
         std::set<int> setOfMoves;

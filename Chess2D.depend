@@ -5411,7 +5411,7 @@
 1705511156 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\board.cpp
 	"Board.h"
 
-1705512297 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\board.h
+1705515961 c:\users\szymo\onedrive\dokumenty\github\chess2d\include\board.h
 	<wx/wx.h>
 	<wx/bmpbuttn.h>
 	"Square.h"
@@ -5422,6 +5422,7 @@
 	"Queen.h"
 	"King.h"
 	<set>
+	<cmath>
 
 1705186632 c:\users\jan\desktop\projekty\chess2d\include\board.h
 	<wx/wx.h>
