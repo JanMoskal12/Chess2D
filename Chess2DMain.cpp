@@ -84,33 +84,33 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
 
     { // ChessBoard Display
-    images[0][0] = wxBitmap(wxImage("images/D.jpg"));
-    images[0][1] = wxBitmap(wxImage(_T("images/Pieces/bpB.png")));
-    images[0][2] = wxBitmap(wxImage(_T("images/Pieces/bpD.png")));
-    images[0][3] = wxBitmap(wxImage(_T("images/Pieces/brB.png")));
-    images[0][4] = wxBitmap(wxImage(_T("images/Pieces/brD.png")));
-    images[0][5] = wxBitmap(wxImage(_T("images/Pieces/bnB.png")));
-    images[0][6] = wxBitmap(wxImage(_T("images/Pieces/bnD.png")));
-    images[0][7] = wxBitmap(wxImage(_T("images/Pieces/bbB.png")));
-    images[0][8] = wxBitmap(wxImage(_T("images/Pieces/bbD.png")));
-    images[0][9] = wxBitmap(wxImage(_T("images/Pieces/bqB.png")));
-    images[0][10] = wxBitmap(wxImage(_T("images/Pieces/bqD.png")));
-    images[0][11] = wxBitmap(wxImage(_T("images/Pieces/bkB.png")));
-    images[0][12] = wxBitmap(wxImage(_T("images/Pieces/bkD.png")));
+    images[whiteOrBlack-1][0] = wxBitmap(wxImage("images/D.jpg"));
+    images[whiteOrBlack-1][1] = wxBitmap(wxImage(_T("images/Pieces/bpB.png")));
+    images[whiteOrBlack-1][2] = wxBitmap(wxImage(_T("images/Pieces/bpD.png")));
+    images[whiteOrBlack-1][3] = wxBitmap(wxImage(_T("images/Pieces/brB.png")));
+    images[whiteOrBlack-1][4] = wxBitmap(wxImage(_T("images/Pieces/brD.png")));
+    images[whiteOrBlack-1][5] = wxBitmap(wxImage(_T("images/Pieces/bnB.png")));
+    images[whiteOrBlack-1][6] = wxBitmap(wxImage(_T("images/Pieces/bnD.png")));
+    images[whiteOrBlack-1][7] = wxBitmap(wxImage(_T("images/Pieces/bbB.png")));
+    images[whiteOrBlack-1][8] = wxBitmap(wxImage(_T("images/Pieces/bbD.png")));
+    images[whiteOrBlack-1][9] = wxBitmap(wxImage(_T("images/Pieces/bqB.png")));
+    images[whiteOrBlack-1][10] = wxBitmap(wxImage(_T("images/Pieces/bqD.png")));
+    images[whiteOrBlack-1][11] = wxBitmap(wxImage(_T("images/Pieces/bkB.png")));
+    images[whiteOrBlack-1][12] = wxBitmap(wxImage(_T("images/Pieces/bkD.png")));
 
-    images[1][0] = wxBitmap(wxImage("images/B.jpg"));
-    images[1][1] = wxBitmap(wxImage(_T("images/Pieces/wpB.png")));
-    images[1][2] = wxBitmap(wxImage(_T("images/Pieces/wpD.png")));
-    images[1][3] = wxBitmap(wxImage(_T("images/Pieces/wrB.png")));
-    images[1][4] = wxBitmap(wxImage(_T("images/Pieces/wrD.png")));
-    images[1][5] = wxBitmap(wxImage(_T("images/Pieces/wnB.png")));
-    images[1][6] = wxBitmap(wxImage(_T("images/Pieces/wnD.png")));
-    images[1][7] = wxBitmap(wxImage(_T("images/Pieces/wbB.png")));
-    images[1][8] = wxBitmap(wxImage(_T("images/Pieces/wbD.png")));
-    images[1][9] = wxBitmap(wxImage(_T("images/Pieces/wqB.png")));
-    images[1][10] = wxBitmap(wxImage(_T("images/Pieces/wqD.png")));
-    images[1][11] = wxBitmap(wxImage(_T("images/Pieces/wkB.png")));
-    images[1][12] = wxBitmap(wxImage(_T("images/Pieces/wkD.png")));
+    images[whiteOrBlack%2][0] = wxBitmap(wxImage("images/B.jpg"));
+    images[whiteOrBlack%2][1] = wxBitmap(wxImage(_T("images/Pieces/wpB.png")));
+    images[whiteOrBlack%2][2] = wxBitmap(wxImage(_T("images/Pieces/wpD.png")));
+    images[whiteOrBlack%2][3] = wxBitmap(wxImage(_T("images/Pieces/wrB.png")));
+    images[whiteOrBlack%2][4] = wxBitmap(wxImage(_T("images/Pieces/wrD.png")));
+    images[whiteOrBlack%2][5] = wxBitmap(wxImage(_T("images/Pieces/wnB.png")));
+    images[whiteOrBlack%2][6] = wxBitmap(wxImage(_T("images/Pieces/wnD.png")));
+    images[whiteOrBlack%2][7] = wxBitmap(wxImage(_T("images/Pieces/wbB.png")));
+    images[whiteOrBlack%2][8] = wxBitmap(wxImage(_T("images/Pieces/wbD.png")));
+    images[whiteOrBlack%2][9] = wxBitmap(wxImage(_T("images/Pieces/wqB.png")));
+    images[whiteOrBlack%2][10] = wxBitmap(wxImage(_T("images/Pieces/wqD.png")));
+    images[whiteOrBlack%2][11] = wxBitmap(wxImage(_T("images/Pieces/wkB.png")));
+    images[whiteOrBlack%2][12] = wxBitmap(wxImage(_T("images/Pieces/wkD.png")));
 
     board[0][0] = BitmapButton1;
     board[0][1] = new wxBitmapButton(this, wxNewId(), images[0][6], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
@@ -133,9 +133,9 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     for(int i = 2; i < 6; i++){
         for(int j = 0; j < 8; j++){
             if((i+j)%2 == 0){
-                board[i][j] = new wxBitmapButton(this, wxNewId(), images[1][0], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+                board[i][j] = new wxBitmapButton(this, wxNewId(), images[(whiteOrBlack)%2][0], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
             }else{
-                board[i][j] = new wxBitmapButton(this, wxNewId(), images[0][0], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+                board[i][j] = new wxBitmapButton(this, wxNewId(), images[(whiteOrBlack+1)%2][0], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
             }
         }
     }

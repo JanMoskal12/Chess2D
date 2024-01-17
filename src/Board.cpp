@@ -261,13 +261,26 @@ bool Board::isSomethingBetween(){
     int _row = this->clickedSquare->getRow();
     int wsp_col = - (_col - this->destination->getCol())/abs(_col - this->destination->getCol());
     switch(this->clickedSquare->getPiece()->getTypeInt()){
-        case 3:
+        case 1:
+            if(abs(_row - this->destination->getRow()) == 2 && this->clickedSquare->getPiece()->getColor() == 1){
+                if(this->squares[ 5 ][_col]->getPiece() != nullptr){
+                    return true;
+                }
+            }
+            if(abs(_row - this->destination->getRow()) == 2 && this->clickedSquare->getPiece()->getColor() == 0){
+                if(this->squares[ 2 ][_col]->getPiece() != nullptr){
+                    return true;
+                }
+            }
+            return false;
+            break;
+        case 3://40 50 60
             if(_col - this->destination->getCol() == 0){
                 for(int row = _row - (_row - this->destination->getRow())/abs(_row - this->destination->getRow()); abs(row - this->destination->getRow()) >0; row = row - (row - this->destination->getRow())/abs(row - this->destination->getRow())){
                     if(this->squares[row][_col]->getPiece() != nullptr){
                         return true;
                     }
-                }//70   50
+                }
                 return false;
             }
             if(_row - this->destination->getRow() == 0){
@@ -280,7 +293,7 @@ bool Board::isSomethingBetween(){
             }
 
            break;
-//
+
         case 7:
             for(int wsp = _row - (_row - this->destination->getRow())/abs(_row - this->destination->getRow()); abs(wsp - this->destination->getRow()) >0; wsp = wsp - (wsp - this->destination->getRow())/abs(wsp - this->destination->getRow())){
                 if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
