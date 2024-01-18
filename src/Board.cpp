@@ -312,7 +312,7 @@ bool Board::isSomethingBetween(){
                     if(this->squares[row][_col]->getPiece() != nullptr){
                         return true;
                     }
-                }//70   50
+                }
                 return false;
             }
             if(_row - this->destination->getRow() == 0){
@@ -338,4 +338,21 @@ bool Board::isSomethingBetween(){
             return false;
     }
 return true;
+}
+
+
+bool Board::isMyKingInCheck(){
+    int _col = this->clickedSquare->getCol();
+    int _row = this->clickedSquare->getRow();
+    int kingRow;
+    int kingCol;
+    if(this->clickedSquare->getPiece()->getColor() == 1){
+        kingRow = this->whiteKing->getRow();
+        kingCol = this->whiteKing->getCol();
+    }else{
+        kingRow = this->blackKing->getRow();
+        kingCol = this->blackKing->getCol();
+    }
+
+
 }
