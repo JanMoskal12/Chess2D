@@ -27,12 +27,14 @@ Board::Board(int i)
             pieces[0][3] = new Bishop(false);
             pieces[0][4] = new Queen(false);
             pieces[0][5] = new King(false);
+            pieces[0][6] = new Rook(false);
             pieces[1][0] = new Pawn(true);
             pieces[1][1] = new Rook(true);
             pieces[1][2] = new Knight(true);
             pieces[1][3] = new Bishop(true);
             pieces[1][4] = new Queen(true);
             pieces[1][5] = new King(true);
+            pieces[1][6] = new Rook(true);
 
 
 
@@ -50,7 +52,7 @@ Board::Board(int i)
                 squares[0][4]->setPiece(pieces[0][5]);
                 squares[0][5]->setPiece(pieces[0][3]);
                 squares[0][6]->setPiece(pieces[0][2]);
-                squares[0][7]->setPiece(pieces[0][1]);
+                squares[0][7]->setPiece(pieces[0][6]);
                 squares[7][0]->setPiece(pieces[1][1]);
                 squares[7][1]->setPiece(pieces[1][2]);
                 squares[7][2]->setPiece(pieces[1][3]);
@@ -58,7 +60,7 @@ Board::Board(int i)
                 squares[7][4]->setPiece(pieces[1][5]);
                 squares[7][5]->setPiece(pieces[1][3]);
                 squares[7][6]->setPiece(pieces[1][2]);
-                squares[7][7]->setPiece(pieces[1][1]);
+                squares[7][7]->setPiece(pieces[1][6]);
 
                 whiteKing = squares[7][4];
                 blackKing = squares[0][4];
@@ -73,6 +75,7 @@ Board::~Board()
 void Board::swapSquares(){
     this->destination->setPiece(this->clickedSquare->getPiece());
     this->destination->getButton()->SetBitmap(images[this->clickedSquare->getPiece()->getColor()][this->clickedSquare->getPiece()->getTypeInt()+1-this->destination->getBackgroundColor()]);
+    this->destination->getPiece()->setMoved();
     this->clickedSquare->setPiece(nullptr);
     this->clickedSquare->getButton()->SetBitmap(images[this->clickedSquare->getBackgroundColor()][0]);
 }
@@ -145,10 +148,10 @@ void Board::whereICanMove(){
         case 5:
             for(int i = 0; i < 5; i = i+4){
                 for(int j = 0; j < 3; j = j+2){
-                    if(_row + i <= 10 && _row + i >=2 && _col + j <= 6 && _col + j >=1 ){
+                    if(_row + i  <= 9 && _row + i >=2 && _col + j <= 8 && _col + j >=1 ){
                         this->setOfMoves.insert(8*_row + _col + 8*i + j - 17);
                     }
-                    if(_row + j <= 8 && _row + j >=1 && _col + i <= 10 && _col + i >= 2){
+                    if(_row + j <= 8 && _row + j >=1 && _col + i <= 9 && _col + i >= 2){
                         this->setOfMoves.insert(8*_row + _col + 8*j + i - 10);
                     }
                 }
@@ -256,35 +259,36 @@ void Board::pawnTakes(){
 
 
 
-bool Board::isSomethingBetween(){
-    int _col = this->clickedSquare->getCol();
-    int _row = this->clickedSquare->getRow();
-    int wsp_col = - (_col - this->destination->getCol())/abs(_col - this->destination->getCol());
-    switch(this->clickedSquare->getPiece()->getTypeInt()){
+bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int typeInt){
+    int _col = _squareOne->getCol();
+    int _row = _squareOne->getRow();
+    int wsp_col = - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol());
+    switch(typeInt){
         case 1:
-            if(abs(_row - this->destination->getRow()) == 2 && this->clickedSquare->getPiece()->getColor() == 1){
+            if(abs(_row - _squareTwo->getRow()) == 2 && this->clickedSquare->getPiece()->getColor() == 1){
                 if(this->squares[ 5 ][_col]->getPiece() != nullptr){
                     return true;
                 }
             }
-            if(abs(_row - this->destination->getRow()) == 2 && this->clickedSquare->getPiece()->getColor() == 0){
+            if(abs(_row - _squareTwo->getRow()) == 2 && this->clickedSquare->getPiece()->getColor() == 0){
                 if(this->squares[ 2 ][_col]->getPiece() != nullptr){
                     return true;
                 }
             }
+
             return false;
             break;
         case 3://40 50 60
-            if(_col - this->destination->getCol() == 0){
-                for(int row = _row - (_row - this->destination->getRow())/abs(_row - this->destination->getRow()); abs(row - this->destination->getRow()) >0; row = row - (row - this->destination->getRow())/abs(row - this->destination->getRow())){
+            if(_col - _squareTwo->getCol() == 0){
+                for(int row = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(row - _squareTwo->getRow()) >0; row = row - (row - _squareTwo->getRow())/abs(row - _squareTwo->getRow())){
                     if(this->squares[row][_col]->getPiece() != nullptr){
                         return true;
                     }
                 }
                 return false;
             }
-            if(_row - this->destination->getRow() == 0){
-                for(int col = _col - (_col - this->destination->getCol())/abs(_col - this->destination->getCol()); abs(col - this->destination->getCol()) >0; col = col - (col - this->destination->getCol())/abs(col - this->destination->getCol())){
+            if(_row - _squareTwo->getRow() == 0){
+                for(int col = _col - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol()); abs(col - _squareTwo->getCol()) >0; col = col - (col - _squareTwo->getCol())/abs(col - _squareTwo->getCol())){
                     if(this->squares[_row][col]->getPiece() != nullptr){
                        return true;
                     }
@@ -295,7 +299,7 @@ bool Board::isSomethingBetween(){
            break;
 
         case 7:
-            for(int wsp = _row - (_row - this->destination->getRow())/abs(_row - this->destination->getRow()); abs(wsp - this->destination->getRow()) >0; wsp = wsp - (wsp - this->destination->getRow())/abs(wsp - this->destination->getRow())){
+            for(int wsp = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(wsp - _squareTwo->getRow()) >0; wsp = wsp - (wsp - _squareTwo->getRow())/abs(wsp - _squareTwo->getRow())){
                 if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
                        return true;
                 }else{
@@ -306,24 +310,24 @@ bool Board::isSomethingBetween(){
             break;
 
         case 9:
-            wsp_col = - (_col - this->destination->getCol())/abs(_col - this->destination->getCol());
-            if(_col - this->destination->getCol() == 0){
-                for(int row = _row - (_row - this->destination->getRow())/abs(_row - this->destination->getRow()); abs(row - this->destination->getRow()) >0; row = row - (row - this->destination->getRow())/abs(row - this->destination->getRow())){
+            wsp_col = - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol());
+            if(_col - _squareTwo->getCol() == 0){
+                for(int row = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(row - _squareTwo->getRow()) >0; row = row - (row - _squareTwo->getRow())/abs(row - _squareTwo->getRow())){
                     if(this->squares[row][_col]->getPiece() != nullptr){
                         return true;
                     }
                 }
                 return false;
             }
-            if(_row - this->destination->getRow() == 0){
-                for(int col = _col - (_col - this->destination->getCol())/abs(_col - this->destination->getCol()); abs(col - this->destination->getCol()) >0; col = col - (col - this->destination->getCol())/abs(col - this->destination->getCol())){
+            if(_row - _squareTwo->getRow() == 0){
+                for(int col = _col - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol()); abs(col - _squareTwo->getCol()) >0; col = col - (col - _squareTwo->getCol())/abs(col - _squareTwo->getCol())){
                     if(this->squares[_row][col]->getPiece() != nullptr){
                        return true;
                     }
                 }
                 return false;
             }
-            for(int wsp = _row - (_row - this->destination->getRow())/abs(_row - this->destination->getRow()); abs(wsp - this->destination->getRow()) >0; wsp = wsp - (wsp - this->destination->getRow())/abs(wsp - this->destination->getRow())){
+            for(int wsp = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(wsp - _squareTwo->getRow()) >0; wsp = wsp - (wsp - _squareTwo->getRow())/abs(wsp - _squareTwo->getRow())){
                 if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
                        return true;
                 }else{
@@ -342,17 +346,16 @@ return true;
 
 
 bool Board::isMyKingInCheck(){
-    int _col = this->clickedSquare->getCol();
-    int _row = this->clickedSquare->getRow();
-    int kingRow;
-    int kingCol;
-    if(this->clickedSquare->getPiece()->getColor() == 1){
-        kingRow = this->whiteKing->getRow();
-        kingCol = this->whiteKing->getCol();
-    }else{
-        kingRow = this->blackKing->getRow();
-        kingCol = this->blackKing->getCol();
+
+    int kingRow = this->whereIsKing()/8;
+    int kingCol = this->whereIsKing()%8;
+
+    if( (_col == kingCol && _col == this->destination->getCol()) || (_row == kingRow && _row == this->destination->getRow())){
+        return false;
     }
+
+
+
 
 
 }

@@ -226,7 +226,7 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
             return;
         }
 
-        if(_B->isSomethingBetween()){
+        if(_B->isSomethingBetween(_B->clickedSquare, _B->destination, _B->clickedSquare->getPiece()->getTypeInt())){
             counter--;
             return;
         }
@@ -237,7 +237,7 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
     _B->wasKingMoving();
     counter++;
     auto test = _B->whereIsKing();
-    wxLogMessage("%d", test);
+    //wxLogMessage("%d", test);
     whiteOrBlack = (whiteOrBlack + 1)%2;
     return;
     }

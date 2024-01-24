@@ -36,7 +36,7 @@ class Board
         bool pawnPieceInFront();
         void pawnMovesButNothingIsInFront();
         void pawnTakes();
-        bool isSomethingBetween();
+        bool isSomethingBetween(Square* _squareOne, Square* _squareTwo, int typeInt);
         bool isMyKingInCheck();
 
 
@@ -45,7 +45,7 @@ class Board
         Square* blackKing;
         Square* clickedSquare;
         Square* destination;
-        Piece* pieces[2][6];
+        Piece* pieces[2][7];
         Square* squares[8][8];
 
     private:
