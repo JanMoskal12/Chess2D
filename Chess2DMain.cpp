@@ -231,12 +231,15 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
             return;
         }
 
+        if(_B->isMyKingInCheck() == 1){
+            wxLogMessage("Check");
+        }
+
     //Moving Piece
     _B->swapSquares();
     //Checking if clicked piece is a king and then in case it was the king we store his new location for later
     _B->wasKingMoving();
     counter++;
-    auto test = _B->whereIsKing();
     //wxLogMessage("%d", test);
     whiteOrBlack = (whiteOrBlack + 1)%2;
     return;

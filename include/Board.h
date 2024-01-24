@@ -40,7 +40,9 @@ class Board
         bool isMyKingInCheck();
 
 
+
         std::set<int> setOfMoves;
+        Square* squareBetween;
         Square* whiteKing;
         Square* blackKing;
         Square* clickedSquare;
@@ -48,7 +50,9 @@ class Board
         Piece* pieces[2][7];
         Square* squares[8][8];
 
+
     private:
+
 
 
 };

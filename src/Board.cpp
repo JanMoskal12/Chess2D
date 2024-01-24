@@ -263,6 +263,8 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int typeI
     int _col = _squareOne->getCol();
     int _row = _squareOne->getRow();
     int wsp_col = - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol());
+    this->squareBetween = squares[this->whereIsKing()/8][this->whereIsKing()%8];
+
     switch(typeInt){
         case 1:
             if(abs(_row - _squareTwo->getRow()) == 2 && this->clickedSquare->getPiece()->getColor() == 1){
@@ -282,6 +284,7 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int typeI
             if(_col - _squareTwo->getCol() == 0){
                 for(int row = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(row - _squareTwo->getRow()) >0; row = row - (row - _squareTwo->getRow())/abs(row - _squareTwo->getRow())){
                     if(this->squares[row][_col]->getPiece() != nullptr){
+                        this->squareBetween = this->squares[row][_col];
                         return true;
                     }
                 }
@@ -290,6 +293,7 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int typeI
             if(_row - _squareTwo->getRow() == 0){
                 for(int col = _col - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol()); abs(col - _squareTwo->getCol()) >0; col = col - (col - _squareTwo->getCol())/abs(col - _squareTwo->getCol())){
                     if(this->squares[_row][col]->getPiece() != nullptr){
+                       this->squareBetween = this->squares[_row][col];
                        return true;
                     }
                 }
@@ -301,6 +305,7 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int typeI
         case 7:
             for(int wsp = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(wsp - _squareTwo->getRow()) >0; wsp = wsp - (wsp - _squareTwo->getRow())/abs(wsp - _squareTwo->getRow())){
                 if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
+                       this->squareBetween = this->squares[wsp][_col + wsp_col];
                        return true;
                 }else{
                 _col = wsp_col + _col;
@@ -350,12 +355,53 @@ bool Board::isMyKingInCheck(){
     int kingRow = this->whereIsKing()/8;
     int kingCol = this->whereIsKing()%8;
 
-    if( (_col == kingCol && _col == this->destination->getCol()) || (_row == kingRow && _row == this->destination->getRow())){
-        return false;
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[0][kingCol], 3)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 3 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[7][kingCol], 3)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 3 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[kingRow][0], 3)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 3 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[kingRow][7], 3)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 3 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
     }
 
 
 
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[abs(kingRow-kingCol)][0], 7)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 7 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[abs(kingRow-kingCol)][7], 7)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 7 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[0][abs(kingRow-kingCol)], 7)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 7 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[7][abs(kingRow-kingCol)], 7)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 7 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
 
-
+    return false;
 }
+
+
+
+
