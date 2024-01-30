@@ -462,6 +462,32 @@ bool Board::isBeatable(Square* _square){
   }
 
 
+
+  for(int i = -1; i < 2; i = i + 2){
+      if((this->destination->getRow()-_Row  == 1) && (std::abs(this->destination->getCol()-_Col ) == 1 ) && this->clickedSquare->getPiece()->getColor() == 0){
+        if(squares[_Row - 1][_Col - i]->getPiece() != nullptr){
+            if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row - 1][_Col - i]->getPiece()->getColor()){
+                if(this->squares[_Row - 1][_Col - i]->getPiece()->getTypeInt() == 1){
+                    return true;
+                }
+            }
+        }
+      }
+  }
+
+  for(int i = -1; i < 2; i = i + 2){
+      if((this->destination->getRow()-_Row  == 1) && (std::abs(this->destination->getCol()-_Col ) == 1 ) && this->clickedSquare->getPiece()->getColor() == 1){
+        if(squares[_Row + 1][_Col - i]->getPiece() != nullptr){
+            if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + 1][_Col - i]->getPiece()->getColor()){
+                if(this->squares[_Row + 1][_Col - i]->getPiece()->getTypeInt() == 1){
+                    return true;
+                }
+            }
+        }
+      }
+  }
+
+
  return false;
 
 }

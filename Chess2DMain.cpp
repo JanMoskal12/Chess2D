@@ -230,13 +230,13 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
             counter--;
             return;
         }
-/*
+
         if(_B->isBeatable(_B->squares[_B->whereIsKing() / 8][_B->whereIsKing() % 8]) == 1){
             wxLogMessage("Check");
-            counter--;
-            return;
+           // counter--;
+            //return;
         }
-
+/*
     if(_B->moveSimulation() == true){
         wxLogMessage("Gdzie sie ruszasz frajerze");
         counter--;
