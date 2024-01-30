@@ -80,6 +80,33 @@ void Board::swapSquares(){
     this->clickedSquare->getButton()->SetBitmap(images[this->clickedSquare->getBackgroundColor()][0]);
 }
 
+bool Board::moveSimulation(){
+
+    bool x = false;
+    this->asylum->setPiece(nullptr);
+
+    if(isDestinationPiece()){
+       this->asylum->setPiece(this->destination->getPiece());
+    }
+
+    this->destination->setPiece(this->clickedSquare->getPiece());
+    this->clickedSquare->setPiece(nullptr);
+
+    if(isBeatable(squares[whereIsKing / 8][whereIsKing % 8])){
+
+        x = true;
+        this->clickedSquare->setPiece(this->destination->getPiece());
+        if(this->asylum->getPiece() == nullptr){
+            this->destination->setPiece(nullptr);
+        }else{
+            this->destination->setPiece(this->asylum->getPiece());
+        }
+    }
+
+    return x;
+}
+
+
 void Board::setDestination(int _nrBB){
     this->destination = this->squares[_nrBB/8][_nrBB%8];
 }
@@ -350,7 +377,7 @@ return false;
 }
 
 
-bool Board::isMyKingInCheck(){
+bool Board::isBeatable(Square* _square){
 
     int kingRow = this->whereIsKing()/8;
     int kingCol = this->whereIsKing()%8;

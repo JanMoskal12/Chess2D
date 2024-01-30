@@ -47,6 +47,7 @@ class Board
         Square* blackKing;
         Square* clickedSquare;
         Square* destination;
+        Square* asylum;
         Piece* pieces[2][7];
         Square* squares[8][8];
 
