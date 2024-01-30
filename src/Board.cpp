@@ -280,7 +280,7 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int typeI
 
             return false;
             break;
-        case 3://40 50 60
+        case 3:
             if(_col - _squareTwo->getCol() == 0){
                 for(int row = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(row - _squareTwo->getRow()) >0; row = row - (row - _squareTwo->getRow())/abs(row - _squareTwo->getRow())){
                     if(this->squares[row][_col]->getPiece() != nullptr){
@@ -385,6 +385,55 @@ bool Board::isMyKingInCheck(){
         }
 
     }
+//Bishop is checking us
+  for(int i = 1; i < 8; i++){
+    if((kingRow)- i >=0 && kingCol-i >=0){
+        if(squares[kingRow-i][kingCol-i]->getPiece() != nullptr){
+            if(this->squares[kingRow][kingCol]->getPiece()->getColor()!= this->squares[kingRow-i][kingCol-i]->getPiece()->getColor()){
+                if(this->squares[kingRow-i][kingCol-i]->getPiece()->getTypeInt() == 7 || this->squares[kingRow-i][kingCol-i]->getPiece()->getTypeInt() == 9){
+                    return true;
+                }
+            }
+            i = i+10;
+        }
+    }
+  }
+  for(int i = 1; i < 8; i++){
+    if((kingRow)- i >=0 && kingCol+i <=7){
+        if(squares[kingRow-i][kingCol+i]->getPiece() != nullptr){
+            if(this->squares[kingRow][kingCol]->getPiece()->getColor()!= this->squares[kingRow-i][kingCol+i]->getPiece()->getColor()){
+                if(this->squares[kingRow-i][kingCol+i]->getPiece()->getTypeInt() == 7 || this->squares[kingRow-i][kingCol+i]->getPiece()->getTypeInt() == 9){
+                    return true;
+                }
+            }
+            i = i+10;
+        }
+    }
+  }
+  for(int i = 1; i < 8; i++){
+    if((kingRow)+ i <=7 && kingCol+i <=7){
+        if(squares[kingRow+i][kingCol+i]->getPiece() != nullptr){
+            if(this->squares[kingRow][kingCol]->getPiece()->getColor()!= this->squares[kingRow+i][kingCol+i]->getPiece()->getColor()){
+                if(this->squares[kingRow+i][kingCol+i]->getPiece()->getTypeInt() == 7 || this->squares[kingRow+i][kingCol+i]->getPiece()->getTypeInt() == 9){
+                    return true;
+                }
+            }
+            i = i+10;
+        }
+    }
+  }
+  for(int i = 1; i < 8; i++){
+    if((kingRow)+ i <=7 && kingCol-i >=0){
+        if(squares[kingRow+i][kingCol-i]->getPiece() != nullptr){
+            if(this->squares[kingRow][kingCol]->getPiece()->getColor()!= this->squares[kingRow+i][kingCol-i]->getPiece()->getColor()){
+                if(this->squares[kingRow+i][kingCol-i]->getPiece()->getTypeInt() == 7 || this->squares[kingRow+i][kingCol-i]->getPiece()->getTypeInt() == 9){
+                    return true;
+                }
+            }
+            i = i+10;
+        }
+    }
+  }
 
 
  return false;
