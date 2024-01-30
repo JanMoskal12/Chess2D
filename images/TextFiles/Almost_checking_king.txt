@@ -1,0 +1,38 @@
+if(isSomethingBetween(squares[kingRow][kingCol], squares[7][kingCol], 3)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 3 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[kingRow][0], 3)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 3 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[kingRow][7], 3)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 3 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+
+
+
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[abs(kingRow-kingCol)][0], 7)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 7 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[abs(kingRow-kingCol)][7], 7)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 7 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[0][abs(kingRow-kingCol)], 7)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 7 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
+    if(isSomethingBetween(squares[kingRow][kingCol], squares[7][abs(kingRow-kingCol)], 7)){
+        if(this->squareBetween->getPiece()->getTypeInt() == 7 || this->squareBetween->getPiece()->getTypeInt() == 9){
+            return true;
+        }
+    }
