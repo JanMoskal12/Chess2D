@@ -20,7 +20,6 @@ Board::Board(int i)
             }
          }
 
-
             pieces[0][0] = new Pawn(false);
             pieces[0][1] = new Rook(false);
             pieces[0][2] = new Knight(false);
@@ -81,28 +80,27 @@ void Board::swapSquares(){
 }
 
 bool Board::moveSimulation(){
-
     bool x = false;
-    this->asylum->setPiece(nullptr);
 
-    if(isDestinationPiece()){
-       this->asylum->setPiece(this->destination->getPiece());
+    this->squareBetween->setPiece(nullptr);
+
+    if(this->isDestinationPiece()){
+       this->squareBetween->setPiece(this->destination->getPiece());
     }
 
     this->destination->setPiece(this->clickedSquare->getPiece());
+
     this->clickedSquare->setPiece(nullptr);
 
-    if(isBeatable(squares[whereIsKing / 8][whereIsKing % 8])){
-
+    if(this->isBeatable(this->squares[whereIsKing()/8][whereIsKing()%8])){
         x = true;
-        this->clickedSquare->setPiece(this->destination->getPiece());
-        if(this->asylum->getPiece() == nullptr){
+    }
+    this->clickedSquare->setPiece(this->destination->getPiece());
+        if(this->squareBetween->getPiece() == nullptr){
             this->destination->setPiece(nullptr);
         }else{
-            this->destination->setPiece(this->asylum->getPiece());
+            this->destination->setPiece(this->squareBetween->getPiece());
         }
-    }
-
     return x;
 }
 
@@ -377,35 +375,36 @@ return false;
 }
 
 
+
 bool Board::isBeatable(Square* _square){
 
-    int kingRow = this->whereIsKing()/8;
-    int kingCol = this->whereIsKing()%8;
+    int _Row = _square->getRow();
+    int _Col = _square->getCol();
 
     //is Rook checking us
     for(int i = 0; i < 8; i = i+7){
-         if(kingRow != i && isSomethingBetween(squares[kingRow][kingCol], squares[i][kingCol], 3)){
+         if(_Row != i && isSomethingBetween(squares[_Row][_Col], squares[i][_Col], 3)){
             if(this->squareBetween->getPiece()->getTypeInt() == 3 || this->squareBetween->getPiece()->getTypeInt() == 9){
-                if(this->squares[kingRow][kingCol]->getPiece()->getColor() != this->squareBetween->getPiece()->getColor()){
+                if(this->squares[_Row][_Col]->getPiece()->getColor() != this->squareBetween->getPiece()->getColor()){
                     return true;
                 }
             }
         }else{
-            if(kingRow != i && this->squares[i][kingCol]->getPiece() != nullptr && this->squares[kingRow][kingCol]->getPiece()->getColor() != this->squares[i][kingCol]->getPiece()->getColor()){
-                if(this->squares[i][kingCol]->getPiece()->getTypeInt() == 9 || this->squares[i][kingCol]->getPiece()->getTypeInt() == 3){
+            if(_Row != i && this->squares[i][_Col]->getPiece() != nullptr && this->squares[_Row][_Col]->getPiece()->getColor() != this->squares[i][_Col]->getPiece()->getColor()){
+                if(this->squares[i][_Col]->getPiece()->getTypeInt() == 9 || this->squares[i][_Col]->getPiece()->getTypeInt() == 3){
                     return true;
                 }
             }
         }
-        if(kingCol != i && isSomethingBetween(squares[kingRow][kingCol], squares[kingRow][i], 3)){
+        if(_Col != i && isSomethingBetween(squares[_Row][_Col], squares[_Row][i], 3)){
             if(this->squareBetween->getPiece()->getTypeInt() == 3 || this->squareBetween->getPiece()->getTypeInt() == 9){
-                if(this->squares[kingRow][kingCol]->getPiece()->getColor() != this->squareBetween->getPiece()->getColor()){
+                if(this->squares[_Row][_Col]->getPiece()->getColor() != this->squareBetween->getPiece()->getColor()){
                     return true;
                 }
             }
         }else{
-            if(kingCol != i && this->squares[kingRow][i]->getPiece() != nullptr && this->squares[kingRow][kingCol]->getPiece()->getColor() != this->squares[kingRow][i]->getPiece()->getColor()){
-                if(this->squares[kingRow][i]->getPiece()->getTypeInt() == 9 || this->squares[kingRow][i]->getPiece()->getTypeInt() == 3){
+            if(_Col != i && this->squares[_Row][i]->getPiece() != nullptr && this->squares[_Row][_Col]->getPiece()->getColor() != this->squares[_Row][i]->getPiece()->getColor()){
+                if(this->squares[_Row][i]->getPiece()->getTypeInt() == 9 || this->squares[_Row][i]->getPiece()->getTypeInt() == 3){
                     return true;
                 }
             }
@@ -414,10 +413,10 @@ bool Board::isBeatable(Square* _square){
     }
 //Bishop is checking us
   for(int i = 1; i < 8; i++){
-    if((kingRow)- i >=0 && kingCol-i >=0){
-        if(squares[kingRow-i][kingCol-i]->getPiece() != nullptr){
-            if(this->squares[kingRow][kingCol]->getPiece()->getColor()!= this->squares[kingRow-i][kingCol-i]->getPiece()->getColor()){
-                if(this->squares[kingRow-i][kingCol-i]->getPiece()->getTypeInt() == 7 || this->squares[kingRow-i][kingCol-i]->getPiece()->getTypeInt() == 9){
+    if((_Row)- i >=0 && _Col-i >=0){
+        if(squares[_Row-i][_Col-i]->getPiece() != nullptr){
+            if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row-i][_Col-i]->getPiece()->getColor()){
+                if(this->squares[_Row-i][_Col-i]->getPiece()->getTypeInt() == 7 || this->squares[_Row-i][_Col-i]->getPiece()->getTypeInt() == 9){
                     return true;
                 }
             }
@@ -426,10 +425,10 @@ bool Board::isBeatable(Square* _square){
     }
   }
   for(int i = 1; i < 8; i++){
-    if((kingRow)- i >=0 && kingCol+i <=7){
-        if(squares[kingRow-i][kingCol+i]->getPiece() != nullptr){
-            if(this->squares[kingRow][kingCol]->getPiece()->getColor()!= this->squares[kingRow-i][kingCol+i]->getPiece()->getColor()){
-                if(this->squares[kingRow-i][kingCol+i]->getPiece()->getTypeInt() == 7 || this->squares[kingRow-i][kingCol+i]->getPiece()->getTypeInt() == 9){
+    if((_Row)- i >=0 && _Col+i <=7){
+        if(squares[_Row-i][_Col+i]->getPiece() != nullptr){
+            if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row-i][_Col+i]->getPiece()->getColor()){
+                if(this->squares[_Row-i][_Col+i]->getPiece()->getTypeInt() == 7 || this->squares[_Row-i][_Col+i]->getPiece()->getTypeInt() == 9){
                     return true;
                 }
             }
@@ -438,10 +437,10 @@ bool Board::isBeatable(Square* _square){
     }
   }
   for(int i = 1; i < 8; i++){
-    if((kingRow)+ i <=7 && kingCol+i <=7){
-        if(squares[kingRow+i][kingCol+i]->getPiece() != nullptr){
-            if(this->squares[kingRow][kingCol]->getPiece()->getColor()!= this->squares[kingRow+i][kingCol+i]->getPiece()->getColor()){
-                if(this->squares[kingRow+i][kingCol+i]->getPiece()->getTypeInt() == 7 || this->squares[kingRow+i][kingCol+i]->getPiece()->getTypeInt() == 9){
+    if((_Row)+ i <=7 && _Col+i <=7){
+        if(squares[_Row+i][_Col+i]->getPiece() != nullptr){
+            if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row+i][_Col+i]->getPiece()->getColor()){
+                if(this->squares[_Row+i][_Col+i]->getPiece()->getTypeInt() == 7 || this->squares[_Row+i][_Col+i]->getPiece()->getTypeInt() == 9){
                     return true;
                 }
             }
@@ -450,10 +449,10 @@ bool Board::isBeatable(Square* _square){
     }
   }
   for(int i = 1; i < 8; i++){
-    if((kingRow)+ i <=7 && kingCol-i >=0){
-        if(squares[kingRow+i][kingCol-i]->getPiece() != nullptr){
-            if(this->squares[kingRow][kingCol]->getPiece()->getColor()!= this->squares[kingRow+i][kingCol-i]->getPiece()->getColor()){
-                if(this->squares[kingRow+i][kingCol-i]->getPiece()->getTypeInt() == 7 || this->squares[kingRow+i][kingCol-i]->getPiece()->getTypeInt() == 9){
+    if((_Row)+ i <=7 && _Col-i >=0){
+        if(squares[_Row+i][_Col-i]->getPiece() != nullptr){
+            if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row+i][_Col-i]->getPiece()->getColor()){
+                if(this->squares[_Row+i][_Col-i]->getPiece()->getTypeInt() == 7 || this->squares[_Row+i][_Col-i]->getPiece()->getTypeInt() == 9){
                     return true;
                 }
             }
@@ -466,6 +465,7 @@ bool Board::isBeatable(Square* _square){
  return false;
 
 }
+
 
 
 

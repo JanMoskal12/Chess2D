@@ -37,7 +37,8 @@ class Board
         void pawnMovesButNothingIsInFront();
         void pawnTakes();
         bool isSomethingBetween(Square* _squareOne, Square* _squareTwo, int typeInt);
-        bool isMyKingInCheck();
+        bool isBeatable(Square* _square);
+        bool moveSimulation();
 
 
 
@@ -47,7 +48,6 @@ class Board
         Square* blackKing;
         Square* clickedSquare;
         Square* destination;
-        Square* asylum;
         Piece* pieces[2][7];
         Square* squares[8][8];
 

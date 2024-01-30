@@ -230,11 +230,19 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
             counter--;
             return;
         }
-
-        if(_B->isMyKingInCheck() == 1){
+/*
+        if(_B->isBeatable(_B->squares[_B->whereIsKing() / 8][_B->whereIsKing() % 8]) == 1){
             wxLogMessage("Check");
+            counter--;
+            return;
         }
 
+    if(_B->moveSimulation() == true){
+        wxLogMessage("Gdzie sie ruszasz frajerze");
+        counter--;
+        return;
+    }
+*/
     //Moving Piece
     _B->swapSquares();
     //Checking if clicked piece is a king and then in case it was the king we store his new location for later
