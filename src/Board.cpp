@@ -517,24 +517,27 @@ bool Board::isBeatable(Square* _square){
         }
     }
   }
-
+/*
   // is King checking us
   for(int i = 0; i < 3; i++){
     for(int j = 0; j< 3; j++){
+        if(i == 1 && j ==1){
+            j++;
+        }
         if( _Row + i == 0  || _Row + i == 10 || _Col + j == 10  || _Col + j  == 0 ){
 
         }else{
            if(this->squares[_Row + i - 1][_Col + j - 1]->getPiece() != nullptr){
-                //if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + i - 1][_Col + j - 1]->getPiece()->getColor()){
+                if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + i - 1][_Col + j - 1]->getPiece()->getColor()){
                     if(this->squares[_Row + i - 1][_Col + j - 1]->getPiece()->getTypeInt() == 11){
                         return true;
                     }
-                //}
+                }
            }
         }
     }
   }
-
+*/
  return false;
 
 }
