@@ -411,7 +411,7 @@ bool Board::isBeatable(Square* _square){
         }
 
     }
-//Bishop is checking us
+//is Bishop checking us
   for(int i = 1; i < 8; i++){
     if((_Row)- i >=0 && _Col-i >=0){
         if(squares[_Row-i][_Col-i]->getPiece() != nullptr){
@@ -462,7 +462,7 @@ bool Board::isBeatable(Square* _square){
   }
 
 
-
+  //is Pawn checking us
   for(int i = -1; i < 2; i = i + 2){
       if((this->destination->getRow()-_Row  == 1) && (std::abs(this->destination->getCol()-_Col ) == 1 ) && this->clickedSquare->getPiece()->getColor() == 0){
         if(squares[_Row - 1][_Col - i]->getPiece() != nullptr){
@@ -487,6 +487,49 @@ bool Board::isBeatable(Square* _square){
       }
   }
 
+  // is Knight checking us
+  for(int i = 0; i < 5; i = i+4){
+    for(int j = 0; j < 3; j = j+2){
+        if(_Row + i  <= 9 && _Row + i >=2 && _Col + j <= 8 && _Col + j >=1 ){
+            if(squares[_Row + i - 2][_Col + j - 1]->getPiece() != nullptr){
+                if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + i - 2][_Col + j - 1]->getPiece()->getColor()){
+                    if(this->squares[_Row + i - 2][_Col + j - 1]->getPiece()->getTypeInt() == 5){
+                        return true;
+                    }
+                }
+            }
+
+        }
+
+
+        if(_Row + j <= 8 && _Row + j >=1 && _Col + i <= 9 && _Col + i >= 2){
+            if(squares[_Row + j - 1][_Col + i - 2]->getPiece() != nullptr){
+                if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + j - 1][_Col + i - 2]->getPiece()->getColor()){
+                    if(this->squares[_Row + j - 1][_Col + i - 2]->getPiece()->getTypeInt() == 5){
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+  }
+
+  // is King checking us
+  for(int i = 0; i < 3; i++){
+    for(int j = 0; j< 3; j++){
+        if( _Row + i == 0  || _Row + i == 10 || _Col + j == 10  || _Col + j  == 0 ){
+
+        }else{
+           if(this->squares[_Row + i - 1][_Col + j - 1]->getPiece() != nullptr){
+                //if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + i - 1][_Col + j - 1]->getPiece()->getColor()){
+                    if(this->squares[_Row + i - 1][_Col + j - 1]->getPiece()->getTypeInt() == 11){
+                        return true;
+                    }
+                //}
+           }
+        }
+    }
+  }
 
  return false;
 
