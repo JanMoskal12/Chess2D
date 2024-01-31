@@ -81,7 +81,7 @@ void Board::swapSquares(){
 
 bool Board::moveSimulation(){
     bool x = false;
-
+    this->wasKingMoving();
     this->squareBetween->setPiece(nullptr);
 
     if(this->isDestinationPiece()){
@@ -89,8 +89,9 @@ bool Board::moveSimulation(){
     }
 
     this->destination->setPiece(this->clickedSquare->getPiece());
-
     this->clickedSquare->setPiece(nullptr);
+
+
 
     if(this->isBeatable(this->squares[whereIsKing()/8][whereIsKing()%8])){
         x = true;
@@ -101,6 +102,15 @@ bool Board::moveSimulation(){
         }else{
             this->destination->setPiece(this->squareBetween->getPiece());
         }
+
+    if((this->blackKing == this->destination) || (this->whiteKing == this->clickedSquare)){
+        if(whiteOrBlack == 1){
+            this->whiteKing = this->clickedSquare;
+        }else{
+        this->blackKing = this->clickedSquare;
+        }
+    }
+
     return x;
 }
 
@@ -495,7 +505,7 @@ bool Board::isBeatable(Square* _square){
   for(int i = 0; i < 5; i = i+4){
     for(int j = 0; j < 3; j = j+2){
         if(_Row + i  <= 9 && _Row + i >=2 && _Col + j <= 8 && _Col + j >=1 ){
-            if(squares[_Row + i - 2][_Col + j - 1]->getPiece() != nullptr){
+            if(this->squares[_Row + i - 2][_Col + j - 1]->getPiece() != nullptr){
                 if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + i - 2][_Col + j - 1]->getPiece()->getColor()){
                     if(this->squares[_Row + i - 2][_Col + j - 1]->getPiece()->getTypeInt() == 5){
                         return true;
@@ -507,7 +517,7 @@ bool Board::isBeatable(Square* _square){
 
 
         if(_Row + j <= 8 && _Row + j >=1 && _Col + i <= 9 && _Col + i >= 2){
-            if(squares[_Row + j - 1][_Col + i - 2]->getPiece() != nullptr){
+            if(this->squares[_Row + j - 1][_Col + i - 2]->getPiece() != nullptr){
                 if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + j - 1][_Col + i - 2]->getPiece()->getColor()){
                     if(this->squares[_Row + j - 1][_Col + i - 2]->getPiece()->getTypeInt() == 5){
                         return true;
@@ -519,22 +529,24 @@ bool Board::isBeatable(Square* _square){
   }
 
   // is King checking us
-  for(int i = 0; i < 3; i++){
+  /*for(int i = 0; i < 3; i++){
     for(int j = 0; j< 3; j++){
-        if( _Row + i == 0  || _Row + i == 10 || _Col + j == 10  || _Col + j  == 0 ){
+        //if(!(i == 1 && j == 1)){
+            if( _Row + i == 0  || _Row + i == 10 || _Col + j == 10  || _Col + j  == 0 ){
 
-        }else{
-           if(this->squares[_Row + i - 1][_Col + j - 1]->getPiece() != nullptr){
-                //if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + i - 1][_Col + j - 1]->getPiece()->getColor()){
-                    if(this->squares[_Row + i - 1][_Col + j - 1]->getPiece()->getTypeInt() == 11){
-                        return true;
-                    }
-                //}
-           }
-        }
-    }
-  }
-
+            }else{
+               if(this->squares[_Row + i - 1][_Col + j - 1]->getPiece() != nullptr){
+                    //if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + i - 1][_Col + j - 1]->getPiece()->getColor()){
+                        if(this->squares[_Row + i - 1][_Col + j - 1]->getPiece()->getTypeInt() == 11){
+                            return true;
+                        }
+                    //}
+               }
+            }
+         //}
+     }
+   }
+*/
  return false;
 
 }
