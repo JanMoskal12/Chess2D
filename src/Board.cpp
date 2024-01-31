@@ -71,7 +71,7 @@ Board::~Board()
 
 }
 
-void Board::swapSquares(){
+void Board::swapSquares(Square* clickedSquare, Square* destination){
     this->destination->setPiece(this->clickedSquare->getPiece());
     this->destination->getButton()->SetBitmap(images[this->clickedSquare->getPiece()->getColor()][this->clickedSquare->getPiece()->getTypeInt()+1-this->destination->getBackgroundColor()]);
     this->destination->getPiece()->setMoved();
@@ -79,13 +79,30 @@ void Board::swapSquares(){
     this->clickedSquare->getButton()->SetBitmap(images[this->clickedSquare->getBackgroundColor()][0]);
 }
 
+void Board::pawnPromotion(){
+
+    if(this->destination->getPiece()->getTypeInt() == 1 && this->destination->getRow() == 7){
+        this->destination->setPiece(this->pieces[0][4]);
+        this->destination->getButton()->SetBitmap(images[0][10 - this->destination->getBackgroundColor()]);
+    }
+
+    if(this->destination->getPiece()->getTypeInt() == 1 && this->destination->getRow() == 0){
+        this->destination->setPiece(this->pieces[1][4]);
+        this->destination->getButton()->SetBitmap(images[1][10 - this->destination->getBackgroundColor()]);
+
+    }
+
+}
+
+
+
 bool Board::moveSimulation(){
     bool x = false;
 
-    this->squareBetween->setPiece(nullptr);
-
-    if(this->isDestinationPiece()){
-       this->squareBetween->setPiece(this->destination->getPiece());
+    this->wasKingMoving();
+    asylum = new Square(-1,-1,0,board[0][0],nullptr);
+    if(this->destination->getPiece() != nullptr){
+        asylum->setPiece(this->destination->getPiece());
     }
 
     this->destination->setPiece(this->clickedSquare->getPiece());
@@ -95,12 +112,25 @@ bool Board::moveSimulation(){
     if(this->isBeatable(this->squares[whereIsKing()/8][whereIsKing()%8])){
         x = true;
     }
+
     this->clickedSquare->setPiece(this->destination->getPiece());
-        if(this->squareBetween->getPiece() == nullptr){
+        if(this->asylum->getPiece() == nullptr){
             this->destination->setPiece(nullptr);
         }else{
-            this->destination->setPiece(this->squareBetween->getPiece());
+            this->destination->setPiece(this->asylum->getPiece());
         }
+
+
+        if((this->blackKing == this->destination) + (this->whiteKing == this->destination) == 1){
+            if(whiteOrBlack == 1){
+                this->whiteKing = this->clickedSquare;
+            }else{
+                this->blackKing = this->clickedSquare;
+
+            }
+        }
+
+    delete asylum;
     return x;
 }
 
@@ -230,11 +260,74 @@ void Board::whereICanMove(){
                     }
                 }
            }
+           if(this->clickedSquare->getPiece()->getMoved()){
+
+           }else{
+                this->setOfMoves.insert(8*(_row) + (_col) + 2);
+                this->setOfMoves.insert(8*(_row) + (_col) - 2);
+           }
+
            break;
 
 
     }
 }
+bool Board::castling(){
+    if(this->clickedSquare != this->squares[whereIsKing()/8][whereIsKing()%8]){
+        return 0;
+    }
+
+
+    if( std::abs(  (this->destination->getCol() - this->squares[whereIsKing()/8][whereIsKing()%8]->getCol()) )== 2){
+
+
+        if(this->destination->getCol() == 2){
+
+            if(this->squares[this->destination->getRow()][0]->getPiece()->getMoved() == false){
+
+                if(this->isSomethingBetween(this->clickedSquare,this->squares[this->destination->getRow()][0],3 ) == false){
+                        this->squares[this->destination->getRow()][3]->setPiece(pieces[this->clickedSquare->getPiece()->getColor()][1]);
+                    if(!(this->isBeatable(this->clickedSquare)) && !(this->isBeatable(this->squares[this->destination->getRow()][3]))  ){
+
+                          this->squares[this->destination->getRow()][3]->setPiece(this->squares[this->destination->getRow()][0]->getPiece());
+                          this->squares[this->destination->getRow()][3]->getButton()->SetBitmap(images[this->squares[this->destination->getRow()][0]->getPiece()->getColor()][this->squares[this->destination->getRow()][0]->getPiece()->getTypeInt()+1-this->squares[this->destination->getRow()][3]->getBackgroundColor()]);
+                          this->squares[this->destination->getRow()][3]->getPiece()->setMoved();
+                          this->squares[this->destination->getRow()][0]->setPiece(nullptr);
+                          this->squares[this->destination->getRow()][0]->getButton()->SetBitmap(images[this->squares[this->destination->getRow()][0]->getBackgroundColor()][0]);
+
+
+                          return 0;
+
+                    }
+                }
+            }
+        }else if(this->destination->getCol() == 6){
+
+            if(this->squares[this->destination->getRow()][0]->getPiece()->getMoved() == false){
+
+                if(this->isSomethingBetween(this->clickedSquare,this->squares[this->destination->getRow()][0],3 ) == false){
+                        this->squares[this->destination->getRow()][5]->setPiece(pieces[this->clickedSquare->getPiece()->getColor()][1]);
+                    if(!(this->isBeatable(this->clickedSquare)) && !(this->isBeatable(this->squares[this->destination->getRow()][3]))  ){
+
+                          this->squares[this->destination->getRow()][5]->setPiece(this->squares[this->destination->getRow()][0]->getPiece());
+                          this->squares[this->destination->getRow()][5]->getButton()->SetBitmap(images[this->squares[this->destination->getRow()][0]->getPiece()->getColor()][this->squares[this->destination->getRow()][0]->getPiece()->getTypeInt()+1-this->squares[this->destination->getRow()][5]->getBackgroundColor()]);
+                          this->squares[this->destination->getRow()][5]->getPiece()->setMoved();
+                          this->squares[this->destination->getRow()][0]->setPiece(nullptr);
+                          this->squares[this->destination->getRow()][0]->getButton()->SetBitmap(images[this->squares[this->destination->getRow()][0]->getBackgroundColor()][0]);
+
+
+                          return 0;
+
+                    }
+                }
+            }
+        }
+    }
+
+    return 0;
+}
+
+
 
 bool Board::isInSetOfMoves(){
     return (this->setOfMoves.find(8*this->destination->getRow() + this->destination->getCol()) != this->setOfMoves.end());
@@ -411,6 +504,7 @@ bool Board::isBeatable(Square* _square){
         }
 
     }
+
 //is Bishop checking us
   for(int i = 1; i < 8; i++){
     if((_Row)- i >=0 && _Col-i >=0){

@@ -23,7 +23,7 @@ class Board
 
         void setClickedSquare(int _nrBB);
         void setDestination(int _nrBB);
-        void swapSquares();
+        void swapSquares(Square* clickedSquare, Square* destination);
         bool isClickedPiece();
         bool isDestinationPiece();
         bool isSameColor();
@@ -39,10 +39,13 @@ class Board
         bool isSomethingBetween(Square* _squareOne, Square* _squareTwo, int typeInt);
         bool isBeatable(Square* _square);
         bool moveSimulation();
+        void pawnPromotion();
+        bool castling();
 
 
 
         std::set<int> setOfMoves;
+        Square* asylum;
         Square* squareBetween;
         Square* whiteKing;
         Square* blackKing;

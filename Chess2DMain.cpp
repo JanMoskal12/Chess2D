@@ -231,24 +231,25 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
             return;
         }
 
-        if(_B->isBeatable(_B->squares[_B->whereIsKing() / 8][_B->whereIsKing() % 8]) == 1){
-            wxLogMessage("Check");
-           // counter--;
-            //return;
-        }
-/*
+
+
     if(_B->moveSimulation() == true){
-        wxLogMessage("Gdzie sie ruszasz frajerze");
+        wxLogMessage("Tutaj nie wolno");
         counter--;
         return;
     }
-*/
+    if(_B->castling()){
+       counter--;
+       return;
+    }
     //Moving Piece
-    _B->swapSquares();
+    _B->swapSquares(_B->clickedSquare, _B->destination);
+    _B->pawnPromotion();
     //Checking if clicked piece is a king and then in case it was the king we store his new location for later
     _B->wasKingMoving();
     counter++;
     //wxLogMessage("%d", test);
+
     whiteOrBlack = (whiteOrBlack + 1)%2;
     return;
     }
