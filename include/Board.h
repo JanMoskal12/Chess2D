@@ -21,6 +21,8 @@ class Board
     public:
         Board(int i);
         ~Board();
+        void assigningPieces();
+        void restart();
         void setClicked(int _nrBB);
         void setDestination(int _nrBB);
         bool isClickedPiece();

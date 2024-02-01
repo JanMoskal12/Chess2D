@@ -20,8 +20,9 @@
 //*)
 
 //helper functions
-enum wxbuildinfoformat {
-    short_f, long_f };
+enum wxbuildinfoformat{
+    short_f, long_f
+};
 
 wxString wxbuildinfo(wxbuildinfoformat format){
     wxString wxbuild(wxVERSION_STRING);
@@ -39,7 +40,6 @@ wxString wxbuildinfo(wxbuildinfoformat format){
                 wxbuild << _T("-ANSI build");
         #endif // wxUSE_UNICODE
     }
-
     return wxbuild;
 }
 
@@ -60,8 +60,7 @@ BEGIN_EVENT_TABLE(Chess2DDialog,wxDialog)
     //*)
 END_EVENT_TABLE()
 
-Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
-{
+Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id){
     //(*Initialize(Chess2DDialog)
     wxFlexGridSizer* FlexGridSizer1;
     wxGridSizer* GridSizer1;
@@ -80,7 +79,7 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
     //*)
 
 
-    { // ChessBoard Display
+    // ChessBoard Display
     images[whiteOrBlack-1][0] = wxBitmap(wxImage("images/D.jpg"));
     images[whiteOrBlack-1][1] = wxBitmap(wxImage(_T("images/Pieces/bpB.png")));
     images[whiteOrBlack-1][2] = wxBitmap(wxImage(_T("images/Pieces/bpD.png")));
@@ -166,11 +165,11 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
         }
     }
-
-    }
-
     _B = new Board(1);
 }
+
+
+
 
 Chess2DDialog::~Chess2DDialog(){
     //(*Destroy(Chess2DDialog)
@@ -242,8 +241,8 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
     _B->wasKingMoving();
     counter++;
 
-
     whiteOrBlack = (whiteOrBlack + 1)%2;
+    _B->restart();
     return;
     }
 

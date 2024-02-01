@@ -4,6 +4,7 @@
 
 extern wxBitmapButton* board[8][8];
 extern wxBitmap images[2][13];
+extern int counter;
 extern int whiteOrBlack;
 
 Board::Board(int i)
@@ -35,8 +36,13 @@ Board::Board(int i)
     pieces[1][5] = new King(true);
     pieces[1][6] = new Rook(true);
 
+    assigningPieces();
+}
 
+Board::~Board(){
+}
 
+void Board::assigningPieces(){
     // Assigning Pawns to Squares
     for(int i = 0; i < 8; i++){
         squares[1][i]->setPiece(pieces[0][0]);
@@ -66,7 +72,63 @@ Board::Board(int i)
     blackKing = squares[0][4];
 }
 
-Board::~Board(){
+void Board::restart(){
+    whiteOrBlack = 1;
+    counter = 1;
+    clicked = nullptr;
+    destination = nullptr;
+    whiteKing = nullptr;
+    blackKing = nullptr;
+    setOfMoves.clear();
+    squareBetween = nullptr;;
+    pieceStorage = nullptr;
+
+    assigningPieces();
+
+    squares[0][0]->getButton()->SetBitmap(images[whiteOrBlack-1][3]);
+    squares[0][1]->getButton()->SetBitmap(images[whiteOrBlack-1][6]);
+    squares[0][2]->getButton()->SetBitmap(images[whiteOrBlack-1][7]);
+    squares[0][3]->getButton()->SetBitmap(images[whiteOrBlack-1][10]);
+    squares[0][4]->getButton()->SetBitmap(images[whiteOrBlack-1][11]);
+    squares[0][5]->getButton()->SetBitmap(images[whiteOrBlack-1][8]);
+    squares[0][6]->getButton()->SetBitmap(images[whiteOrBlack-1][5]);
+    squares[0][7]->getButton()->SetBitmap(images[whiteOrBlack-1][4]);
+
+    for(int j = 0; j < 8; j++){
+        if(j%2 == 0){
+            squares[1][j]->getButton()->SetBitmap(images[whiteOrBlack-1][2]);
+        }else{
+            squares[1][j]->getButton()->SetBitmap(images[whiteOrBlack-1][1]);
+        }
+    }
+
+    for(int i = 2; i < 6; i++){
+        for(int j = 0; j < 8; j++){
+            if((i+j)%2 == 0){
+                squares[i][j]->getButton()->SetBitmap(images[whiteOrBlack][0]);
+            }else{
+                squares[i][j]->getButton()->SetBitmap(images[(whiteOrBlack+1)%2][0]);
+            }
+        }
+    }
+
+    for(int j = 0; j < 8; j++){
+        if((j)%2 != 0){
+            squares[6][j]->getButton()->SetBitmap(images[whiteOrBlack][2]);
+        }else{
+            squares[6][j]->getButton()->SetBitmap(images[whiteOrBlack][1]);
+        }
+    }
+
+    squares[7][0]->getButton()->SetBitmap(images[whiteOrBlack][4]);
+    squares[7][1]->getButton()->SetBitmap(images[whiteOrBlack][5]);
+    squares[7][2]->getButton()->SetBitmap(images[whiteOrBlack][8]);
+    squares[7][3]->getButton()->SetBitmap(images[whiteOrBlack][9]);
+    squares[7][4]->getButton()->SetBitmap(images[whiteOrBlack][12]);
+    squares[7][5]->getButton()->SetBitmap(images[whiteOrBlack][7]);
+    squares[7][6]->getButton()->SetBitmap(images[whiteOrBlack][6]);
+    squares[7][7]->getButton()->SetBitmap(images[whiteOrBlack][3]);
+
 }
 
 void Board::setClicked(int _nrBB){

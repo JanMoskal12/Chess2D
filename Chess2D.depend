@@ -3274,7 +3274,7 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1706820235 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
+1706828823 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/log.h>
@@ -5425,7 +5425,7 @@
 	<set>
 	<cmath>
 
-1706822131 c:\users\jan\desktop\projekty\chess2d\include\board.h
+1706826898 c:\users\jan\desktop\projekty\chess2d\include\board.h
 	<set>
 	<cmath>
 	<wx/wx.h>
@@ -5438,6 +5438,6 @@
 	"Queen.h"
 	"King.h"
 
-1706819193 source:c:\users\jan\desktop\projekty\chess2d\src\board.cpp
+1706829045 source:c:\users\jan\desktop\projekty\chess2d\src\board.cpp
 	"Board.h"
 
