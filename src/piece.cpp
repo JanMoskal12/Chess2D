@@ -5,6 +5,9 @@ Piece::Piece(bool _color, bool _moved){
     moved = _moved;
 }
 
+Piece::~Piece(){
+}
+
 bool Piece::getColor(){
     return color;
 }
@@ -17,6 +20,4 @@ void Piece::setMoved(){
     moved = true;
 }
 
-Piece::~Piece(){
 
-}

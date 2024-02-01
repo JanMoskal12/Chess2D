@@ -3274,7 +3274,7 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1706652341 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
+1706739662 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/log.h>
@@ -3326,13 +3326,13 @@
 1705148302 source:c:\users\jan\desktop\projekty\chess2d\src\piece.cpp
 	"Piece.h"
 
-1705182035 c:\users\jan\desktop\projekty\chess2d\include\piece.h
+1706813555 c:\users\jan\desktop\projekty\chess2d\include\piece.h
 	<iostream>
 
 1705182035 source:c:\users\jan\desktop\projekty\chess2d\src\pawn.cpp
 	"Pawn.h"
 
-1705182035 c:\users\jan\desktop\projekty\chess2d\include\pawn.h
+1706813555 c:\users\jan\desktop\projekty\chess2d\include\pawn.h
 	"Piece.h"
 
 1705149433 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\src\piece.cpp
@@ -3380,31 +3380,31 @@
 1705182035 source:c:\users\jan\desktop\projekty\chess2d\src\bishop.cpp
 	"Bishop.h"
 
-1705182035 c:\users\jan\desktop\projekty\chess2d\include\bishop.h
+1706813555 c:\users\jan\desktop\projekty\chess2d\include\bishop.h
 	"Piece.h"
 
 1705182035 source:c:\users\jan\desktop\projekty\chess2d\src\king.cpp
 	"King.h"
 
-1705182035 c:\users\jan\desktop\projekty\chess2d\include\king.h
+1706813555 c:\users\jan\desktop\projekty\chess2d\include\king.h
 	"Piece.h"
 
 1705182035 source:c:\users\jan\desktop\projekty\chess2d\src\knight.cpp
 	"Knight.h"
 
-1705182035 c:\users\jan\desktop\projekty\chess2d\include\knight.h
+1706813555 c:\users\jan\desktop\projekty\chess2d\include\knight.h
 	"Piece.h"
 
 1705182035 source:c:\users\jan\desktop\projekty\chess2d\src\queen.cpp
 	"Queen.h"
 
-1705182035 c:\users\jan\desktop\projekty\chess2d\include\queen.h
+1706813555 c:\users\jan\desktop\projekty\chess2d\include\queen.h
 	"Piece.h"
 
 1705182035 source:c:\users\jan\desktop\projekty\chess2d\src\rook.cpp
 	"Rook.h"
 
-1705182035 c:\users\jan\desktop\projekty\chess2d\include\rook.h
+1706813554 c:\users\jan\desktop\projekty\chess2d\include\rook.h
 	"Piece.h"
 
 1705507382 source:c:\users\jan\desktop\projekty\chess2d\src\square.cpp
@@ -5425,7 +5425,7 @@
 	<set>
 	<cmath>
 
-1706650976 c:\users\jan\desktop\projekty\chess2d\include\board.h
+1706739662 c:\users\jan\desktop\projekty\chess2d\include\board.h
 	<wx/wx.h>
 	<wx/bmpbuttn.h>
 	"Square.h"
@@ -5438,6 +5438,6 @@
 	<set>
 	<cmath>
 
-1706652921 source:c:\users\jan\desktop\projekty\chess2d\src\board.cpp
+1706811104 source:c:\users\jan\desktop\projekty\chess2d\src\board.cpp
 	"Board.h"
 
