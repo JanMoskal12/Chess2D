@@ -12,7 +12,6 @@
 #include <wx/log.h>
 #include "Square.h"
 
-
 //(*InternalHeaders(Chess2DDialog)
 #include <wx/bitmap.h>
 #include <wx/image.h>
@@ -44,13 +43,11 @@ wxString wxbuildinfo(wxbuildinfoformat format){
     return wxbuild;
 }
 
-
- // Declaration of board and images
+// Declaration of board and images
 wxBitmapButton* board[8][8];
 wxBitmap images[2][13];
 
-
- //Counting
+//Counting
 int counter=1;
 int whiteOrBlack = 1;
 
@@ -248,7 +245,7 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
     //Checking if clicked piece is a king and then in case it was the king we store his new location for later
     _B->wasKingMoving();
     counter++;
-    //wxLogMessage("%d", test);
+
 
     whiteOrBlack = (whiteOrBlack + 1)%2;
     return;

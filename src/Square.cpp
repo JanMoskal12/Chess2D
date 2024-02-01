@@ -1,8 +1,5 @@
 #include "Square.h"
 
-
-extern wxBitmapButton* board[64];
-
 Square::Square(int _row, int _col, bool _backgroundColor, wxBitmapButton* _button, Piece* _piece){
     col = _col;
     row = _row;
@@ -14,16 +11,20 @@ Square::Square(int _row, int _col, bool _backgroundColor, wxBitmapButton* _butto
 Square::~Square(){
 }
 
-int Square::getCol(){
-    return col;
-}
-
 int Square::getRow(){
     return row;
 }
 
+int Square::getCol(){
+    return col;
+}
+
 bool Square::getBackgroundColor(){
     return backgroundColor;
+}
+
+wxBitmapButton* Square::getButton(){
+    return button;
 }
 
 Piece* Square::getPiece(){
@@ -33,8 +34,3 @@ Piece* Square::getPiece(){
 void Square::setPiece(Piece* _piece){
     piece = _piece;
 }
-
-wxBitmapButton* Square::getButton(){
-    return button;
-}
-

@@ -1,7 +1,6 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-
 #include <wx/wx.h>
 #include <wx/bmpbuttn.h>
 #include "Square.h"
@@ -17,9 +16,8 @@
 class Board
 {
     public:
-        Board(int i);
+        Board(int emp);
         ~Board();
-
 
         void setClickedSquare(int _nrBB);
         void setDestination(int _nrBB);
@@ -42,8 +40,6 @@ class Board
         void pawnPromotion();
         bool castling();
 
-
-
         std::set<int> setOfMoves;
         Square* asylum;
         Square* squareBetween;
@@ -53,12 +49,6 @@ class Board
         Square* destination;
         Piece* pieces[2][7];
         Square* squares[8][8];
-
-
-    private:
-
-
-
 };
 
 #endif // BOARD_H

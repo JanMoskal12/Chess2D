@@ -12,19 +12,19 @@ class Square
         friend class Board;
         Square(int _row, int _col, bool _backgroundColor, wxBitmapButton* _button, Piece* _piece = nullptr);
         ~Square();
-        int getCol();
         int getRow();
+        int getCol();
         bool getBackgroundColor();
+        wxBitmapButton* getButton();
         Piece* getPiece();
         void setPiece(Piece* _piece);
-        wxBitmapButton* getButton();
 
     protected:
-        Piece* piece;
-        int col;
         int row;
+        int col;
         bool backgroundColor;
         wxBitmapButton* button;
+        Piece* piece;
 };
 
 #endif // SQUARE_H
