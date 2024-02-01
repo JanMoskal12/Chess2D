@@ -44,8 +44,6 @@ class Chess2DDialog: public wxDialog
 
         DECLARE_EVENT_TABLE()
         Board* _B;
-
-
 };
 
 #endif // CHESS2DMAIN_H

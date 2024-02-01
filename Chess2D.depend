@@ -3171,7 +3171,7 @@
 1697140154 c:\cb_dodatki\wxwidgets-3.2.2.1-mono64\include\wx\univ\theme.h
 	"wx/string.h"
 
-1705363550 c:\users\jan\desktop\projekty\chess2d\chess2dmain.h
+1706818689 c:\users\jan\desktop\projekty\chess2d\chess2dmain.h
 	"Square.h"
 	"Board.h"
 	<wx/bmpbuttn.h>
@@ -3274,7 +3274,7 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1706739662 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
+1706820235 source:c:\users\jan\desktop\projekty\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/log.h>
@@ -3407,10 +3407,10 @@
 1706813554 c:\users\jan\desktop\projekty\chess2d\include\rook.h
 	"Piece.h"
 
-1705507382 source:c:\users\jan\desktop\projekty\chess2d\src\square.cpp
+1706816455 source:c:\users\jan\desktop\projekty\chess2d\src\square.cpp
 	"Square.h"
 
-1706816193 c:\users\jan\desktop\projekty\chess2d\include\square.h
+1706816885 c:\users\jan\desktop\projekty\chess2d\include\square.h
 	<wx/wx.h>
 	<wx/bmpbuttn.h>
 	"Piece.h"
@@ -5425,7 +5425,9 @@
 	<set>
 	<cmath>
 
-1706816456 c:\users\jan\desktop\projekty\chess2d\include\board.h
+1706822131 c:\users\jan\desktop\projekty\chess2d\include\board.h
+	<set>
+	<cmath>
 	<wx/wx.h>
 	<wx/bmpbuttn.h>
 	"Square.h"
@@ -5435,9 +5437,7 @@
 	"Bishop.h"
 	"Queen.h"
 	"King.h"
-	<set>
-	<cmath>
 
-1706811104 source:c:\users\jan\desktop\projekty\chess2d\src\board.cpp
+1706819193 source:c:\users\jan\desktop\projekty\chess2d\src\board.cpp
 	"Board.h"
 

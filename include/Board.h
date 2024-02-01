@@ -1,6 +1,8 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include <set>
+#include <cmath>
 #include <wx/wx.h>
 #include <wx/bmpbuttn.h>
 #include "Square.h"
@@ -10,45 +12,44 @@
 #include "Bishop.h"
 #include "Queen.h"
 #include "King.h"
-#include <set>
-#include <cmath>
+
+using std::set;
+using std::abs;
 
 class Board
 {
     public:
-        Board(int emp);
+        Board(int i);
         ~Board();
-
-        void setClickedSquare(int _nrBB);
+        void setClicked(int _nrBB);
         void setDestination(int _nrBB);
-        void swapSquares(Square* clickedSquare, Square* destination);
         bool isClickedPiece();
         bool isDestinationPiece();
-        bool isSameColor();
-        bool isKing();
+        bool ArePiecesSameColor();
         bool isGoodColorMoving();
+        void updateSquares(Square* _clicked, Square* _destination);
+        bool isKingInside();
         void wasKingMoving();
         int whereIsKing();
-        void whereICanMove();
-        bool isInSetOfMoves();
-        bool pawnPieceInFront();
+        bool castling();
+        bool pawnBlockedByPieceInFront();
         void pawnMovesButNothingIsInFront();
         void pawnTakes();
-        bool isSomethingBetween(Square* _squareOne, Square* _squareTwo, int typeInt);
+        void pawnPromotion();
+        void whereICanMove();
+        bool isInSetOfMoves();
+        bool isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _typeInt);
         bool isBeatable(Square* _square);
         bool moveSimulation();
-        void pawnPromotion();
-        bool castling();
-
-        std::set<int> setOfMoves;
-        Square* asylum;
-        Square* squareBetween;
-        Square* whiteKing;
-        Square* blackKing;
-        Square* clickedSquare;
-        Square* destination;
         Piece* pieces[2][7];
         Square* squares[8][8];
+        Square* clicked;
+        Square* destination;
+        Square* whiteKing;
+        Square* blackKing;
+        set<int> setOfMoves;
+        Square* squareBetween;
+        Square* pieceStorage;
 };
 
 #endif // BOARD_H

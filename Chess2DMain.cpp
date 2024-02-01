@@ -48,7 +48,7 @@ wxBitmapButton* board[8][8];
 wxBitmap images[2][13];
 
 //Counting
-int counter=1;
+int counter = 1;
 int whiteOrBlack = 1;
 
 //(*IdInit(Chess2DDialog)
@@ -169,12 +169,8 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id)
 
     }
 
-     Board _ss(1);
-    _B= new Board(1);
-
-
+    _B = new Board(1);
 }
-
 
 Chess2DDialog::~Chess2DDialog(){
     //(*Destroy(Chess2DDialog)
@@ -197,7 +193,7 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
     //1st click
     if(counter%2 != 0){
         //Saving clicked square for later
-        _B->setClickedSquare(nrBB);
+        _B->setClicked(nrBB);
             //Checking if clicked square is empty or is good color moving
             if(!(_B->isClickedPiece()) || !(_B->isGoodColorMoving())){
                 return;
@@ -211,7 +207,7 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
         _B->setDestination(nrBB);
 
         //Checking if we clicked pieces with same color
-        if(_B->isDestinationPiece() && _B->isSameColor()){
+        if(_B->isDestinationPiece() && _B->ArePiecesSameColor()){
             counter--;
             return;
         }
@@ -223,7 +219,7 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
             return;
         }
 
-        if(_B->isSomethingBetween(_B->clickedSquare, _B->destination, _B->clickedSquare->getPiece()->getTypeInt())){
+        if(_B->isSomethingBetween(_B->clicked, _B->destination, _B->clicked->getPiece()->getTypeInt())){
             counter--;
             return;
         }
@@ -240,7 +236,7 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
        return;
     }
     //Moving Piece
-    _B->swapSquares(_B->clickedSquare, _B->destination);
+    _B->updateSquares(_B->clicked, _B->destination);
     _B->pawnPromotion();
     //Checking if clicked piece is a king and then in case it was the king we store his new location for later
     _B->wasKingMoving();
