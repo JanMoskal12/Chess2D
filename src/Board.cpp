@@ -220,7 +220,7 @@ bool Board::castling(){
 
     if(abs((this->destination->getCol() - this->squares[whereIsKing()/8][whereIsKing()%8]->getCol())) == 2){
         if(this->destination->getCol() == 2){
-            if(this->squares[this->destination->getRow()][0]->getPiece()->getMoved() == false){
+            if(this->squares[this->destination->getRow()][0]->getPiece() != nullptr && this->squares[this->destination->getRow()][0]->getPiece()->getMoved() == false){
                 if(this->isSomethingBetween(this->clicked,this->squares[this->destination->getRow()][0],3 ) == false){
                     this->squares[this->destination->getRow()][3]->setPiece(pieces[this->clicked->getPiece()->getColor()][1]);
                     if(!(this->isBeatable(this->clicked)) && !(this->isBeatable(this->squares[this->destination->getRow()][3]))){
@@ -237,7 +237,7 @@ bool Board::castling(){
             }return 1;
 
         }else if(this->destination->getCol() == 6){
-            if(this->squares[this->destination->getRow()][7]->getPiece()->getMoved() == false){
+            if(this->squares[this->destination->getRow()][7]->getPiece() != nullptr && this->squares[this->destination->getRow()][7]->getPiece()->getMoved() == false){
                 if(this->isSomethingBetween(this->clicked,this->squares[this->destination->getRow()][7], 3) == false){
                     this->squares[this->destination->getRow()][5]->setPiece(pieces[this->clicked->getPiece()->getColor()][1]);
                     if(!(this->isBeatable(this->clicked)) && !(this->isBeatable(this->squares[this->destination->getRow()][5]))){
