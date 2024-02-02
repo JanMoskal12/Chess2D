@@ -236,15 +236,20 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
             counter--;
             return;
         }
+        // If castling was performed or another move was made nothing happens, if castling could not be performed or something went wrong then undoes the click
         if(_B->castling()){
             counter--;
             return;
         }
-        //Moving Piece
+        // Updating Squares after players move
         _B->updateSquares(_B->clicked, _B->destination);
+
+        // If the pawn is in the opponent's first row, then we change it into Queen
         _B->pawnPromotion();
+
         //Checking if clicked piece is a king and then in case it was the king we store his new location for later
         _B->wasKingMoving();
+
         counter++;
         whiteOrBlack = (whiteOrBlack + 1)%2;
         return;

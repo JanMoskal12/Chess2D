@@ -18,7 +18,6 @@
 #include <wx/sizer.h>
 //*)
 
-
 class Chess2DDialog: public wxDialog
 {
     public:
