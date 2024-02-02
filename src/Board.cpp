@@ -107,7 +107,6 @@ void Board::restart(){
     destination = nullptr;
     whiteKing = nullptr;
     blackKing = nullptr;
-    setOfMoves.clear();
     squareBetween = nullptr;;
 
     cleaning();
@@ -287,10 +286,10 @@ void Board::pawnMovesButNothingIsInFront(){
 void Board::pawnTakes(){
     int _col = this->clicked->getCol();
     int _row = this->clicked->getRow();
-    if((this->destination->getRow()-_row  == -1) && (std::abs(this->destination->getCol()-_col ) == 1 ) && this->clicked->getPiece()->getColor() == 1){
+    if((this->destination->getRow()-_row  == -1) && (abs(this->destination->getCol()-_col ) == 1 ) && this->clicked->getPiece()->getColor() == 1){
         this->setOfMoves.insert(8*this->destination->getRow() + this->destination->getCol());
     }
-    if((this->destination->getRow()-_row  == 1) && (std::abs(this->destination->getCol()-_col ) == 1 ) && this->clicked->getPiece()->getColor() == 0){
+    if((this->destination->getRow()-_row  == 1) && (abs(this->destination->getCol()-_col ) == 1 ) && this->clicked->getPiece()->getColor() == 0){
         this->setOfMoves.insert(8*this->destination->getRow() + this->destination->getCol());
     }
 }

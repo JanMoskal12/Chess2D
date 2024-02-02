@@ -78,8 +78,7 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id){
     Connect(ID_BITMAPBUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Chess2DDialog::OnBitmapButton1Click);
     //*)
 
-
-    // ChessBoard Display
+    // Black Pieces Images
     images[whiteOrBlack-1][0] = wxBitmap(wxImage("images/D.jpg"));
     images[whiteOrBlack-1][1] = wxBitmap(wxImage(_T("images/Pieces/bpB.png")));
     images[whiteOrBlack-1][2] = wxBitmap(wxImage(_T("images/Pieces/bpD.png")));
@@ -94,6 +93,7 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id){
     images[whiteOrBlack-1][11] = wxBitmap(wxImage(_T("images/Pieces/bkB.png")));
     images[whiteOrBlack-1][12] = wxBitmap(wxImage(_T("images/Pieces/bkD.png")));
 
+    // White Pieces Images
     images[whiteOrBlack%2][0] = wxBitmap(wxImage("images/B.jpg"));
     images[whiteOrBlack%2][1] = wxBitmap(wxImage(_T("images/Pieces/wpB.png")));
     images[whiteOrBlack%2][2] = wxBitmap(wxImage(_T("images/Pieces/wpD.png")));
@@ -108,6 +108,8 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id){
     images[whiteOrBlack%2][11] = wxBitmap(wxImage(_T("images/Pieces/wkB.png")));
     images[whiteOrBlack%2][12] = wxBitmap(wxImage(_T("images/Pieces/wkD.png")));
 
+
+    // Creating BoardSquares
     board[0][0] = BitmapButton1;
     board[0][1] = new wxBitmapButton(this, wxNewId(), images[0][6], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
     board[0][2] = new wxBitmapButton(this, wxNewId(), images[0][7], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
@@ -165,11 +167,10 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id){
 
         }
     }
+
+    // Creating Board
     _B = new Board(1);
 }
-
-
-
 
 Chess2DDialog::~Chess2DDialog(){
     //(*Destroy(Chess2DDialog)
@@ -200,10 +201,10 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
     if(counter%2 != 0){
         //Saving clicked square for later
         _B->setClicked(nrBB);
-            //Checking if clicked square is empty or is good color moving
-            if(!(_B->isClickedPiece()) || !(_B->isGoodColorMoving())){
-                return;
-            }
+        //Checking if clicked square is empty or is good color moving
+        if(!(_B->isClickedPiece()) || !(_B->isGoodColorMoving())){
+            return;
+        }
         counter++;
         return;
     }
@@ -211,45 +212,41 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
     //2nd click
     if(counter%2 == 0){
         _B->setDestination(nrBB);
-
-        //Checking if we clicked pieces with same color
+        //Checking if we clicked Pieces with same color
         if(_B->isDestinationPiece() && _B->ArePiecesSameColor()){
             counter--;
             return;
         }
-
+        // Creating a set of moves for the figure selected by the player
         _B->whereICanMove();
 
+        // If the move is not in this setOfMoves, we cannot perform it
         if(!_B->isInSetOfMoves()){
             counter--;
             return;
         }
-
+        // If there is something between the square where we want to place the figure and the starting square, the move will not be made
         if(_B->isSomethingBetween(_B->clicked, _B->destination, _B->clicked->getPiece()->getTypeInt())){
             counter--;
             return;
         }
-
-
-
-    if(_B->moveSimulation() == true){
-        wxLogMessage("Tutaj nie wolno");
-        counter--;
+        // Even before making a move, we check whether the king is in check, if so, we check whether the king is no longer in check after the move chosen by the player; if the player's move does not solve the check problem, the move cannot be made
+        if(_B->moveSimulation()){
+            wxLogMessage("Tutaj nie wolno");
+            counter--;
+            return;
+        }
+        if(_B->castling()){
+            counter--;
+            return;
+        }
+        //Moving Piece
+        _B->updateSquares(_B->clicked, _B->destination);
+        _B->pawnPromotion();
+        //Checking if clicked piece is a king and then in case it was the king we store his new location for later
+        _B->wasKingMoving();
+        counter++;
+        whiteOrBlack = (whiteOrBlack + 1)%2;
         return;
     }
-    if(_B->castling()){
-       counter--;
-       return;
-    }
-    //Moving Piece
-    _B->updateSquares(_B->clicked, _B->destination);
-    _B->pawnPromotion();
-    //Checking if clicked piece is a king and then in case it was the king we store his new location for later
-    _B->wasKingMoving();
-    counter++;
-
-    whiteOrBlack = (whiteOrBlack + 1)%2;
-    return;
-    }
-
 }
