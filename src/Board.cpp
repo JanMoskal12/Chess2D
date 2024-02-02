@@ -176,7 +176,7 @@ bool Board::isDestinationPiece(){
     return !(this->destination->getPiece() == nullptr);
 }
 
-bool Board::ArePiecesSameColor(){
+bool Board::arePiecesSameColor(){
     return (this->clicked->getPiece()->getColor() == this->destination->getPiece()->getColor());
 }
 
@@ -476,8 +476,6 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
     }
     return false;
 }
-
-
 
 bool Board::isBeatable(Square* _square){
     int _Row = _square->getRow();

@@ -30,7 +30,7 @@ class Board
         void setDestination(int _nrBB);
         bool isClickedPiece();
         bool isDestinationPiece();
-        bool ArePiecesSameColor();
+        bool arePiecesSameColor();
         bool isGoodColorMoving();
         void updateSquares(Square* _clicked, Square* _destination);
         bool isKingInside();
