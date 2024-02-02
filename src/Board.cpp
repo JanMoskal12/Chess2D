@@ -96,8 +96,8 @@ void Board::assigningPieces(){
     squares[7][7]->setPiece(pieces[1][6]);
 
     // Assigning Kings to additional info Squares
-    whiteKing = squares[7][4];
-    blackKing = squares[0][4];
+    this->whiteKing = squares[7][4];
+    this->blackKing = squares[0][4];
 }
 
 void Board::restart(){
@@ -231,24 +231,30 @@ bool Board::castling(){
                         this->squares[this->destination->getRow()][0]->setPiece(nullptr);
                         this->squares[this->destination->getRow()][0]->getButton()->SetBitmap(images[this->squares[this->destination->getRow()][0]->getBackgroundColor()][0]);
                         return 0;
-                    }
-                }
-            }
+                    }return 1;
+
+                }return 1;
+
+            }return 1;
+
         }else if(this->destination->getCol() == 6){
             if(this->squares[this->destination->getRow()][7]->getPiece()->getMoved() == false){
                 if(this->isSomethingBetween(this->clicked,this->squares[this->destination->getRow()][7], 3) == false){
                     this->squares[this->destination->getRow()][5]->setPiece(pieces[this->clicked->getPiece()->getColor()][1]);
-                    if(!(this->isBeatable(this->clicked)) && !(this->isBeatable(this->squares[this->destination->getRow()][3]))){
+                    if(!(this->isBeatable(this->clicked)) && !(this->isBeatable(this->squares[this->destination->getRow()][5]))){
                         this->squares[this->destination->getRow()][5]->setPiece(this->squares[this->destination->getRow()][7]->getPiece());
                         this->squares[this->destination->getRow()][5]->getButton()->SetBitmap(images[this->squares[this->destination->getRow()][7]->getPiece()->getColor()][this->squares[this->destination->getRow()][7]->getPiece()->getTypeInt()+1-this->squares[this->destination->getRow()][5]->getBackgroundColor()]);
                         this->squares[this->destination->getRow()][5]->getPiece()->setMoved();
                         this->squares[this->destination->getRow()][7]->setPiece(nullptr);
                         this->squares[this->destination->getRow()][7]->getButton()->SetBitmap(images[this->squares[this->destination->getRow()][7]->getBackgroundColor()][0]);
                         return 0;
-                    }
-                }
-            }
-        }
+                    }return 1;
+
+                }return 1;
+
+            }return 1;
+
+        }return 1;
     }
     return 0;
 }
