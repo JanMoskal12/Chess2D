@@ -7,9 +7,40 @@ extern wxBitmap images[2][13];
 extern int counter;
 extern int whiteOrBlack;
 
-Board::Board(int i)
-{
-    // Creating Squares
+Board::Board(int i){
+    creatingSquares();
+    creatingPieces();
+    assigningPieces();
+}
+
+Board::~Board(){
+    cleaning();
+}
+
+void Board::cleaning(){
+    // Setting nullptr for each Piece in Square
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++) {
+            squares[i][j]->setPiece(nullptr);
+        }
+    }
+
+    //Deleting Squares
+    for (int i = 0; i < 8; i++){
+        for (int j = 0; j < 8; j++){
+            delete squares[i][j];
+        }
+    }
+
+    // Deleting Pieces
+    for (int i = 0; i < 2; i++){
+        for (int j = 0; j < 7; ++j){
+            delete pieces[i][j];
+        }
+    }
+}
+
+void Board::creatingSquares(){
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){
             if((i+j) % 2 == 0){
@@ -19,8 +50,9 @@ Board::Board(int i)
             }
         }
     }
+}
 
-    // Creating Pieces
+void Board::creatingPieces(){
     pieces[0][0] = new Pawn(false);
     pieces[0][1] = new Rook(false);
     pieces[0][2] = new Knight(false);
@@ -36,10 +68,6 @@ Board::Board(int i)
     pieces[1][5] = new King(true);
     pieces[1][6] = new Rook(true);
 
-    assigningPieces();
-}
-
-Board::~Board(){
 }
 
 void Board::assigningPieces(){
@@ -81,8 +109,10 @@ void Board::restart(){
     blackKing = nullptr;
     setOfMoves.clear();
     squareBetween = nullptr;;
-    pieceStorage = nullptr;
 
+    cleaning();
+    creatingSquares();
+    creatingPieces();
     assigningPieces();
 
     squares[0][0]->getButton()->SetBitmap(images[whiteOrBlack-1][3]);
@@ -593,7 +623,7 @@ bool Board::isBeatable(Square* _square){
 bool Board::moveSimulation(){
     bool x = false;
     this->wasKingMoving();
-    pieceStorage = new Square(-1, -1, 0, board[0][0], nullptr);
+    Square* pieceStorage = new Square(-1, -1, 0, board[0][0], nullptr);
     if(this->destination->getPiece() != nullptr){
         pieceStorage->setPiece(this->destination->getPiece());
     }
@@ -603,10 +633,10 @@ bool Board::moveSimulation(){
         x = true;
     }
     this->clicked->setPiece(this->destination->getPiece());
-    if(this->pieceStorage->getPiece() == nullptr){
+    if(pieceStorage->getPiece() == nullptr){
         this->destination->setPiece(nullptr);
     }else{
-        this->destination->setPiece(this->pieceStorage->getPiece());
+        this->destination->setPiece(pieceStorage->getPiece());
     }
     if((this->blackKing == this->destination) + (this->whiteKing == this->destination) == 1){
         if(whiteOrBlack == 1){
@@ -615,5 +645,6 @@ bool Board::moveSimulation(){
             this->blackKing = this->clicked;
         }
     }
+    delete pieceStorage;
     return x;
 }

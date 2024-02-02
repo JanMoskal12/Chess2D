@@ -21,6 +21,9 @@ class Board
     public:
         Board(int i);
         ~Board();
+        void cleaning();
+        void creatingSquares();
+        void creatingPieces();
         void assigningPieces();
         void restart();
         void setClicked(int _nrBB);
@@ -51,7 +54,6 @@ class Board
         Square* blackKing;
         set<int> setOfMoves;
         Square* squareBetween;
-        Square* pieceStorage;
 };
 
 #endif // BOARD_H

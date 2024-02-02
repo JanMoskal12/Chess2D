@@ -32,6 +32,8 @@ class Chess2DDialog: public wxDialog
         void OnQuit(wxCommandEvent& event);
         void OnAbout(wxCommandEvent& event);
         void OnBitmapButton1Click(wxCommandEvent& event);
+        void OnCheckBox1Click(wxCommandEvent& event);
+        void OnCheckBox1Click1(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(Chess2DDialog)

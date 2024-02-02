@@ -177,6 +177,13 @@ Chess2DDialog::~Chess2DDialog(){
 }
 
 void Chess2DDialog::OnQuit(wxCommandEvent& event){
+    _B->cleaning();
+    delete _B;
+    for(int i = 0; i < 8; i++){
+        for(int j = 0; j < 8; j++){
+            delete board[i][j];
+        }
+    }
     Close();
 }
 
@@ -242,11 +249,7 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
     counter++;
 
     whiteOrBlack = (whiteOrBlack + 1)%2;
-    _B->restart();
     return;
     }
 
 }
-
-
-
