@@ -14,7 +14,7 @@
 #include "Queen.h"
 #include "King.h"
 
-
+using std::list;
 using std::set;
 using std::abs;
 
@@ -43,11 +43,11 @@ class Board
         void pawnMovesButNothingIsInFront();
         void pawnTakes();
         void pawnPromotion();
-        void whereICanMove();
+        void whereICanMove(Square* clicked);
         bool isInSetOfMoves();
         bool isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _typeInt);
         bool isBeatable(Square* _square);
-        bool moveSimulation();
+        bool moveSimulation(Square* clicked, Square* destination);
         bool isMate();
         Piece* pieces[2][7];
         Square* squares[8][8];

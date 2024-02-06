@@ -222,7 +222,7 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
             return;
         }
         // Creating a set of moves for the figure selected by the player
-        _B->whereICanMove();
+        _B->whereICanMove(_B->clicked);
 
         // If the move is not in this setOfMoves, we cannot perform it
         if(!_B->isInSetOfMoves()){
@@ -235,7 +235,7 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
             return;
         }
         // Even before making a move, we check whether the king is in check, if so, we check whether the king is no longer in check after the move chosen by the player; if the player's move does not solve the check problem, the move cannot be made
-        if(_B->moveSimulation()){
+        if(_B->moveSimulation(_B->clicked, _B->destination)){
             wxLogMessage("Tutaj nie wolno");
             counter--;
             return;
@@ -256,6 +256,11 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
 
         counter++;
         whiteOrBlack = (whiteOrBlack + 1)%2;
+        /*
+        if( _B->isMate() == true ){
+            wxLogMessage("Mat");
+        }
+        */
         return;
     }
 }
