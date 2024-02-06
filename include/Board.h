@@ -2,6 +2,7 @@
 #define BOARD_H
 
 #include <set>
+#include <list>
 #include <cmath>
 #include <wx/wx.h>
 #include <wx/bmpbuttn.h>
@@ -12,7 +13,7 @@
 #include "Bishop.h"
 #include "Queen.h"
 #include "King.h"
-#include "list"
+
 
 using std::set;
 using std::abs;
@@ -56,6 +57,7 @@ class Board
         Square* blackKing;
         set<int> setOfMoves;
         Square* squareBetween;
+        list<int> listOfThreats;
 
 };
 
