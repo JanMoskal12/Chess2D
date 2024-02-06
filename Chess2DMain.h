@@ -14,6 +14,7 @@
 
 //(*Headers(Chess2DDialog)
 #include <wx/bmpbuttn.h>
+#include <wx/checkbox.h>
 #include <wx/dialog.h>
 #include <wx/sizer.h>
 //*)
@@ -33,14 +34,18 @@ class Chess2DDialog: public wxDialog
         void OnBitmapButton1Click(wxCommandEvent& event);
         void OnCheckBox1Click(wxCommandEvent& event);
         void OnCheckBox1Click1(wxCommandEvent& event);
+        void OnCheckBoxClick(wxCommandEvent& event);
+        void OnInit(wxInitDialogEvent& event);
         //*)
 
         //(*Identifiers(Chess2DDialog)
         static const long ID_BITMAPBUTTON1;
+        static const long ID_CHECKBOX1;
         //*)
 
         //(*Declarations(Chess2DDialog)
         wxBitmapButton* BitmapButton1;
+        wxCheckBox* CheckBox1;
         //*)
 
         DECLARE_EVENT_TABLE()

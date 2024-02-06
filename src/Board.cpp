@@ -21,21 +21,21 @@ void Board::cleaning(){
     // Setting nullptr for each Piece in Square
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++) {
-            squares[i][j]->setPiece(nullptr);
+            this->squares[i][j]->setPiece(nullptr);
         }
     }
 
     //Deleting Squares
     for (int i = 0; i < 8; i++){
         for (int j = 0; j < 8; j++){
-            delete squares[i][j];
+            delete this->squares[i][j];
         }
     }
 
     // Deleting Pieces
     for (int i = 0; i < 2; i++){
         for (int j = 0; j < 7; ++j){
-            delete pieces[i][j];
+            delete this->pieces[i][j];
         }
     }
 }
@@ -44,56 +44,56 @@ void Board::creatingSquares(){
     for(int i = 0; i < 8; i++){
         for(int j = 0; j < 8; j++){
             if((i+j) % 2 == 0){
-                squares[i][j] = new Square(i, j , true, board[i][j]);
+                this->squares[i][j] = new Square(i, j , true, board[i][j]);
             }else{
-                squares[i][j] = new Square(i, j , false, board[i][j]);
+                this->squares[i][j] = new Square(i, j , false, board[i][j]);
             }
         }
     }
 }
 
 void Board::creatingPieces(){
-    pieces[0][0] = new Pawn(false);
-    pieces[0][1] = new Rook(false);
-    pieces[0][2] = new Knight(false);
-    pieces[0][3] = new Bishop(false);
-    pieces[0][4] = new Queen(false);
-    pieces[0][5] = new King(false);
-    pieces[0][6] = new Rook(false);
-    pieces[1][0] = new Pawn(true);
-    pieces[1][1] = new Rook(true);
-    pieces[1][2] = new Knight(true);
-    pieces[1][3] = new Bishop(true);
-    pieces[1][4] = new Queen(true);
-    pieces[1][5] = new King(true);
-    pieces[1][6] = new Rook(true);
+    this->pieces[0][0] = new Pawn(false);
+    this->pieces[0][1] = new Rook(false);
+    this->pieces[0][2] = new Knight(false);
+    this->pieces[0][3] = new Bishop(false);
+    this->pieces[0][4] = new Queen(false);
+    this->pieces[0][5] = new King(false);
+    this->pieces[0][6] = new Rook(false);
+    this->pieces[1][0] = new Pawn(true);
+    this->pieces[1][1] = new Rook(true);
+    this->pieces[1][2] = new Knight(true);
+    this->pieces[1][3] = new Bishop(true);
+    this->pieces[1][4] = new Queen(true);
+    this->pieces[1][5] = new King(true);
+    this->pieces[1][6] = new Rook(true);
 
 }
 
 void Board::assigningPieces(){
     // Assigning Pawns to Squares
     for(int i = 0; i < 8; i++){
-        squares[1][i]->setPiece(pieces[0][0]);
-        squares[6][i]->setPiece(pieces[1][0]);
+        this->squares[1][i]->setPiece(pieces[0][0]);
+        this->squares[6][i]->setPiece(pieces[1][0]);
     }
 
     // Assigning other Pieces to Squares
-    squares[0][0]->setPiece(pieces[0][1]);
-    squares[0][1]->setPiece(pieces[0][2]);
-    squares[0][2]->setPiece(pieces[0][3]);
-    squares[0][3]->setPiece(pieces[0][4]);
-    squares[0][4]->setPiece(pieces[0][5]);
-    squares[0][5]->setPiece(pieces[0][3]);
-    squares[0][6]->setPiece(pieces[0][2]);
-    squares[0][7]->setPiece(pieces[0][6]);
-    squares[7][0]->setPiece(pieces[1][1]);
-    squares[7][1]->setPiece(pieces[1][2]);
-    squares[7][2]->setPiece(pieces[1][3]);
-    squares[7][3]->setPiece(pieces[1][4]);
-    squares[7][4]->setPiece(pieces[1][5]);
-    squares[7][5]->setPiece(pieces[1][3]);
-    squares[7][6]->setPiece(pieces[1][2]);
-    squares[7][7]->setPiece(pieces[1][6]);
+    this->squares[0][0]->setPiece(pieces[0][1]);
+    this->squares[0][1]->setPiece(pieces[0][2]);
+    this->squares[0][2]->setPiece(pieces[0][3]);
+    this->squares[0][3]->setPiece(pieces[0][4]);
+    this->squares[0][4]->setPiece(pieces[0][5]);
+    this->squares[0][5]->setPiece(pieces[0][3]);
+    this->squares[0][6]->setPiece(pieces[0][2]);
+    this->squares[0][7]->setPiece(pieces[0][6]);
+    this->squares[7][0]->setPiece(pieces[1][1]);
+    this->squares[7][1]->setPiece(pieces[1][2]);
+    this->squares[7][2]->setPiece(pieces[1][3]);
+    this->squares[7][3]->setPiece(pieces[1][4]);
+    this->squares[7][4]->setPiece(pieces[1][5]);
+    this->squares[7][5]->setPiece(pieces[1][3]);
+    this->squares[7][6]->setPiece(pieces[1][2]);
+    this->squares[7][7]->setPiece(pieces[1][6]);
 
     // Assigning Kings to additional info Squares
     this->whiteKing = squares[7][4];
@@ -114,49 +114,49 @@ void Board::restart(){
     creatingPieces();
     assigningPieces();
 
-    squares[0][0]->getButton()->SetBitmap(images[whiteOrBlack-1][3]);
-    squares[0][1]->getButton()->SetBitmap(images[whiteOrBlack-1][6]);
-    squares[0][2]->getButton()->SetBitmap(images[whiteOrBlack-1][7]);
-    squares[0][3]->getButton()->SetBitmap(images[whiteOrBlack-1][10]);
-    squares[0][4]->getButton()->SetBitmap(images[whiteOrBlack-1][11]);
-    squares[0][5]->getButton()->SetBitmap(images[whiteOrBlack-1][8]);
-    squares[0][6]->getButton()->SetBitmap(images[whiteOrBlack-1][5]);
-    squares[0][7]->getButton()->SetBitmap(images[whiteOrBlack-1][4]);
+    this->squares[0][0]->getButton()->SetBitmap(images[whiteOrBlack-1][3]);
+    this->squares[0][1]->getButton()->SetBitmap(images[whiteOrBlack-1][6]);
+    this->squares[0][2]->getButton()->SetBitmap(images[whiteOrBlack-1][7]);
+    this->squares[0][3]->getButton()->SetBitmap(images[whiteOrBlack-1][10]);
+    this->squares[0][4]->getButton()->SetBitmap(images[whiteOrBlack-1][11]);
+    this->squares[0][5]->getButton()->SetBitmap(images[whiteOrBlack-1][8]);
+    this->squares[0][6]->getButton()->SetBitmap(images[whiteOrBlack-1][5]);
+    this->squares[0][7]->getButton()->SetBitmap(images[whiteOrBlack-1][4]);
 
     for(int j = 0; j < 8; j++){
         if(j%2 == 0){
-            squares[1][j]->getButton()->SetBitmap(images[whiteOrBlack-1][2]);
+            this->squares[1][j]->getButton()->SetBitmap(images[whiteOrBlack-1][2]);
         }else{
-            squares[1][j]->getButton()->SetBitmap(images[whiteOrBlack-1][1]);
+            this->squares[1][j]->getButton()->SetBitmap(images[whiteOrBlack-1][1]);
         }
     }
 
     for(int i = 2; i < 6; i++){
         for(int j = 0; j < 8; j++){
             if((i+j)%2 == 0){
-                squares[i][j]->getButton()->SetBitmap(images[whiteOrBlack][0]);
+                this->squares[i][j]->getButton()->SetBitmap(images[whiteOrBlack][0]);
             }else{
-                squares[i][j]->getButton()->SetBitmap(images[(whiteOrBlack+1)%2][0]);
+                this->squares[i][j]->getButton()->SetBitmap(images[(whiteOrBlack+1)%2][0]);
             }
         }
     }
 
     for(int j = 0; j < 8; j++){
         if((j)%2 != 0){
-            squares[6][j]->getButton()->SetBitmap(images[whiteOrBlack][2]);
+            this->squares[6][j]->getButton()->SetBitmap(images[whiteOrBlack][2]);
         }else{
-            squares[6][j]->getButton()->SetBitmap(images[whiteOrBlack][1]);
+            this->squares[6][j]->getButton()->SetBitmap(images[whiteOrBlack][1]);
         }
     }
 
-    squares[7][0]->getButton()->SetBitmap(images[whiteOrBlack][4]);
-    squares[7][1]->getButton()->SetBitmap(images[whiteOrBlack][5]);
-    squares[7][2]->getButton()->SetBitmap(images[whiteOrBlack][8]);
-    squares[7][3]->getButton()->SetBitmap(images[whiteOrBlack][9]);
-    squares[7][4]->getButton()->SetBitmap(images[whiteOrBlack][12]);
-    squares[7][5]->getButton()->SetBitmap(images[whiteOrBlack][7]);
-    squares[7][6]->getButton()->SetBitmap(images[whiteOrBlack][6]);
-    squares[7][7]->getButton()->SetBitmap(images[whiteOrBlack][3]);
+    this->squares[7][0]->getButton()->SetBitmap(images[whiteOrBlack][4]);
+    this->squares[7][1]->getButton()->SetBitmap(images[whiteOrBlack][5]);
+    this->squares[7][2]->getButton()->SetBitmap(images[whiteOrBlack][8]);
+    this->squares[7][3]->getButton()->SetBitmap(images[whiteOrBlack][9]);
+    this->squares[7][4]->getButton()->SetBitmap(images[whiteOrBlack][12]);
+    this->squares[7][5]->getButton()->SetBitmap(images[whiteOrBlack][7]);
+    this->squares[7][6]->getButton()->SetBitmap(images[whiteOrBlack][6]);
+    this->squares[7][7]->getButton()->SetBitmap(images[whiteOrBlack][3]);
 
 }
 

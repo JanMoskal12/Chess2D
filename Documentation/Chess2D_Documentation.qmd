@@ -43,7 +43,7 @@ Pliki obrazków figur zostały nazwane zgodnie z ustaloną konwencją. Każda na
 ##### Przykłady:
 
 | Kolor figury | Figura | Kolor pola | Przykład nazwy pliku | Opis                      |
-|--------------|--------|------------|----------------------|---------------------------|
+|-------------|-------------|-------------|--------------|------------------|
 | `w`          | `p`    | `B`        | `wpB.png`            | Biały pion, jasne pole    |
 | `b`          | `r`    | `D`        | `brD.png`            | Czarna wieża, ciemne pole |
 
@@ -95,17 +95,9 @@ Tablica **`images`** została zdefiniowana jako dwuwymiarowa tablica **`wxBitmap
 
     -   Obrazy są wczytywane z katalogu "images" na podstawie ustalonej konwencji nazewniczej. Każdy obrazek jest zidentyfikowany przez trzy litery w nazwie, które odpowiadają kolorowi figury, jej typowi oraz kolorowi tła.
 
--   **Przykładowe Indeksowanie:**
-
-    -   Poniżej znajduje się przykładowe indeksowanie tablicy **`images`** dla białego piona:
-
 -   **Wykorzystanie w Praktyce:**
 
     -   Tablica **`images`** jest używana do przypisywania odpowiednich obrazków do przycisków **`wxBitmapButton`** w tablicy **`board`**, reprezentujących figury na szachownicy.
-
--   **Przykład Kodu:**
-
-    -   Poniżej znajduje się przykładowy fragment kodu, ilustrujący użycie tablicy **`images`** do przypisywania obrazków do przycisków:
 
 Tablica **`images`** umożliwia łatwe zarządzanie obrazkami figur szachowych w grze i zapewnia spójność wizualną na szachownicy.
 
@@ -255,8 +247,6 @@ Ta struktura klas pozwala na uporządkowanie kodu, zapewniając modularność i 
 
     Klasa te dziedziczą po klasie **`Piece`** i reprezentują konkretne figury w grze. Poniżej przedstawiono kluczowe elementy tech klas:
 
-    -   **Pierwszy Ruch**: Posiada informację o tym, czy figura wykonała swój pierwszy ruch w grze. To istotne np. dla reguły pierwszego ruchu piona.
-
-    -   **Typ Figury**: Posiada informację (string) o typie konkretnej figury, która zwracana jest przez getType().
+    -   **Pierwszy Ruch**: Posiada informację o tym, czy figura wykonała swój pierwszy ruch w grze. To istotne np. dla roszady.
 
     -   **TypInt Figury:** Posiada informację (int) o typie konkretnej figury, która zwracana jest przez getTypeInt() (przydatne do indeksowania naszych tablic).

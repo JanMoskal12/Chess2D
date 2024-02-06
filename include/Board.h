@@ -12,6 +12,7 @@
 #include "Bishop.h"
 #include "Queen.h"
 #include "King.h"
+#include "list"
 
 using std::set;
 using std::abs;
@@ -54,6 +55,7 @@ class Board
         Square* blackKing;
         set<int> setOfMoves;
         Square* squareBetween;
+
 };
 
 #endif // BOARD_H

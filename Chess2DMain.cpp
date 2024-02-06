@@ -53,6 +53,7 @@ int whiteOrBlack = 1;
 
 //(*IdInit(Chess2DDialog)
 const long Chess2DDialog::ID_BITMAPBUTTON1 = wxNewId();
+const long Chess2DDialog::ID_CHECKBOX1 = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(Chess2DDialog,wxDialog)
@@ -65,17 +66,21 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id){
     wxFlexGridSizer* FlexGridSizer1;
     wxGridSizer* GridSizer1;
 
-    Create(parent, id, _("wxWidgets app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
-    FlexGridSizer1 = new wxFlexGridSizer(0, 1, 0, 0);
+    Create(parent, wxID_ANY, _("wxWidgets app"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
+    FlexGridSizer1 = new wxFlexGridSizer(2, 1, 0, 0);
     GridSizer1 = new wxGridSizer(8, 8, -4, -4);
     BitmapButton1 = new wxBitmapButton(this, ID_BITMAPBUTTON1, wxBitmap(wxImage(_T("images\\Pieces\\brB.png"))), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BITMAPBUTTON1"));
     GridSizer1->Add(BitmapButton1, 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 0);
     FlexGridSizer1->Add(GridSizer1, 1, wxALL|wxEXPAND, 5);
+    CheckBox1 = new wxCheckBox(this, ID_CHECKBOX1, _("Label"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX1"));
+    CheckBox1->SetValue(false);
+    FlexGridSizer1->Add(CheckBox1, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     SetSizer(FlexGridSizer1);
     FlexGridSizer1->Fit(this);
     FlexGridSizer1->SetSizeHints(this);
 
     Connect(ID_BITMAPBUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Chess2DDialog::OnBitmapButton1Click);
+    Connect(wxID_ANY,wxEVT_INIT_DIALOG,(wxObjectEventFunction)&Chess2DDialog::OnInit);
     //*)
 
     // Black Pieces Images
@@ -254,4 +259,13 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
         whiteOrBlack = (whiteOrBlack + 1)%2;
         return;
     }
+}
+
+void Chess2DDialog::OnCheckBoxClick(wxCommandEvent& event){
+
+    _B->restart();
+}
+
+void Chess2DDialog::OnInit(wxInitDialogEvent& event)
+{
 }

@@ -1,0 +1,537 @@
+\documentclass[]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{xcolor}
+
+
+
+\lstdefinestyle{mystyle}{
+	language=C++,
+	basicstyle=\footnotesize\ttfamily,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!60!black},
+	identifierstyle=\color{black},
+	stringstyle=\color{orange},
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	breaklines=true,
+	showstringspaces=false,
+	backgroundcolor=\color{black!5},
+	frame=single,
+	rulecolor=\color{black!30},
+	linewidth=\linewidth,
+	xleftmargin=0.00\linewidth,
+	xrightmargin=0.00\linewidth,
+}
+
+\lstset{style=mystyle,tabsize=2}
+
+% Title Page
+\title{Szachy}
+\author{Szymon Makulec Jan Moskal}
+
+
+\begin{document}
+\maketitle
+\section*{Cel i efekty pracy}
+
+
+\subsection*{Opis}
+\begin{flushleft}
+Projekt zakładał stworzenie gry w szachy dla dwóch graczy. Kod oparty jest na bibliotece wxWidgets, a interfejs użytkownika wykorzystuje siatkę wxBitmapButton z obrazkami figur połączonymi z kolorem tła, do reprezentacji szachownicy i figur na niej położonych. Projekt udało nam się doprowadzić do stanu gdzie są przestrzegane zasady gry w szachy takie jak: ruszanie się na zmianę graczy, figury mają tylko takie możliwości ruchy jakby była to normalna gra, mamy dostęp do roszady, pierwszego ruchu piona o 2, promocji piona. Przestrzegane są również zasady związane z szachowaniem tj. nie możemy się ruszyć w taki sposób by po ruchu król był dalej pod biciem.
+\end{flushleft}
+\subsection*{Tablice obiektów}
+
+\textbf{Użycie obrazków (images[2][13])}
+
+\begin{lstlisting}
+// Black Pieces Images
+images[0][0] = wxBitmap(wxImage("images/D.jpg"));
+images[0][1] = wxBitmap(wxImage(_T("images/Pieces/bpB.png")));
+images[0][2] = wxBitmap(wxImage(_T("images/Pieces/bpD.png")));
+images[0][3] = wxBitmap(wxImage(_T("images/Pieces/brB.png")));
+images[0][4] = wxBitmap(wxImage(_T("images/Pieces/brD.png")));
+images[0][5] = wxBitmap(wxImage(_T("images/Pieces/bnB.png")));
+images[0][6] = wxBitmap(wxImage(_T("images/Pieces/bnD.png")));
+images[0][7] = wxBitmap(wxImage(_T("images/Pieces/bbB.png")));
+images[0][8] = wxBitmap(wxImage(_T("images/Pieces/bbD.png")));
+images[0][9] = wxBitmap(wxImage(_T("images/Pieces/bqB.png")));
+images[0][10] = wxBitmap(wxImage(_T("images/Pieces/bqD.png")));
+images[0][11] = wxBitmap(wxImage(_T("images/Pieces/bkB.png")));
+images[0][12] = wxBitmap(wxImage(_T("images/Pieces/bkD.png")));
+
+// White Pieces Images
+images[1][0] = wxBitmap(wxImage("images/B.jpg"));
+images[1][1] = wxBitmap(wxImage(_T("images/Pieces/wpB.png")));
+images[1][2] = wxBitmap(wxImage(_T("images/Pieces/wpD.png")));
+images[1][3] = wxBitmap(wxImage(_T("images/Pieces/wrB.png")));
+images[1][4] = wxBitmap(wxImage(_T("images/Pieces/wrD.png")));
+images[1][5] = wxBitmap(wxImage(_T("images/Pieces/wnB.png")));
+images[1][6] = wxBitmap(wxImage(_T("images/Pieces/wnD.png")));
+images[1][7] = wxBitmap(wxImage(_T("images/Pieces/wbB.png")));
+images[1][8] = wxBitmap(wxImage(_T("images/Pieces/wbD.png")));
+images[1][9] = wxBitmap(wxImage(_T("images/Pieces/wqB.png")));
+images[1][10] = wxBitmap(wxImage(_T("images/Pieces/wqD.png")));
+images[1][11] = wxBitmap(wxImage(_T("images/Pieces/wkB.png")));
+images[1][12] = wxBitmap(wxImage(_T("images/Pieces/wkD.png")));
+\end{lstlisting}
+\vspace{\baselineskip}
+Do wyświetlania figur na przyciskach wxBitmapButton, używamy zestawu dwudziestu sześciu obrazków, reprezentujących figury szachowe. Dwa puste pola (czarne i białe) oraz sześć różnych typów figur (pion, wieża, skoczek, goniec, hetman, król) w dwóch kolorach (biały i czarny) na dwóch tłach (jasnym, ciemnym). images, jest to tablica, w której przechowywane są obrazy figur szachowych używane do wyświetlania na przyciskach wxBitmapButton na szachownicy. Umożliwia łatwe zarządzanie obrazkami figur szachowych w grze.
+\newpage
+\begin{flushleft}
+\textbf{Użycie przycisków wxBitmapButton (board[8][8])}
+\end{flushleft}
+\begin{lstlisting}
+board[0][0] = BitmapButton1;
+board[0][1] = new wxBitmapButton(this, wxNewId(), images[0][6], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[0][2] = new wxBitmapButton(this, wxNewId(), images[0][7], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[0][3] = new wxBitmapButton(this, wxNewId(), images[0][10], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[0][4] = new wxBitmapButton(this, wxNewId(), images[0][11], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[0][5] = new wxBitmapButton(this, wxNewId(), images[0][8], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[0][6] = new wxBitmapButton(this, wxNewId(), images[0][5], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[0][7] = new wxBitmapButton(this, wxNewId(), images[0][4], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+
+for(int j = 0; j < 8; j++){
+	if(j%2 == 0){
+		board[1][j] = new wxBitmapButton(this, wxNewId(),images[0][2] , wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+	}else{
+		board[1][j] = new wxBitmapButton(this, wxNewId(),images[0][1] , wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+		
+	}
+}
+
+for(int i = 2; i < 6; i++){
+	for(int j = 0; j < 8; j++){
+		if((i+j)%2 == 0){
+			board[i][j] = new wxBitmapButton(this, wxNewId(), images[1][0], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+		}else{
+			board[i][j] = new wxBitmapButton(this, wxNewId(), images[0][0], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+		}
+	}
+}
+
+for(int j = 0; j < 8; j++){
+	if((j)%2 != 0){
+		board[6][j] = new wxBitmapButton(this, wxNewId(), images[1][2], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+	}else{
+		board[6][j] = new wxBitmapButton(this, wxNewId(), images[1][1], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+		
+	}
+}
+
+board[7][0] = new wxBitmapButton(this, wxNewId(), images[1][4], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[7][1] = new wxBitmapButton(this, wxNewId(), images[1][5], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[7][2] = new wxBitmapButton(this, wxNewId(), images[1][8], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[7][3] = new wxBitmapButton(this, wxNewId(), images[1][9], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[7][4] = new wxBitmapButton(this, wxNewId(), images[1][12], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[7][5] = new wxBitmapButton(this, wxNewId(), images[1][7], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[7][6] = new wxBitmapButton(this, wxNewId(), images[1][6], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+board[7][7] = new wxBitmapButton(this, wxNewId(), images[1][3], wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW, wxDefaultValidator);
+
+for(int i = 0;i < 8; i++){
+	for(int j = 0; j < 8; j++){
+		if(i + j == 0){
+			j++;
+		}
+		GridSizer1->Add(board[i][j], 1, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+		Connect(board[i][j]->GetId(),wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&Chess2DDialog::OnBitmapButton1Click);
+		
+		
+	}
+}
+\end{lstlisting}
+\vspace{\baselineskip}
+Każdy element board[i][j] (8x8) reprezentuje jedno pole z wyświetloną figurą danego koloru i tłem na szachownicy, zawiera przycisk do interakcji z użytkownikiem. Każdy przycisk jest obsługiwany przez tą samą funkcję OnBitmapButton1Click.
+\newpage
+\begin{flushleft}
+\textbf{Użycie figur (pieces[2][7])}
+\end{flushleft}
+\begin{lstlisting}
+pieces[0][0] = new Pawn(false);
+pieces[0][1] = new Rook(false);
+pieces[0][2] = new Knight(false);
+pieces[0][3] = new Bishop(false);
+pieces[0][4] = new Queen(false);
+pieces[0][5] = new King(false);
+pieces[0][6] = new Rook(false);
+pieces[1][0] = new Pawn(true);
+pieces[1][1] = new Rook(true);
+pieces[1][2] = new Knight(true);
+pieces[1][3] = new Bishop(true);
+pieces[1][4] = new Queen(true);
+pieces[1][5] = new King(true);
+pieces[1][6] = new Rook(true);
+\end{lstlisting}
+\vspace{\baselineskip}
+\textbf{pieces[i][j]} jest to dwuwymiarowa tablica wskaźników do obiektów klasy Piece. Jest to tablica, w której przechowywane są obiekty reprezentujące różne typy figur szachowych w dwóch kolorach: białym i czarnym. Każdy obiekt klasy Piece przechowuje informacje o tym czy figura już się ruszała. Dlatego tworzymy dwie wieże, żeby każdej z osobna można było sprawdzać czy się ruszała. W przypadku pionów uznaliśmy tworze oddzielnych Pawnów za zbyteczne, ponieważ każdy może poruszać się tylko w 1 kierunku.
+\begin{flushleft}
+\textbf{Przechowywanie przycisków i figur w jednym obiekcie (squares[8][8])}
+\end{flushleft}
+\begin{lstlisting}
+for(int i = 0; i < 8; i++){
+	for(int j = 0; j < 8; j++){
+		if((i+j) % 2 == 0){
+			squares[i][j] = new Square(i, j , true, board[i][j]);
+		}else{
+			squares[i][j] = new Square(i, j , false, board[i][j]);
+		}
+	}
+}
+
+for(int i = 0; i < 8; i++){
+	squares[1][i]->setPiece(pieces[0][0]);
+	squares[6][i]->setPiece(pieces[1][0]);
+}
+
+// Assigning other Pieces to Squares
+squares[0][0]->setPiece(pieces[0][1]);
+squares[0][1]->setPiece(pieces[0][2]);
+squares[0][2]->setPiece(pieces[0][3]);
+squares[0][3]->setPiece(pieces[0][4]);
+squares[0][4]->setPiece(pieces[0][5]);
+squares[0][5]->setPiece(pieces[0][3]);
+squares[0][6]->setPiece(pieces[0][2]);
+squares[0][7]->setPiece(pieces[0][6]);
+squares[7][0]->setPiece(pieces[1][1]);
+squares[7][1]->setPiece(pieces[1][2]);
+squares[7][2]->setPiece(pieces[1][3]);
+squares[7][3]->setPiece(pieces[1][4]);
+squares[7][4]->setPiece(pieces[1][5]);
+squares[7][5]->setPiece(pieces[1][3]);
+squares[7][6]->setPiece(pieces[1][2]);
+squares[7][7]->setPiece(pieces[1][6]);
+\end{lstlisting}
+\begin{flushleft}
+\textbf{squares[i][j]} to dwuwymiarowa tablica wskaźników do obiektów typu Square, reprezentująca pola szachownicy. Każdy element tej tablicy to obiekt Square, który przechowuje informacje o polu (przycisk, figura oraz wiersz, kolumna i kolor pola).
+\end{flushleft}
+\section*{Struktura klas}
+
+Projekt składa się z kilku klas, które są ze sobą powiązane w celu zorganizowania logiki gry w szachy. Poniżej przedstawiona jest struktura klas, ich relacje oraz krótkie opisy.\vspace{\baselineskip}
+
+\textbf{Chess2DDialog}: Główna klasa projektu, dziedzicząca po wxDialog, reprezentująca okno gry w szachy. Odpowiada za obsługę interfejsu użytkownika i inicjalizację gry.\vspace{\baselineskip}
+
+\textbf{Board}: Klasa reprezentująca szachownicę. Odpowiada za logikę gry, przechowuje obiekty klasy Square reprezentujące pola na szachownicy.\vspace{\baselineskip}
+
+\textbf{Square}: Klasa reprezentująca pole na szachownicy. Zawiera informacje o kolorze pola, wierszu i kolumnie pola oraz referencje do przycisku wxBitmapButton i do figury Piece.\vspace{\baselineskip}
+
+\textbf{Piece}: Klasa abstrakcyjna, po niej dziedziczą konkretne rodzaje figur szachowych. Zawiera podstawowe metody i pola, takie jak: kolor, czy to czy figura się ruszała. Wprowadza metode wirtualną dotyczącą zwracania typu figury.\vspace{\baselineskip}
+
+\textbf{Pawn, Rook, Knight, Bishop, Queen, King}: Klasy dziedziczące po klasie Piece, reprezentujące poszczególne rodzaje figur szachowych. Każda z tych klas implementuje pola z informacjami na temat danej figury.
+
+\subsection*{Relacje między klasami:}
+
+\textbf{Chess2DDialog} zawiera obiekt klasy \textbf{Board}, który odpowiada za logikę gry i przechowuje informacje o szachownicy.\vspace{\baselineskip}
+
+Klasa \textbf{Board} zarządza tablicą obiektów \textbf{Square} reprezentujących pola na szachownicy.\vspace{\baselineskip}
+
+Każdy obiekt \textbf{Square} zawiera referencję do obiektu wxBitmapButton oraz informacje o obecności figury (\textbf{Piece}).\vspace{\baselineskip}
+
+Klasy \textbf{Pawn, Rook, Knight, Bishop, Queen, King} dziedziczą po klasie \textbf{Piece} i zawierają specyficzne implementacje metod związanych z ich ruchami.
+\begin{flushleft}
+Ta struktura klas pozwala na uporządkowanie kodu i łatwość rozbudowy gry.
+\end{flushleft}
+\section*{Szczegóły konkretnych klas:}
+
+\subsection*{Chess2DDialog}
+
+\begin{lstlisting}
+wxBitmapButton* board[8][8];
+wxBitmap images[2][13];
+
+int counter = 1;
+int whiteOrBlack = 1;
+
+_B = new Board(1);
+
+\end{lstlisting}
+\begin{flushleft}
+W konstruktorze klasy tworzony jest obiekt klasy Board, który będzie reprezentować szachownicę w grze. Tutaj są wczytywane obrazki do images[2][13] oraz tworzone przyciski umieszczane w board[8][8], a także liczniki odpowiadające za liczenie kliknięć i pilnowanie czyj mamy ruch. Zawiera również obsługę zdarzeń związanych z interakcją użytkownika (OnBitmapButtonClick()). Także w tym miejscu jest kod odpowiedzialny za wyświetlanie szachownicy.
+\end{flushleft}
+\subsection*{Board}
+
+\begin{lstlisting}
+class Board
+{
+	public:
+	Board(int i);
+	~Board();
+	void cleaning();
+	void creatingSquares();
+	void creatingPieces();
+	void assigningPieces();
+	void restart();
+	void setClicked(int _nrBB);
+	void setDestination(int _nrBB);
+	bool isClickedPiece();
+	bool isDestinationPiece();
+	bool ArePiecesSameColor();
+	bool isGoodColorMoving();
+	void updateSquares(Square* _clicked, Square* _destination);
+	bool isKingInside();
+	void wasKingMoving();
+	int whereIsKing();
+	bool castling();
+	bool pawnBlockedByPieceInFront();
+	void pawnMovesButNothingIsInFront();
+	void pawnTakes();
+	void pawnPromotion();
+	void whereICanMove();
+	bool isInSetOfMoves();
+	bool isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _typeInt);
+	bool isBeatable(Square* _square);
+	bool moveSimulation();
+	Piece* pieces[2][7];
+	Square* squares[8][8];
+	Square* clicked;
+	Square* destination;
+	Square* whiteKing;
+	Square* blackKing;
+	set<int> setOfMoves;
+	Square* squareBetween;
+};
+
+\end{lstlisting}
+\begin{flushleft}
+Klasa Board jest centralnym punktem logiki gry, zarządzającym szachownicą. Zawiera tablicę obiektów Square oraz tablicę obiektów Piece. Jest w niej kod odpowiedzialny za ustawienie początkowego rozmieszczenia figur na szachownicy. Klasa Board implementuje logikę ruchu figur, sprawdzając, czy dany ruch jest zgodny z zasadami gry w szachy. Odpowiada za obsługę zdarzeń związanych z interakcją użytkownika na poziomie szachownicy, takich jak kliknięcia na pola. Po wykonaniu ruchu odpowiednio aktualizuje widok.
+\end{flushleft}
+\subsection*{Square}
+
+\begin{lstlisting}
+class Square
+{
+	public:
+	friend class Board;
+	Square(int _row, int _col, bool _backgroundColor, wxBitmapButton* _button, Piece* _piece = nullptr);
+	~Square();
+	int getRow();
+	int getCol();
+	bool getBackgroundColor();
+	wxBitmapButton* getButton();
+	Piece* getPiece();
+	void setPiece(Piece* _piece);
+	
+	protected:
+	int row;
+	int col;
+	bool backgroundColor;
+	wxBitmapButton* button;
+	Piece* piece;
+};
+\end{lstlisting}
+\begin{flushleft}
+Klasa Square reprezentuje pojedyncze pole na szachownicy. Przechowuje informację o kolorze pola na szachownicy (jasne/ciemne), wierszu i kolumnie pola. Zawiera referencję do obiektu klasy Piece reprezentującego figurę. Jeśli pole jest puste, wartość ta to nullptr. Przechowuje referencję do przycisku, który jest powiązany z danym polem na szachownicy.
+\end{flushleft}
+\subsection*{Piece}
+
+\begin{lstlisting}
+class Piece
+{
+	public:
+	Piece(bool _color, bool _moved);
+	virtual ~Piece();
+	bool getColor();
+	bool getMoved();
+	void setMoved();
+	virtual int getTypeInt()=0;
+	
+	protected:
+	bool color;
+	bool moved;
+};
+\end{lstlisting}
+\vspace{\baselineskip}
+Klasa Piece stanowi abstrakcję dla poszczególnych rodzajów figur (piona, wieży, skoczka, gońca, hetmana, króla). Klasa posiada konstruktor, który inicjuje kolor figury oraz informację o tym, czy figura wykonała ruch. Posiada metode virtual int getTypeInt()=0: Jest to metoda czysto wirtualna, zwracająca typ figury jako wartość liczbową (przydatna do indeksach naszych tablic).
+
+\subsection*{Pawn, Rook, Knight, Bishop, Queen, King}
+
+\begin{lstlisting}
+class Pawn:public Piece
+{
+	public:
+	Pawn(bool _color, bool _moved = false);
+	~Pawn();
+	int getTypeInt();
+	
+	private:
+	int TypeInt = 1;
+};
+\end{lstlisting}
+\vspace{\baselineskip}
+Klasy te dziedziczą po klasie Piece i reprezentują konkretne figury w grze. Poniżej przedstawiono kluczowe elementy tech klas: Posiada informację o tym, czy figura wykonała swój pierwszy ruch w grze. To istotne np. dla reguły pierwszego ruchu piona lub dla roszady Posiada informację (int) o typie konkretnej figury. Wszytskie te klasy są identyczne.
+
+\subsection*{Metody w klasie Board:}
+
+\textbf{Odpowiedzialne za restartowanie gry oraz usuwanie i tworzenie obiektów:}
+
+\begin{lstlisting}
+void cleaning();
+void creatingSquares();
+void creatingPieces();
+void assigningPieces();
+void restart();
+\end{lstlisting}
+\begin{flushleft}
+$\bullet$ \textbf{cleaning()}: Usuwa zmienne tworzone dynamicznie (korzysta z niej destruktor i restart).
+
+$\bullet$ \textbf{creatingSquares()}: Tworzy obiekty reprezentujące pola na szachownicy.
+
+$\bullet$ \textbf{creatingPieces()}: Tworzy obiekty reprezentujące figury szachowe.
+
+$\bullet$ \textbf{assigningPieces()}: Przypisuje figury do odpowiednich pól na szachownicy (pozycje startowe).
+
+$\bullet$ \textbf{restart()}: Przywraca początkowe ustawienie figur na szachownicy.
+
+\textbf{Odpowiedzialne za obsługę interakcji użytkownika z szachownicą, kontrolujące kliknięcia, aby zapobiec nieoczekiwanym i niechcianym zachowaniom:}
+\end{flushleft}
+\begin{lstlisting}
+void setClicked(int _nrBB);
+void setDestination(int _nrBB);
+bool isClickedPiece();
+bool isDestinationPiece();
+bool arePiecesSameColor();
+bool isGoodColorMoving();
+\end{lstlisting}
+\begin{flushleft}
+$\bullet$ \textbf{setClicked(int \_nrBB)}: ustawia kliknięte pole
+
+
+$\bullet$ \textbf{setDestination(int \_nrBB)}: ustawia docelowe pole
+
+$\bullet$ \textbf{isClickedPiece()}: sprawdza czy w klikniętym polu jest jakaś figura (używana po to żeby sprawdzić czy w wybranym polu jest jakaś figura, którą można się ruszyć)
+
+$\bullet$ \textbf{isDestinationPiece()}: sprawdza czy w docelowym polu jest jakaś figura
+
+$\bullet$ \textbf{arePiecesSameColor()}: sprawdza czy w klikniętym i docelowym polu są figury tego samego koloru (używana żeby zapobiec ruszaniu się na pola gdzie mamy własne figury)
+
+$\bullet$ \textbf{isGoodColorMoving()}: sprawdza czy ruch wykonuje kolor, którego jest teraz kolej
+
+ \textbf{Odpowiedzialna za aktualizacje szachownicy po ruchu:}
+
+\begin{lstlisting}
+void updateSquares(Square* _clicked, Square* _destination);
+\end{lstlisting}
+$\bullet$ \textbf{updateSquares(Square* \_clicked, Square* \_destination)}: ustawia obrazki i figury na polu klikniętym i docelowym
+
+ \textbf{Odpowiedzialne za lokalizację oraz zmianę pozycji króli królów:}
+
+\begin{lstlisting}
+bool isKingInside();
+void wasKingMoving();
+int whereIsKing();
+\end{lstlisting}
+$\bullet$ \textbf{isKingInside()}: sprawdza czy król jest w klikniętym polu
+
+$\bullet$ \textbf{wasKingMoving()}: sprawdza na koniec ruchu czy król się ruszył i aktualizuje jego lokalizacje
+
+$\bullet$ \textbf{whereIsKing()}: zwraca pozycje króla strony, która jest teraz na ruchu
+
+\textbf{Odpowiedzialna za roszadę}
+
+\begin{lstlisting}
+bool castling();
+\end{lstlisting}
+$\bullet$ \textbf{castling()}: sprawdza czy w danym ruchu roszada miała miejsce, jeśli nie miała lub się udała to zwraca false, jeśli nie można było jej zrobić zwraca true
+
+\textbf{Odpowiedzialne za ruch i bicie (przez niego) piona oraz jego promocje:}
+
+\begin{lstlisting}
+bool pawnBlockedByPieceInFront();
+void pawnMovesButNothingIsInFront();
+void pawnTakes();
+void pawnPromotion();
+\end{lstlisting}
+
+$\bullet$ \textbf{pawnBlockedByPieceInFront()}: sprawdza czy ruch pion jest blokowany przez figury przed nim
+
+$\bullet$ \textbf{pawnMovesButNothingIsInFront()}: wykonuje ruch piona, gdy nic przed nim nie stoi
+
+$\bullet$ \textbf{pawnTakes()}: wykonuje bicie po przekątnej gdy są tam jakieś figury przeciwnika
+
+$\bullet$ \textbf{pawnPromotion()}: sprawdza czy pion znajduje się w pierwszym rzędzie u przeciwnika wtedy zamienia go w hetmana
+
+ \textbf{Odpowiedzialne za sprawdzanie legalnych ruchów dla każdej figury:}
+
+\begin{lstlisting}
+void whereICanMove();
+bool isInSetOfMoves();
+bool isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _typeInt);
+\end{lstlisting}
+
+$\bullet$ \textbf{whereICanMove()}: tworzy zbiór legalnych ruchów dla figury wybranej przez gracza
+
+$\bullet$ \textbf{isInSetOfMoves()}: sprawdza czy ruch wybrany przez gracza jest w zbiorze legalnych ruchów dla danej figury
+
+$\bullet$ \textbf{isSomethingBetween(Square* \_squareOne, Square* \_squareTwo, int \_typeInt)}: sprawdza czy między dwoma polami jest jakaś figura (używane do sprawdzenia czy nic nie stoi na drodze na dane pole)
+
+ \textbf{Odpowiedzialne za szachowanie i symulacje ruchów}
+
+\begin{lstlisting}
+bool isBeatable(Square* _square);
+bool moveSimulation();
+\end{lstlisting}
+
+$\bullet$ \textbf{isBeatable(Square* \_square)}: sprawdza czy wybrana figura jest podbiciem przez jakąś figure (używane głównie do sprawdzania szachowania króla)
+
+$\bullet$ \textbf{moveSimulation()}: przeprowadza symulacje ruchu (potem cofa wprowadzone zmiany) w sytuacji gdy król jest pod szachem, jeśli ruch gracza sprawia, że król nie jest już pod szachem zwraca true, w przeciwnym wypadku false
+
+\subsection*{Obsługa przycisków (OnBitmapButton1Click)}
+
+\begin{lstlisting}
+void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
+	int nrBB = event.GetId() - 100;
+	
+	if(counter%2 != 0){
+		_B->setClicked(nrBB);
+		if(!(_B->isClickedPiece()) || !(_B->isGoodColorMoving())){
+			return;
+		}
+		counter++;
+		return;
+	}
+	
+	if(counter%2 == 0){
+		_B->setDestination(nrBB);
+		if(_B->isDestinationPiece() && _B->arePiecesSameColor()){
+			counter--;
+			return;
+		}
+		_B->whereICanMove();
+		
+		if(!_B->isInSetOfMoves()){
+			counter--;
+			return;
+		}
+		if(_B->isSomethingBetween(_B->clicked, _B->destination, _B->clicked->getPiece()->getTypeInt())){
+			counter--;
+			return;
+		}
+
+		if(_B->moveSimulation()){
+			wxLogMessage("Tutaj nie wolno");
+			counter--;
+			return;
+		}
+
+		if(_B->castling()){
+			counter--;
+			return;
+		}
+		_B->updateSquares(_B->clicked, _B->destination);
+		
+		_B->pawnPromotion();
+		_B->wasKingMoving();
+		
+		counter++;
+		whiteOrBlack = (whiteOrBlack + 1)%2;
+		return;
+	}
+}
+\end{lstlisting}
+
+Funkcja OnBitmapButton1Click w każdym kliknięciu zapisuje nrBB (czyli numer bitmapy indywidualny dla każdego przycisku) a następnie sprawdza po kolei warunki z taką zasadą, że jeśli coś jest nie tak to wracamy do kliknięcia 1. W kliknięciu 1, poprzez wskaźnik do clicked zapisuje informacje o klikniętym Squarze. Następnie sprawdza po kolei czy na klikniętym polu znajdowała się figura a potem czy ma ona odpowiedni kolor (czyli czy dobra osoba się rusza). Kolejność jest ważna, ponieważ bez sprawdzenia czy na klikniętym polu jest figura mogłoby dojść do sytuacji, że chcemy użyć metody z klasy Piece na polu, w którym Piece-a nie ma i program zakończyłby działanie. Jeśli wszystko się zgadza zwiększamy counter o 1 i wychodzimy z metody. Przy kliknięciu 2 tak jak w 1 przekazujemy wskaźnik tylko tym razem do destination. Sprawdzamy wpierw czy kliknięte miejsce ma figurę a jeśli ma to sprawdzamy czy jest tego samego koloru. Jeśli jednak nie było z tym problemu to do zbioru poprzez funkcje whereICanMove() zapisujemy możliwe ruchy nie uwzględniając tego, że figura może zostać zablokowana. Następnie sprawdzamy czy destination w ogóle zawiera się w naszym zbiorze ruchów. Jeśli tak to następnie sprawdzamy czy jest coś między polem startowym a docelowym a jeśli i to przejdzie bez problemów to wykonywana jest symulacja ruchu, która ma sprawdzić czy po ruchu nasz król nie będzie pod szachem. Na sam koniec sprawdzamy czy może ktoś niechciałby zrobić roszady. Uaktualniamy pozycje, sprawdzamy czy na ostatnich liniach nie stoją piony, które chciałyby dostać awans a na koniec jeśli ruszał się król to poprzez metodę wasKingMoving() sprawdzamy jego kolor i w zależności od tego uaktualniamy blackKing lub whiteKing.
+
+\end{flushleft}
+\end{document}          
