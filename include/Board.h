@@ -47,6 +47,7 @@ class Board
         bool isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _typeInt);
         bool isBeatable(Square* _square);
         bool moveSimulation();
+        bool isMate();
         Piece* pieces[2][7];
         Square* squares[8][8];
         Square* clicked;

@@ -14,7 +14,7 @@
 
 //(*Headers(Chess2DDialog)
 #include <wx/bmpbuttn.h>
-#include <wx/checkbox.h>
+#include <wx/button.h>
 #include <wx/dialog.h>
 #include <wx/sizer.h>
 //*)
@@ -39,13 +39,13 @@ class Chess2DDialog: public wxDialog
         //*)
 
         //(*Identifiers(Chess2DDialog)
+        static const long ID_BUTTON1;
         static const long ID_BITMAPBUTTON1;
-        static const long ID_CHECKBOX1;
         //*)
 
         //(*Declarations(Chess2DDialog)
         wxBitmapButton* BitmapButton1;
-        wxCheckBox* CheckBox1;
+        wxButton* Button1;
         //*)
 
         DECLARE_EVENT_TABLE()

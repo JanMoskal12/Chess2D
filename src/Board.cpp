@@ -651,3 +651,6 @@ bool Board::moveSimulation(){
     delete pieceStorage;
     return x;
 }
+
+bool Board::isMate(){
+}
