@@ -377,7 +377,7 @@ void Board::whereICanMove(Square* clicked){
                     if(i == 1 && j ==1){
                         j++;
                     }
-                    if( _row + i == 0  || _row + i == 10 || _col + j == 10  || _col + j  == 0 ){
+                    if( _row + i == 0  || _row + i == 9 || _col + j == 9  || _col + j  == 0 ){
                     }else{
                         this->setOfMoves.insert(8*(_row) + (_col) + 8*i + j - 9);
                     }
@@ -680,21 +680,25 @@ bool Board::isMate(){
         return false;
     }
 
-
     this->whereICanMove(this->squares[_row][_col]);
 
-    for(auto it = this->setOfMoves.begin(); it != this->setOfMoves.end(); ++it){
-         if(this->squares[*it / 8][*it % 8]->getPiece() == nullptr ){
-            this->destination = this->squares[*it / 8][*it % 8];
-            if(this->moveSimulation(this->squares[_row][_col], this->squares[*it / 8][*it % 8]) ){
-                return false;
+    if(this->listOfThreats.size() == 2){
+        for(auto it = this->setOfMoves.begin(); it != this->setOfMoves.end(); ++it){
+            if(abs(_col - *it % 8) == 2){
+            continue;
             }
 
-         }
-
-
+            if(this->squares[*it / 8][*it % 8]->getPiece() == nullptr ){
+                this->destination = this->squares[*it / 8][*it % 8];
+                if(!this->moveSimulation(this->squares[_row][_col], this->squares[*it / 8][*it % 8])){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
-     return true;
+
+     return false;
 }
 
 

@@ -256,20 +256,15 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
 
         counter++;
         whiteOrBlack = (whiteOrBlack + 1)%2;
-        /*
+
         if( _B->isMate() == true ){
             wxLogMessage("Mat");
         }
-        */
         return;
     }
 }
 
 void Chess2DDialog::OnCheckBoxClick(wxCommandEvent& event){
-
     _B->restart();
 }
 
-void Chess2DDialog::OnInit(wxInitDialogEvent& event)
-{
-}
