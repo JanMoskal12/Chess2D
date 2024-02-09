@@ -397,6 +397,7 @@ bool Board::isInSetOfMoves(){
 }
 
 bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _typeInt){
+    listOfDefenders.clear();
     int _col = _squareOne->getCol();
     int _row = _squareOne->getRow();
     int wsp_col = - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol());
@@ -405,12 +406,12 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
         case 1:
             if(abs(_row - _squareTwo->getRow()) == 2 && this->clicked->getPiece()->getColor() == 1){
                 if(this->squares[ 5 ][_col]->getPiece() != nullptr){
-                    this->listOfDefenders.insert(_row * 8 + _col);
+                    return true;
                 }
             }
             if(abs(_row - _squareTwo->getRow()) == 2 && this->clicked->getPiece()->getColor() == 0){
                 if(this->squares[ 2 ][_col]->getPiece() != nullptr){
-                    this->listOfDefenders.insert(_row * 8 + _col);
+                    return true;
                 }
             }
             return false;
@@ -418,18 +419,20 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
         case 3:
             if(_col - _squareTwo->getCol() == 0){
                 for(int row = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(row - _squareTwo->getRow()) >0; row = row - (row - _squareTwo->getRow())/abs(row - _squareTwo->getRow())){
+                    this->listOfDefenders.push_back(row * 8 + _col);
                     if(this->squares[row][_col]->getPiece() != nullptr){
                         this->squareBetween = this->squares[row][_col];
-                        this->listOfDefenders.insert(_row * 8 + _col);
+                        return true;
                     }
                 }
                 return false;
             }
             if(_row - _squareTwo->getRow() == 0){
                 for(int col = _col - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol()); abs(col - _squareTwo->getCol()) >0; col = col - (col - _squareTwo->getCol())/abs(col - _squareTwo->getCol())){
+                    this->listOfDefenders.push_back(_row * 8 + col);
                     if(this->squares[_row][col]->getPiece() != nullptr){
                        this->squareBetween = this->squares[_row][col];
-                       this->listOfDefenders.insert(_row * 8 + _col);
+                       return true;
                     }
                 }
                 return false;
@@ -437,9 +440,10 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
            break;
         case 7:
             for(int wsp = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(wsp - _squareTwo->getRow()) >0; wsp = wsp - (wsp - _squareTwo->getRow())/abs(wsp - _squareTwo->getRow())){
+                this->listOfDefenders.push_back(wsp * 8 + _col + wsp_col);
                 if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
                     this->squareBetween = this->squares[wsp][_col + wsp_col];
-                    this->listOfDefenders.insert(_row * 8 + _col);
+                    return true;
                 }else{
                     _col = wsp_col + _col;
                 }
@@ -450,23 +454,26 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
             wsp_col = - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol());
             if(_col - _squareTwo->getCol() == 0){
                 for(int row = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(row - _squareTwo->getRow()) >0; row = row - (row - _squareTwo->getRow())/abs(row - _squareTwo->getRow())){
+                    this->listOfDefenders.push_back(row * 8 + _col);
                     if(this->squares[row][_col]->getPiece() != nullptr){
-                        this->listOfDefenders.insert(_row * 8 + _col);
+                        return true;
                     }
                 }
                 return false;
             }
             if(_row - _squareTwo->getRow() == 0){
                 for(int col = _col - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol()); abs(col - _squareTwo->getCol()) >0; col = col - (col - _squareTwo->getCol())/abs(col - _squareTwo->getCol())){
+                    this->listOfDefenders.push_back(_row * 8 + col);
                     if(this->squares[_row][col]->getPiece() != nullptr){
-                       this->listOfDefenders.insert(_row * 8 + _col);
+                       return true;
                     }
                 }
                 return false;
             }
             for(int wsp = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(wsp - _squareTwo->getRow()) >0; wsp = wsp - (wsp - _squareTwo->getRow())/abs(wsp - _squareTwo->getRow())){
+                this->listOfDefenders.push_back(wsp * 8 + _col + wsp_col);
                 if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
-                    this->listOfDefenders.insert(_row * 8 + _col);
+                    return true;
                 }else{
                     _col = wsp_col + _col;
                 }
@@ -477,11 +484,6 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
         default:
             return false;
     }
-
-    if(!this->listOfDefenders.empty()){
-        return true;
-    }
-
     return false;
 }
 
@@ -690,7 +692,7 @@ bool Board::isMate(){
     if(!isBeatable(this->squares[_row][_col])){
         return false;
     }
-
+    wxLogMessage("%d", 1);
     this->whereICanMove(this->squares[_row][_col]);
 
         for(auto it = this->setOfMoves.begin(); it != this->setOfMoves.end(); ++it){
@@ -701,24 +703,30 @@ bool Board::isMate(){
             if(this->squares[*it / 8][*it % 8]->getPiece() == nullptr || this->squares[*it / 8][*it % 8]->getPiece()->getColor() != this->squares[_row][_col]->getPiece()->getColor()){
                 this->destination = this->squares[*it / 8][*it % 8];
                 if(!this->moveSimulation(this->squares[_row][_col], this->squares[*it / 8][*it % 8])){
+                    wxLogMessage("%d", 2);
                     return false;
                 }
             }
         }
     this->target = squares[*(listOfThreats.begin()) / 8][*(listOfThreats.begin()) % 8];
     if(this->isBeatable(this->target)){
-        listOfDefenders = listOfThreats;
-        for(auto it = listOfDefenders.begin(); it != listOfDefenders.end(); ++it){
+        listOfHope = listOfDefenders;
+
+        for(auto it = listOfHope.begin(); it != listOfHope.end(); ++it){
+            wxLogMessage("%d", *it);
             if(!this->moveSimulation(this->squares[*it / 8][*it % 8], this->target)){
                 return false;
             }
+
         }
     }
 
-    listOfDefenders.clear();
-
-
-
+    listOfHope.clear();
+    //this->isSomethingBetween(this->squares[_row][_col], this->target, this->target->getPiece()->getTypeInt());
+    /*for(auto it = listOfDefenders.begin(); it != listOfDefenders.end(); ++it){
+            wxLogMessage("%d", *it);
+        }
+*/
     return true;
 }
 

@@ -60,6 +60,7 @@ class Board
         list<int> listOfThreats;
         Square* target;
         list<int> listOfDefenders;
+        list<int> listOfHope;
 
 };
 
