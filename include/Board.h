@@ -55,10 +55,10 @@ class Board
         Square* destination;
         Square* whiteKing;
         Square* blackKing;
-        set<int> setOfMoves;
         Square* squareBetween;
-        list<int> listOfThreats;
         Square* target;
+        set<int> setOfMoves;
+        list<int> listOfThreats;
         list<int> listOfDefenders;
         list<int> listOfHope;
         list<int> listOfInsanity;

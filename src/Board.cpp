@@ -692,9 +692,11 @@ bool Board::isMate(){
     if(!isBeatable(this->squares[_row][_col])){
         return false;
     }
+
     this->whereICanMove(this->squares[_row][_col]);
 
         for(auto it = this->setOfMoves.begin(); it != this->setOfMoves.end(); ++it){
+            this->clicked = this->squares[_row][_col];
             if(abs(_col - *it % 8) == 2){
             continue;
             }
@@ -706,6 +708,10 @@ bool Board::isMate(){
                 }
             }
         }
+
+     wxLogMessage("%d", *(listOfThreats.begin()));
+
+
     this->target = squares[*(listOfThreats.begin()) / 8][*(listOfThreats.begin()) % 8];
 
 
@@ -723,16 +729,56 @@ bool Board::isMate(){
 
     for(auto it = listOfHope.begin(); it != listOfHope.end(); ++it){
         this->squares[*it / 8][*it % 8]->setPiece(pieces[(this->squares[_row][_col]->getPiece()->getColor()+1)%2][1]);
+        this->destination = this->squares[*it / 8][*it % 8];
         if(isBeatable(squares[*it / 8][*it % 8])){
+            this->squares[*it / 8][*it % 8]->setPiece(nullptr);
             listOfInsanity = listOfThreats;
+        this->squares[*it / 8][*it % 8]->setPiece(nullptr);
+
+
+
+        if(this->squares[*it / 8][*it % 8]->getRow() == 4 && squares[_row][_col]->getPiece()->getColor() == 1){
+            if(this->squares[6][*it % 8]->getPiece() != nullptr && this->squares[6][*it % 8]->getPiece()->getTypeInt() == 1){
+                this->clicked = this->squares[6][*it % 8];
+                if(!this->moveSimulation(this->squares[6][*it % 8], this->squares[4][*it % 8])){
+                    return false;
+                }
+           }
+        }
+        if(this->squares[*it / 8][*it % 8]->getRow() == 3 && squares[_row][_col]->getPiece()->getColor() == 0){
+            if(this->squares[1][*it % 8]->getPiece() != nullptr && this->squares[1][*it % 8]->getPiece()->getTypeInt() == 1){
+               this->clicked = this->squares[1][*it % 8];
+               if(!this->moveSimulation(this->squares[1][*it % 8], this->squares[3][*it % 8])){
+                    return false;
+                }
+           }
+        }
+
+        if(*it / 8 < 6 && this->squares[*it / 8 + 1][*it % 8]->getPiece() != nullptr && this->squares[*it / 8 + 1][*it % 8]->getPiece()->getTypeInt() == 1 && this->squares[*it / 8 + 1][*it % 8]->getPiece()->getColor() == 1){
+            this->clicked = this->squares[*it / 8 + 1][*it % 8];
+            if(!this->moveSimulation(this->squares[*it / 8 + 1][*it % 8], this->squares[*it / 8][*it % 8])){
+                return false;
+            }
+        }
+         if(*it / 8 > 1 && this->squares[*it / 8 - 1][*it % 8]->getPiece() != nullptr && this->squares[*it / 8 - 1][*it % 8]->getPiece()->getTypeInt() == 1 && this->squares[*it / 8 - 1][*it % 8]->getPiece()->getColor() == 0){
+            this->clicked = this->squares[*it / 8 - 1][*it % 8];
+            if(!this->moveSimulation(this->squares[*it / 8 - 1][*it % 8], this->squares[*it / 8][*it % 8])){
+                return false;
+            }
+        }
+
+
             for(auto itt = listOfInsanity.begin(); itt != listOfInsanity.end(); ++itt){
-                if(!this->moveSimulation(this->squares[*itt / 8][*itt % 8], this->squares[*it / 8][*it % 8])){
+                this->clicked = this->squares[*itt / 8][*itt % 8];
+                if(!this->moveSimulation(this->squares[*itt / 8][*itt % 8], this->squares[*it / 8][*it % 8]) && clicked->getPiece()->getTypeInt() != 1){
+                    wxLogMessage("%d", *itt);
                     return false;
                 }
             }
         }
 
     }
+
     return true;
 }
 
