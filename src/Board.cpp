@@ -586,7 +586,7 @@ bool Board::isBeatable(Square* _square){
     for(int i = -1; i < 2; i = i + 2){
         if(_Row == 0){
         }else{
-            if(squares[_Row - 1][_Col - i]->getPiece() != nullptr){
+            if(_Col - i >= 0 && _Col - i <= 7 && squares[_Row - 1][_Col - i]->getPiece() != nullptr){
                 if(this->squares[_Row][_Col]->getPiece()->getColor() != this->squares[_Row - 1][_Col - i]->getPiece()->getColor()){
                     if(this->squares[_Row - 1][_Col - i]->getPiece()->getTypeInt() == 1 && this->squares[_Row - 1][_Col - i]->getPiece()->getColor() == 0){
                         this->listOfThreats.push_back(this->squares[_Row - 1][_Col - i]->getRow() * 8 + this->squares[_Row - 1][_Col - i]->getCol());
@@ -599,7 +599,7 @@ bool Board::isBeatable(Square* _square){
     for(int i = -1; i < 2; i = i + 2){
         if(_Row == 7){
         }else{
-            if(squares[_Row + 1][_Col - i]->getPiece() != nullptr){
+            if(_Col - i >= 0 && _Col - i <= 7 && squares[_Row + 1][_Col - i]->getPiece() != nullptr){
                 if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + 1][_Col - i]->getPiece()->getColor()){
                     if(this->squares[_Row + 1][_Col - i]->getPiece()->getTypeInt() == 1 && this->squares[_Row + 1][_Col - i]->getPiece()->getColor() == 1){
                         this->listOfThreats.push_back(this->squares[_Row + 1][_Col - i]->getRow() * 8 + this->squares[_Row + 1][_Col - i]->getCol());
@@ -685,14 +685,13 @@ bool Board::moveSimulation(Square* _clicked, Square* _destination){
 }
 
 bool Board::isMate(){
-    //Wciąż nie działa
+
     int _col = this->whereIsKing() % 8;
     int _row = this->whereIsKing() / 8;
     this->clicked = this->squares[_row][_col];
     if(!isBeatable(this->squares[_row][_col])){
         return false;
     }
-    wxLogMessage("%d", 1);
     this->whereICanMove(this->squares[_row][_col]);
 
         for(auto it = this->setOfMoves.begin(); it != this->setOfMoves.end(); ++it){
@@ -709,23 +708,29 @@ bool Board::isMate(){
             }
         }
     this->target = squares[*(listOfThreats.begin()) / 8][*(listOfThreats.begin()) % 8];
+
+
     if(this->isBeatable(this->target)){
-        listOfHope = listOfDefenders;
+        listOfHope = listOfThreats;
+            for(auto it = listOfHope.begin(); it != listOfHope.end(); ++it){
+                this->clicked = this->squares[*it / 8][*it % 8];
+                this->destination = target;
+                if(!this->moveSimulation(this->squares[*it / 8][*it % 8], this->target)){
+                    return false;
+                }
 
-        for(auto it = listOfHope.begin(); it != listOfHope.end(); ++it){
-            wxLogMessage("%d", *it);
-            if(!this->moveSimulation(this->squares[*it / 8][*it % 8], this->target)){
-                return false;
             }
-
         }
-    }
 
-    listOfHope.clear();
-    //this->isSomethingBetween(this->squares[_row][_col], this->target, this->target->getPiece()->getTypeInt());
-    /*for(auto it = listOfDefenders.begin(); it != listOfDefenders.end(); ++it){
+
+    /*
+    this->isSomethingBetween(this->squares[_row][_col], this->target, this->target->getPiece()->getTypeInt());
+    for(auto it = listOfDefenders.begin(); it != listOfDefenders.end(); ++it){
             wxLogMessage("%d", *it);
         }
+         if(this->squares[6][0]->getPiece()!= nullptr){
+                wxLogMessage("%d", this->squares[5][7]->getPiece()->getTypeInt());
+            }
 */
     return true;
 }
