@@ -254,12 +254,12 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
         //Checking if clicked piece is a king and then in case it was the king we store his new location for later
         _B->wasKingMoving();
 
-        counter++;
         whiteOrBlack = (whiteOrBlack + 1)%2;
 
         if( _B->isMate() == true ){
             wxLogMessage("Mat");
         }
+        counter++;
         return;
     }
 }

@@ -58,6 +58,8 @@ class Board
         set<int> setOfMoves;
         Square* squareBetween;
         list<int> listOfThreats;
+        Square* target;
+        list<int> listOfDefenders;
 
 };
 

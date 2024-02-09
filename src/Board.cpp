@@ -644,24 +644,30 @@ bool Board::isBeatable(Square* _square){
 
 bool Board::moveSimulation(Square* _clicked, Square* _destination){
     bool x = false;
-    this->wasKingMoving();
+    if((this->blackKing == _clicked) + (this->whiteKing == _clicked) == 1){
+        if(_clicked->getPiece()->getColor()){
+            this->whiteKing = _destination;
+        }else{
+            this->blackKing = _destination;
+        }
+    }
     Square* pieceStorage = new Square(-1, -1, 0, board[0][0], nullptr);
     if(_destination->getPiece() != nullptr){
         pieceStorage->setPiece(_destination->getPiece());
     }
-    _destination->setPiece(clicked->getPiece());
+    _destination->setPiece(_clicked->getPiece());
     _clicked->setPiece(nullptr);
     if(this->isBeatable(this->squares[whereIsKing()/8][whereIsKing()%8])){
         x = true;
     }
-    _clicked->setPiece(destination->getPiece());
+    _clicked->setPiece(_destination->getPiece());
     if(pieceStorage->getPiece() == nullptr){
         _destination->setPiece(nullptr);
     }else{
         _destination->setPiece(pieceStorage->getPiece());
     }
     if((this->blackKing == _destination) + (this->whiteKing == _destination) == 1){
-        if(whiteOrBlack == 1){
+        if(_clicked->getPiece()->getColor()){
             this->whiteKing = _clicked;
         }else{
             this->blackKing = _clicked;
@@ -682,23 +688,32 @@ bool Board::isMate(){
 
     this->whereICanMove(this->squares[_row][_col]);
 
-    if(this->listOfThreats.size() == 2){
         for(auto it = this->setOfMoves.begin(); it != this->setOfMoves.end(); ++it){
             if(abs(_col - *it % 8) == 2){
             continue;
             }
 
-            if(this->squares[*it / 8][*it % 8]->getPiece() == nullptr ){
+            if(this->squares[*it / 8][*it % 8]->getPiece() == nullptr || this->squares[*it / 8][*it % 8]->getPiece()->getColor() != this->squares[_row][_col]->getPiece()->getColor()){
                 this->destination = this->squares[*it / 8][*it % 8];
                 if(!this->moveSimulation(this->squares[_row][_col], this->squares[*it / 8][*it % 8])){
                     return false;
                 }
             }
         }
-        return true;
+    this->target = squares[*(listOfThreats.begin()) / 8][*(listOfThreats.begin()) % 8];
+    if(this->isBeatable(this->target)){
+        listOfDefenders = listOfThreats;
+        for(auto it = listOfDefenders.begin(); it != listOfDefenders.end(); ++it){
+            if(!this->moveSimulation(this->squares[*it / 8][*it % 8], this->target)){
+                return false;
+            }
+        }
     }
 
-     return false;
+    listOfDefenders.clear();
+
+
+    return true;
 }
 
 
