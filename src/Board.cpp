@@ -702,7 +702,6 @@ bool Board::isMate(){
             if(this->squares[*it / 8][*it % 8]->getPiece() == nullptr || this->squares[*it / 8][*it % 8]->getPiece()->getColor() != this->squares[_row][_col]->getPiece()->getColor()){
                 this->destination = this->squares[*it / 8][*it % 8];
                 if(!this->moveSimulation(this->squares[_row][_col], this->squares[*it / 8][*it % 8])){
-                    wxLogMessage("%d", 2);
                     return false;
                 }
             }
@@ -713,25 +712,27 @@ bool Board::isMate(){
     if(this->isBeatable(this->target)){
         listOfHope = listOfThreats;
             for(auto it = listOfHope.begin(); it != listOfHope.end(); ++it){
-                this->clicked = this->squares[*it / 8][*it % 8];
-                this->destination = target;
                 if(!this->moveSimulation(this->squares[*it / 8][*it % 8], this->target)){
                     return false;
                 }
-
             }
         }
 
-
-    /*
     this->isSomethingBetween(this->squares[_row][_col], this->target, this->target->getPiece()->getTypeInt());
-    for(auto it = listOfDefenders.begin(); it != listOfDefenders.end(); ++it){
-            wxLogMessage("%d", *it);
-        }
-         if(this->squares[6][0]->getPiece()!= nullptr){
-                wxLogMessage("%d", this->squares[5][7]->getPiece()->getTypeInt());
+    listOfHope = listOfDefenders;
+
+    for(auto it = listOfHope.begin(); it != listOfHope.end(); ++it){
+        this->squares[*it / 8][*it % 8]->setPiece(pieces[(this->squares[_row][_col]->getPiece()->getColor()+1)%2][1]);
+        if(isBeatable(squares[*it / 8][*it % 8])){
+            listOfInsanity = listOfThreats;
+            for(auto itt = listOfInsanity.begin(); itt != listOfInsanity.end(); ++itt){
+                if(!this->moveSimulation(this->squares[*itt / 8][*itt % 8], this->squares[*it / 8][*it % 8])){
+                    return false;
+                }
             }
-*/
+        }
+
+    }
     return true;
 }
 

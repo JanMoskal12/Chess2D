@@ -61,6 +61,7 @@ class Board
         Square* target;
         list<int> listOfDefenders;
         list<int> listOfHope;
+        list<int> listOfInsanity;
 
 };
 
