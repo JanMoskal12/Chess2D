@@ -405,12 +405,12 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
         case 1:
             if(abs(_row - _squareTwo->getRow()) == 2 && this->clicked->getPiece()->getColor() == 1){
                 if(this->squares[ 5 ][_col]->getPiece() != nullptr){
-                    return true;
+                    this->listOfDefenders.insert(_row * 8 + _col);
                 }
             }
             if(abs(_row - _squareTwo->getRow()) == 2 && this->clicked->getPiece()->getColor() == 0){
                 if(this->squares[ 2 ][_col]->getPiece() != nullptr){
-                    return true;
+                    this->listOfDefenders.insert(_row * 8 + _col);
                 }
             }
             return false;
@@ -420,7 +420,7 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
                 for(int row = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(row - _squareTwo->getRow()) >0; row = row - (row - _squareTwo->getRow())/abs(row - _squareTwo->getRow())){
                     if(this->squares[row][_col]->getPiece() != nullptr){
                         this->squareBetween = this->squares[row][_col];
-                        return true;
+                        this->listOfDefenders.insert(_row * 8 + _col);
                     }
                 }
                 return false;
@@ -429,7 +429,7 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
                 for(int col = _col - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol()); abs(col - _squareTwo->getCol()) >0; col = col - (col - _squareTwo->getCol())/abs(col - _squareTwo->getCol())){
                     if(this->squares[_row][col]->getPiece() != nullptr){
                        this->squareBetween = this->squares[_row][col];
-                       return true;
+                       this->listOfDefenders.insert(_row * 8 + _col);
                     }
                 }
                 return false;
@@ -439,7 +439,7 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
             for(int wsp = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(wsp - _squareTwo->getRow()) >0; wsp = wsp - (wsp - _squareTwo->getRow())/abs(wsp - _squareTwo->getRow())){
                 if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
                     this->squareBetween = this->squares[wsp][_col + wsp_col];
-                    return true;
+                    this->listOfDefenders.insert(_row * 8 + _col);
                 }else{
                     _col = wsp_col + _col;
                 }
@@ -451,7 +451,7 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
             if(_col - _squareTwo->getCol() == 0){
                 for(int row = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(row - _squareTwo->getRow()) >0; row = row - (row - _squareTwo->getRow())/abs(row - _squareTwo->getRow())){
                     if(this->squares[row][_col]->getPiece() != nullptr){
-                        return true;
+                        this->listOfDefenders.insert(_row * 8 + _col);
                     }
                 }
                 return false;
@@ -459,14 +459,14 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
             if(_row - _squareTwo->getRow() == 0){
                 for(int col = _col - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol()); abs(col - _squareTwo->getCol()) >0; col = col - (col - _squareTwo->getCol())/abs(col - _squareTwo->getCol())){
                     if(this->squares[_row][col]->getPiece() != nullptr){
-                       return true;
+                       this->listOfDefenders.insert(_row * 8 + _col);
                     }
                 }
                 return false;
             }
             for(int wsp = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(wsp - _squareTwo->getRow()) >0; wsp = wsp - (wsp - _squareTwo->getRow())/abs(wsp - _squareTwo->getRow())){
                 if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
-                    return true;
+                    this->listOfDefenders.insert(_row * 8 + _col);
                 }else{
                     _col = wsp_col + _col;
                 }
@@ -477,6 +477,11 @@ bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _type
         default:
             return false;
     }
+
+    if(!this->listOfDefenders.empty()){
+        return true;
+    }
+
     return false;
 }
 
@@ -711,6 +716,7 @@ bool Board::isMate(){
     }
 
     listOfDefenders.clear();
+
 
 
     return true;
