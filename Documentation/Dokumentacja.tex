@@ -927,6 +927,127 @@ bool Board::moveSimulation(Square* _clicked, Square* _destination){
 Jest to jedna z najistotniejszych metod naszego programu. Jest to sztuczne wywołanie ruchu, poza wzrokiem gracza. Na początek sprawdzamy czy ruszamy się królem jeśli tak to zmieniamy jego pozycje. Następnie wykonujemy prawie, że zwykły ruch. Prawie, bo nie interesują nas wyświetlane obrazki oraz przechowujemy to pole, do którego ktoś próbuje się ruszyć. Robimy to po to by nie stracić informacji o tym co się w nim znajduje. Po wykonaniu ruchu sprawdzamy czy król jest po nim szachowany i tą informacje zwrócimy na koniec programu. Przed zwróceniem tej informacji wracamy ze wszystkim do pozycji początkowej. Funkcja prosta a jednak jakże przydatna.
 \vspace{\baselineskip}
 \newline
+\newpage
+\textbf{isMate()}
+
+\begin{lstlisting}
+bool Board::isMate(){
+	
+	int _col = this->whereIsKing() % 8;
+	int _row = this->whereIsKing() / 8;
+	this->clicked = this->squares[_row][_col];
+	if(!isBeatable(this->squares[_row][_col])){
+		return false;
+	}
+	listOfHope = listOfThreats;
+	this->whereICanMove(this->squares[_row][_col]);
+	
+	for(auto it = this->setOfMoves.begin(); it != this->setOfMoves.end(); ++it){
+		this->clicked = this->squares[_row][_col];
+		if(abs(_col - *it % 8) == 2){
+			continue;
+		}
+		
+		if(this->squares[*it / 8][*it % 8]->getPiece() == nullptr || this->squares[*it / 8][*it % 8]->getPiece()->getColor() != this->squares[_row][_col]->getPiece()->getColor()){
+			this->destination = this->squares[*it / 8][*it % 8];
+			if(!this->moveSimulation(this->squares[_row][_col], this->squares[*it / 8][*it % 8])){
+				return false;
+			}
+		}
+	}
+	
+	
+	
+	this->target = squares[*(listOfHope.begin()) / 8][*(listOfHope.begin()) % 8];
+	
+	
+	if(this->isBeatable(this->target)){
+		listOfHope = listOfThreats;
+		for(auto it = listOfHope.begin(); it != listOfHope.end(); ++it){
+			if(!this->moveSimulation(this->squares[*it / 8][*it % 8], this->target)){
+				return false;
+			}
+		}
+	}
+	
+	if(abs(_row - this->target->getRow()) > 1 ||  abs(_col - this->target->getCol()) > 1 ){
+		this->isSomethingBetween(this->squares[_row][_col], this->target, this->target->getPiece()->getTypeInt());
+		listOfHope = listOfDefenders;
+		
+		for(auto it = listOfHope.begin(); it != listOfHope.end(); ++it){
+			this->squares[*it / 8][*it % 8]->setPiece(pieces[(this->squares[_row][_col]->getPiece()->getColor()+1)%2][1]);
+			this->destination = this->squares[*it / 8][*it % 8];
+			if(isBeatable(squares[*it / 8][*it % 8])){
+				this->squares[*it / 8][*it % 8]->setPiece(nullptr);
+				listOfInsanity = listOfThreats;
+				this->squares[*it / 8][*it % 8]->setPiece(nullptr);
+				
+				
+				
+				if(this->squares[*it / 8][*it % 8]->getRow() == 4 && squares[_row][_col]->getPiece()->getColor() == 1){
+					if(this->squares[6][*it % 8]->getPiece() != nullptr && this->squares[6][*it % 8]->getPiece()->getTypeInt() == 1){
+						this->clicked = this->squares[6][*it % 8];
+						if(!this->moveSimulation(this->squares[6][*it % 8], this->squares[4][*it % 8])){
+							return false;
+						}
+					}
+				}
+				if(this->squares[*it / 8][*it % 8]->getRow() == 3 && squares[_row][_col]->getPiece()->getColor() == 0){
+					if(this->squares[1][*it % 8]->getPiece() != nullptr && this->squares[1][*it % 8]->getPiece()->getTypeInt() == 1){
+						this->clicked = this->squares[1][*it % 8];
+						if(!this->moveSimulation(this->squares[1][*it % 8], this->squares[3][*it % 8])){
+							return false;
+						}
+					}
+				}
+				
+				if(*it / 8 < 6 && this->squares[*it / 8 + 1][*it % 8]->getPiece() != nullptr && this->squares[*it / 8 + 1][*it % 8]->getPiece()->getTypeInt() == 1 && this->squares[*it / 8 + 1][*it % 8]->getPiece()->getColor() == 1){
+					this->clicked = this->squares[*it / 8 + 1][*it % 8];
+					if(!this->moveSimulation(this->squares[*it / 8 + 1][*it % 8], this->squares[*it / 8][*it % 8])){
+						return false;
+					}
+				}
+				if(*it / 8 > 1 && this->squares[*it / 8 - 1][*it % 8]->getPiece() != nullptr && this->squares[*it / 8 - 1][*it % 8]->getPiece()->getTypeInt() == 1 && this->squares[*it / 8 - 1][*it % 8]->getPiece()->getColor() == 0){
+					this->clicked = this->squares[*it / 8 - 1][*it % 8];
+					if(!this->moveSimulation(this->squares[*it / 8 - 1][*it % 8], this->squares[*it / 8][*it % 8])){
+						return false;
+					}
+				}
+				
+				
+				for(auto itt = listOfInsanity.begin(); itt != listOfInsanity.end(); ++itt){
+					this->clicked = this->squares[*itt / 8][*itt % 8];
+					if(isKingInside()){
+						continue;
+					}
+					if(!this->moveSimulation(this->squares[*itt / 8][*itt % 8], this->squares[*it / 8][*it % 8]) && clicked->getPiece()->getTypeInt() != 1){
+						return false;
+					}
+				}
+			}
+			
+		}
+	}
+	return true;
+}
+\end{lstlisting}
+\vspace{\baselineskip}
+Na sam koniec zrodzony w bólach i mękach mat. Funkcja pobiera od nas lokalizacje króla ( przeciwnego, ponieważ w OnBitmapButtonClicku używamy jej po zwiększeniu licznika whiteOrBlack ). Sprawdzamy czy król jest w ogóle szachowany. Następnie sprawdzamy czy może się gdzieś poruszyć bez bycia dalej szachowanym. Jeśli to nie wyjdzie to ustawiamy nasz cel do zbicia i tworzymy listę figur, które mogłyby ten cel zbić. Gdy taka lista zostanie utworzona to robimy symulację ruchów co by było gdybyśmy tą figurą zbili nasz cel. Robimy to dlatego, że ruch naszej figury może odsłonić króla od innej strony. Jeśli nasz cel jest w odległości jednej kratki od nas, nie możemy się nigdzie ruszyć bez bycia szachowanym oraz nie możemy go zbić to jest to już koniec - mamy mata. W innym przypadku tworzymy listę pól spomiędzy naszego celu i króla a następnie po pętli ustawiamy w niej figurę żeby móc wykonać metodę isBeatable i figury, które mogą wejść w to pole by je zasłonić zapisujemy do listy by i dla nich zrobić symulację ruchu. Jako, że pion jako jedyny ma inne ruszanie się od bicia to dla niego musimy oddzielnie sprawdzić czy może zasłonić. Nie dość, że oddzielnie to jeszcze dla samego piona, oddzielnie dla koloru i dlatego czy możemy się nim ruszyć o 2. Jeśli nic z tych rzeczy nie pomogło to już na pewno mamy mata.
+\vspace{\baselineskip}
+\newline
 \subsection*{Wkład pracy:}
+\vspace{\baselineskip}
+Robienie projektu odbywało się w większości w taki sposób, że naprzemiennie jedna osoba pisała i cała dwójka myślała. Czasem zdarzało się, że ktoś coś robił "po godzinach".
+\vspace{\baselineskip}
+\newline
+$\bullet$ Tworzenie koncepcji projektu : Jan Moskal - 70\% , Szymon Makulec - 30\%\newline
+$\bullet$ Obrabianie obrazków : Jan Moskal - 10\%, Szymon Makulec - 90\%\newline
+$\bullet$ Tworzenie szkieletu klas : Jan Moskal - 90\%, Szymon Makulec - 10\%\newline
+$\bullet$ Board.cpp oraz Chess2DMain.cpp : Jan Moskal - 25\%, Szymon Makulec - 75\%\newline
+$\bullet$ Dokumentacja : Jan Moskal - 45\%, Szymon Makulec - 55\%\newline
+$\bullet$ Debugging : Jan Moskal - 50\%, Szymon Makulec - 50\%\newline
+
+\subsection*{Podsumowanie}
+Projekt uważamy za udany. Baliśmy się go, często nie wierzyliśmy, że jest szansa na zrobienie go do końca. Nauczył nas wielu przydatnych umiejętności, sprawił, że nasza psychika jest w stanie wytrzymać więcej niż wcześniej. Pomógł zaznajomić się z biblioteką wxWidgets oraz programu zewnętrznego jak github. Jesteśmy świadomi, na ile nasz kod jest niewydajny dlatego w przyszłości planujemy gruntowne zmiany optymalizacyjne.
 \end{flushleft}
 \end{document}          

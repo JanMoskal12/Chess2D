@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.2)  10 FEB 2024 14:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.5.2)  10 FEB 2024 16:56
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -221,29 +221,29 @@ LaTeX Font Info:    External font `plex10' loaded for size
 LaTeX Font Info:    External font `plex10' loaded for size
 (Font)              <5> on input line 383.
  [9{c:/texlive/2023/texmf-dist/fonts/enc/dvips/pl/plms.enc}]
-[10] [11] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21] [22]
-(./Dokumentacja.aux) ) 
+[10] [11] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21] [22] [23] [24]
+[25] [26] (./Dokumentacja.aux) ) 
 Here is how much of TeX's memory you used:
- 4070 strings out of 476001
- 56548 string characters out of 5793198
+ 4079 strings out of 476001
+ 56623 string characters out of 5793198
  2339068 words of memory out of 5000000
- 24527 multiletter control sequences out of 15000+600000
+ 24536 multiletter control sequences out of 15000+600000
  526658 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,6n,69p,1978b,1718s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<c:/texlive/2023/texmf-dist/fonts/type1/public/pl/plsy10.
-pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb><c:/te
-xlive/2023/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/texlive/2023
-/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2023/texmf-dis
-t/fonts/type1/public/cm-super/sfrm0500.pfb><c:/texlive/2023/texmf-dist/fonts/ty
-pe1/public/cm-super/sfrm1000.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public
-/cm-super/sfrm1200.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/
-sfrm1728.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sftt0800.p
-fb>
-Output written on Dokumentacja.pdf (23 pages, 269927 bytes).
+<c:/texlive/2023/texmf-dist/fonts/type1/public/
+pl/plsy10.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfbx1000.
+pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb><c:/te
+xlive/2023/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb><c:/texlive/2023
+/texmf-dist/fonts/type1/public/cm-super/sfrm0500.pfb><c:/texlive/2023/texmf-dis
+t/fonts/type1/public/cm-super/sfrm1000.pfb><c:/texlive/2023/texmf-dist/fonts/ty
+pe1/public/cm-super/sfrm1200.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public
+/cm-super/sfrm1728.pfb><c:/texlive/2023/texmf-dist/fonts/type1/public/cm-super/
+sftt0800.pfb>
+Output written on Dokumentacja.pdf (27 pages, 283923 bytes).
 PDF statistics:
- 125 PDF objects out of 1000 (max. 8388607)
- 81 compressed objects within 1 object stream
+ 138 PDF objects out of 1000 (max. 8388607)
+ 90 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

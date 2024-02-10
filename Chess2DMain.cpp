@@ -174,6 +174,7 @@ Chess2DDialog::Chess2DDialog(wxWindow* parent,wxWindowID id){
 
     // Creating Board
     _B = new Board(1);
+    SetIcon(wxICON(aaaa));
 }
 
 Chess2DDialog::~Chess2DDialog(){

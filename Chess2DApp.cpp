@@ -15,7 +15,7 @@
 //*)
 
 IMPLEMENT_APP(Chess2DApp);
-
+//SetIcon(wxICON(aaaa));
 bool Chess2DApp::OnInit()
 {
     //(*AppInitialize

@@ -716,9 +716,6 @@ bool Board::isMate(){
 
     if(this->isBeatable(this->target)){
         listOfHope = listOfThreats;
-         for(auto it = listOfHope.begin(); it != listOfHope.end(); ++it){
-            wxLogMessage("%d", *it);
-         }
             for(auto it = listOfHope.begin(); it != listOfHope.end(); ++it){
                 if(!this->moveSimulation(this->squares[*it / 8][*it % 8], this->target)){
                     return false;
@@ -726,7 +723,7 @@ bool Board::isMate(){
             }
         }
 
-if(abs(_row - this->target->getRow()) > 1 &&  abs(_col - this->target->getCol()) > 1 ){
+if(abs(_row - this->target->getRow()) > 1 ||  abs(_col - this->target->getCol()) > 1 ){
     this->isSomethingBetween(this->squares[_row][_col], this->target, this->target->getPiece()->getTypeInt());
     listOfHope = listOfDefenders;
 
