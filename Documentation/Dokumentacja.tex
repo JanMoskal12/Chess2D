@@ -80,7 +80,7 @@ images[1][12] = wxBitmap(wxImage(_T("images/Pieces/wkD.png")));
 \end{lstlisting}
 \vspace{\baselineskip}
 Do wyświetlania figur na przyciskach wxBitmapButton, używamy zestawu dwudziestu sześciu obrazków, reprezentujących figury szachowe. Dwa puste pola (czarne i białe) oraz sześć różnych typów figur (pion, wieża, skoczek, goniec, hetman, król) w dwóch kolorach (biały i czarny) na dwóch tłach (jasnym, ciemnym). images, jest to tablica, w której przechowywane są obrazy figur szachowych używane do wyświetlania na przyciskach wxBitmapButton na szachownicy. Umożliwia łatwe zarządzanie obrazkami figur szachowych w grze.
-\newpage
+
 \begin{flushleft}
 \textbf{Użycie przycisków wxBitmapButton (board[8][8])}
 \end{flushleft}
@@ -145,7 +145,7 @@ for(int i = 0;i < 8; i++){
 \end{lstlisting}
 \vspace{\baselineskip}
 Każdy element board[i][j] (8x8) reprezentuje jedno pole z wyświetloną figurą danego koloru i tłem na szachownicy, zawiera przycisk do interakcji z użytkownikiem. Każdy przycisk jest obsługiwany przez tą samą funkcję OnBitmapButton1Click.
-\newpage
+
 \begin{flushleft}
 \textbf{Użycie figur (pieces[2][7])}
 \end{flushleft}
@@ -267,7 +267,7 @@ class Board
 	void setDestination(int _nrBB);
 	bool isClickedPiece();
 	bool isDestinationPiece();
-	bool ArePiecesSameColor();
+	bool arePiecesSameColor();
 	bool isGoodColorMoving();
 	void updateSquares(Square* _clicked, Square* _destination);
 	bool isKingInside();
@@ -278,19 +278,25 @@ class Board
 	void pawnMovesButNothingIsInFront();
 	void pawnTakes();
 	void pawnPromotion();
-	void whereICanMove();
+	void whereICanMove(Square* clicked);
 	bool isInSetOfMoves();
 	bool isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _typeInt);
 	bool isBeatable(Square* _square);
-	bool moveSimulation();
+	bool moveSimulation(Square* clicked, Square* destination);
+	bool isMate();
 	Piece* pieces[2][7];
 	Square* squares[8][8];
 	Square* clicked;
 	Square* destination;
 	Square* whiteKing;
 	Square* blackKing;
-	set<int> setOfMoves;
 	Square* squareBetween;
+	Square* target;
+	set<int> setOfMoves;
+	list<int> listOfThreats;
+	list<int> listOfDefenders;
+	list<int> listOfHope;
+	list<int> listOfInsanity;
 };
 
 \end{lstlisting}
@@ -477,8 +483,8 @@ $\bullet$ \textbf{isBeatable(Square* \_square)}: sprawdza czy wybrana figura jes
 
 $\bullet$ \textbf{moveSimulation()}: przeprowadza symulacje ruchu (potem cofa wprowadzone zmiany) w sytuacji gdy król jest pod szachem, jeśli ruch gracza sprawia, że król nie jest już pod szachem zwraca true, w przeciwnym wypadku false
 
-\subsection*{Obsługa przycisków (OnBitmapButton1Click)}
-
+\subsection*{Przeprowadzenie przez rozgrywkę}
+\textbf{Obsługa przycisków (OnBitmapButton1Click)}
 \begin{lstlisting}
 void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
 	int nrBB = event.GetId() - 100;
@@ -524,14 +530,403 @@ void Chess2DDialog::OnBitmapButton1Click(wxCommandEvent& event){
 		_B->pawnPromotion();
 		_B->wasKingMoving();
 		
-		counter++;
 		whiteOrBlack = (whiteOrBlack + 1)%2;
+		
+		if( _B->isMate() == true ){
+			wxLogMessage("Mat");
+		}
+		counter++;
 		return;
 	}
 }
 \end{lstlisting}
+\vspace{\baselineskip}
+Funkcja OnBitmapButton1Click w każdym kliknięciu zapisuje nrBB (czyli numer bitmapy indywidualny dla każdego przycisku) a następnie sprawdza po kolei warunki z taką zasadą, że jeśli coś jest nie tak to wracamy do kliknięcia 1. W kliknięciu 1, poprzez wskaźnik do clicked zapisuje informacje o klikniętym Squarze. Następnie sprawdza po kolei czy na klikniętym polu znajdowała się figura a potem czy ma ona odpowiedni kolor (czyli czy dobra osoba się rusza). Kolejność jest ważna, ponieważ bez sprawdzenia czy na klikniętym polu jest figura mogłoby dojść do sytuacji, że chcemy użyć metody z klasy Piece na polu, w którym Piece-a nie ma i program zakończyłby działanie. Jeśli wszystko się zgadza zwiększamy counter o 1 i wychodzimy z metody. Przy kliknięciu 2 tak jak w 1 przekazujemy wskaźnik tylko tym razem do destination. Sprawdzamy wpierw czy kliknięte miejsce ma figurę a jeśli ma to sprawdzamy czy jest tego samego koloru. Jeśli jednak nie było z tym problemu to do zbioru poprzez funkcje whereICanMove() zapisujemy możliwe ruchy nie uwzględniając tego, że figura może zostać zablokowana. Następnie sprawdzamy czy destination w ogóle zawiera się w naszym zbiorze ruchów. Jeśli tak to następnie sprawdzamy czy jest coś między polem startowym a docelowym a jeśli i to przejdzie bez problemów to wykonywana jest symulacja ruchu, która ma sprawdzić czy po ruchu nasz król nie będzie pod szachem. Pod koniec sprawdzamy czy może ktoś niechciałby zrobić roszady. Uaktualniamy pozycje, sprawdzamy czy na ostatnich liniach nie stoją piony, które chciałyby dostać awans. Jeśli ruszał się król to poprzez metodę wasKingMoving() sprawdzamy jego kolor i w zależności od tego uaktualniamy blackKing lub whiteKing, dzięki którym możemy na bieżąco sprawdzać gdzie znajdują się króle na planszy. Na koniec naszego ruchu sprawdzamy czy nie zmatowaliśmy przeciwnika.
+\newpage
+\subsection*{Wybrane metody z Board.cpp}
+\textbf{updateSquares(Square* \_clicked, Square* \_destination)}
 
-Funkcja OnBitmapButton1Click w każdym kliknięciu zapisuje nrBB (czyli numer bitmapy indywidualny dla każdego przycisku) a następnie sprawdza po kolei warunki z taką zasadą, że jeśli coś jest nie tak to wracamy do kliknięcia 1. W kliknięciu 1, poprzez wskaźnik do clicked zapisuje informacje o klikniętym Squarze. Następnie sprawdza po kolei czy na klikniętym polu znajdowała się figura a potem czy ma ona odpowiedni kolor (czyli czy dobra osoba się rusza). Kolejność jest ważna, ponieważ bez sprawdzenia czy na klikniętym polu jest figura mogłoby dojść do sytuacji, że chcemy użyć metody z klasy Piece na polu, w którym Piece-a nie ma i program zakończyłby działanie. Jeśli wszystko się zgadza zwiększamy counter o 1 i wychodzimy z metody. Przy kliknięciu 2 tak jak w 1 przekazujemy wskaźnik tylko tym razem do destination. Sprawdzamy wpierw czy kliknięte miejsce ma figurę a jeśli ma to sprawdzamy czy jest tego samego koloru. Jeśli jednak nie było z tym problemu to do zbioru poprzez funkcje whereICanMove() zapisujemy możliwe ruchy nie uwzględniając tego, że figura może zostać zablokowana. Następnie sprawdzamy czy destination w ogóle zawiera się w naszym zbiorze ruchów. Jeśli tak to następnie sprawdzamy czy jest coś między polem startowym a docelowym a jeśli i to przejdzie bez problemów to wykonywana jest symulacja ruchu, która ma sprawdzić czy po ruchu nasz król nie będzie pod szachem. Na sam koniec sprawdzamy czy może ktoś niechciałby zrobić roszady. Uaktualniamy pozycje, sprawdzamy czy na ostatnich liniach nie stoją piony, które chciałyby dostać awans a na koniec jeśli ruszał się król to poprzez metodę wasKingMoving() sprawdzamy jego kolor i w zależności od tego uaktualniamy blackKing lub whiteKing.
+\begin{lstlisting}
+void Board::updateSquares(Square* _clicked, Square* _destination){
+	this->destination->setPiece(this->clicked->getPiece());
+	this->destination->getButton()->SetBitmap(images[this->clicked->getPiece()->getColor()][this->clicked->getPiece()->getTypeInt()+1-this->destination->getBackgroundColor()]);
+	this->destination->getPiece()->setMoved();
+	this->clicked->setPiece(nullptr);
+	this->clicked->getButton()->SetBitmap(images[this->clicked->getBackgroundColor()][0]);
+	}
+\end{lstlisting}
+\vspace{\baselineskip}
+Metoda działa w taki sposób, że najpierw w miejscu docelowym ustawiamy jaka figura będzie stać na tym polu, następnie obrazek figury, którą chcemy się ruszyć. Wykorzystujemy tutaj fakt, że w tablicy images[a][b] a odpowiada za kolor figury a b za to jaka to figura oraz czy stoi na polu białym czy czarnym gdzie w naszej tablicy obrazki na biały i czarnym polu znajdują się od siebie w odległości 1. Następnie ustawiamy figurze, że się ruszyła a na koniec usuwamy ślady naszej figury z pola startowego.
+\vspace{\baselineskip}
+\newline
+\textbf{castling()}
+\begin{lstlisting}
+bool Board::castling(){
+	if(this->clicked != this->squares[whereIsKing()/8][whereIsKing()%8]){
+		return 0;
+	}
+	
+	if(abs((this->destination->getCol() - this->squares[whereIsKing()/8][whereIsKing()%8]->getCol())) == 2){
+		if(this->destination->getCol() == 2){
+			if(this->squares[this->destination->getRow()][0]->getPiece() != nullptr && this->squares[this->destination->getRow()][0]->getPiece()->getMoved() == false){
+				if(this->isSomethingBetween(this->clicked,this->squares[this->destination->getRow()][0],3 ) == false){
+					this->squares[this->destination->getRow()][3]->setPiece(pieces[this->clicked->getPiece()->getColor()][1]);
+					if(!(this->isBeatable(this->clicked)) && !(this->isBeatable(this->squares[this->destination->getRow()][3]))){
+						this->squares[this->destination->getRow()][3]->setPiece(this->squares[this->destination->getRow()][0]->getPiece());
+						this->squares[this->destination->getRow()][3]->getButton()->SetBitmap(images[this->squares[this->destination->getRow()][0]->getPiece()->getColor()][this->squares[this->destination->getRow()][0]->getPiece()->getTypeInt()+1-this->squares[this->destination->getRow()][3]->getBackgroundColor()]);
+						this->squares[this->destination->getRow()][3]->getPiece()->setMoved();
+						this->squares[this->destination->getRow()][0]->setPiece(nullptr);
+						this->squares[this->destination->getRow()][0]->getButton()->SetBitmap(images[this->squares[this->destination->getRow()][0]->getBackgroundColor()][0]);
+						return 0;
+					}return 1;
+					
+				}return 1;
+				
+			}return 1;
+			
+		}else if(this->destination->getCol() == 6){
+			if(this->squares[this->destination->getRow()][7]->getPiece() != nullptr && this->squares[this->destination->getRow()][7]->getPiece()->getMoved() == false){
+				if(this->isSomethingBetween(this->clicked,this->squares[this->destination->getRow()][7], 3) == false){
+					this->squares[this->destination->getRow()][5]->setPiece(pieces[this->clicked->getPiece()->getColor()][1]);
+					if(!(this->isBeatable(this->clicked)) && !(this->isBeatable(this->squares[this->destination->getRow()][5]))){
+						this->squares[this->destination->getRow()][5]->setPiece(this->squares[this->destination->getRow()][7]->getPiece());
+						this->squares[this->destination->getRow()][5]->getButton()->SetBitmap(images[this->squares[this->destination->getRow()][7]->getPiece()->getColor()][this->squares[this->destination->getRow()][7]->getPiece()->getTypeInt()+1-this->squares[this->destination->getRow()][5]->getBackgroundColor()]);
+						this->squares[this->destination->getRow()][5]->getPiece()->setMoved();
+						this->squares[this->destination->getRow()][7]->setPiece(nullptr);
+						this->squares[this->destination->getRow()][7]->getButton()->SetBitmap(images[this->squares[this->destination->getRow()][7]->getBackgroundColor()][0]);
+						return 0;
+					}return 1;
+					
+				}return 1;
+				
+			}return 1;
+			
+		}return 1;
+	}
+	return 0;
+}
+\end{lstlisting}
+\vspace{\baselineskip}
+Na początek sprawdzamy czy w ogóle próbowaliśmy ruszyć się królem. Następnie sprawdzamy w warunkach kolejno:
+\newline
+$\bullet$ Czy pole docelowe znajduje się w odległości 2 od króla - Jest to jedyna taka sytuacja gdy król może poruszyć się o 2 pola\newline
+$\bullet$ Czy król próbuje zrobić roszadę długą - Czyli czy kolumna docelowa ma numer 2 ( numerując od 0 )\newline
+$\bullet$ Czy po drugiej stronie w ogóle stoi wieża z którą moglibyśmy zrobić roszadę oraz czy dla wieży to będzie pierwszy ruch\newline
+$\bullet$ Czy pomiędzy królem a wieżą jest pusta przestrzeń - z pomocą metody isSomethingBetween\newline
+Następnie w pole, w którym znajdzie się wieża po roszadzie wpisujemy wieżę by móc dla tego pola wykonać metodę isBeatable
+i sprawdzamy czy pola, na których był lub przez, które będzie przechodził król są szachowane. Jeśli wszystko jest jak powinno to następuje roszada. To samo wykonuje się dla roszady krótkiej tyle, że sprawdzamy inne pola.
+\vspace{\baselineskip}
+\newline
+\textbf{isSomethingBetween(Square* \_squareOne, Square* \_squareTwo, int \_typeInt)}
 
+\begin{lstlisting}
+bool Board::isSomethingBetween(Square* _squareOne, Square* _squareTwo, int _typeInt){
+	listOfDefenders.clear();
+	int _col = _squareOne->getCol();
+	int _row = _squareOne->getRow();
+	int wsp_col = - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol());
+	this->squareBetween = squares[this->whereIsKing()/8][this->whereIsKing()%8];
+	switch(_typeInt){
+		case 1:
+		if(abs(_row - _squareTwo->getRow()) == 2 && this->clicked->getPiece()->getColor() == 1){
+			if(this->squares[ 5 ][_col]->getPiece() != nullptr){
+				return true;
+			}
+		}
+		if(abs(_row - _squareTwo->getRow()) == 2 && this->clicked->getPiece()->getColor() == 0){
+			if(this->squares[ 2 ][_col]->getPiece() != nullptr){
+				return true;
+			}
+		}
+		return false;
+		break;
+		case 3:
+		if(_col - _squareTwo->getCol() == 0){
+			for(int row = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(row - _squareTwo->getRow()) >0; row = row - (row - _squareTwo->getRow())/abs(row - _squareTwo->getRow())){
+				this->listOfDefenders.push_back(row * 8 + _col);
+				if(this->squares[row][_col]->getPiece() != nullptr){
+					this->squareBetween = this->squares[row][_col];
+					return true;
+				}
+			}
+			return false;
+		}
+		if(_row - _squareTwo->getRow() == 0){
+			for(int col = _col - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol()); abs(col - _squareTwo->getCol()) >0; col = col - (col - _squareTwo->getCol())/abs(col - _squareTwo->getCol())){
+				this->listOfDefenders.push_back(_row * 8 + col);
+				if(this->squares[_row][col]->getPiece() != nullptr){
+					this->squareBetween = this->squares[_row][col];
+					return true;
+				}
+			}
+			return false;
+		}
+		break;
+		case 7:
+		for(int wsp = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(wsp - _squareTwo->getRow()) >0; wsp = wsp - (wsp - _squareTwo->getRow())/abs(wsp - _squareTwo->getRow())){
+			this->listOfDefenders.push_back(wsp * 8 + _col + wsp_col);
+			if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
+				this->squareBetween = this->squares[wsp][_col + wsp_col];
+				return true;
+			}else{
+				_col = wsp_col + _col;
+			}
+		}
+		return false;
+		break;
+		case 9:
+		wsp_col = - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol());
+		if(_col - _squareTwo->getCol() == 0){
+			for(int row = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(row - _squareTwo->getRow()) >0; row = row - (row - _squareTwo->getRow())/abs(row - _squareTwo->getRow())){
+				this->listOfDefenders.push_back(row * 8 + _col);
+				if(this->squares[row][_col]->getPiece() != nullptr){
+					return true;
+				}
+			}
+			return false;
+		}
+		if(_row - _squareTwo->getRow() == 0){
+			for(int col = _col - (_col - _squareTwo->getCol())/abs(_col - _squareTwo->getCol()); abs(col - _squareTwo->getCol()) >0; col = col - (col - _squareTwo->getCol())/abs(col - _squareTwo->getCol())){
+				this->listOfDefenders.push_back(_row * 8 + col);
+				if(this->squares[_row][col]->getPiece() != nullptr){
+					return true;
+				}
+			}
+			return false;
+		}
+		for(int wsp = _row - (_row - _squareTwo->getRow())/abs(_row - _squareTwo->getRow()); abs(wsp - _squareTwo->getRow()) >0; wsp = wsp - (wsp - _squareTwo->getRow())/abs(wsp - _squareTwo->getRow())){
+			this->listOfDefenders.push_back(wsp * 8 + _col + wsp_col);
+			if(this->squares[wsp][_col + wsp_col]->getPiece() != nullptr){
+				return true;
+			}else{
+				_col = wsp_col + _col;
+			}
+		}
+		return false;
+		break;
+		
+		default:
+		return false;
+	}
+	return false;
+}
+
+\end{lstlisting}
+\vspace{\baselineskip}
+W tej metodzie robimy wiele rzeczy na raz. Była ona robiona z myślą, żeby sprawdzać czy jak chcemy się gdzieś ruszyć to nie stoi nam coś na drodze jednak potem uznaliśmy, że może nam się przydać żeby sprawdzić czy coś nie atakuje króla. Dlatego w momencie gdy funkcja natknie sie na jakieś pole, to zapisuje je do squareBetween. Zapisuje ona również do listy listOfDefenders wszystkie pola pomiędzy polem startowym a końcowym. Co do działania funkcji to w argumentach przekazujemy jej pole początkowe oraz końcowe oraz jako kto chcemy się poruszyć (jaką figurą). W zależności od naszego \_typeInt wchodzimy do innego case-a w switchu i kolejno dla piona sprawdzamy tylko sytuację gdy może ruszyć się o 2, dla wieży sprawdzamy czy ruch odbywa się na kierunku poziomym czy pionowym a następnie odpowiednio czy góra/prawo czy dół/lewo. Dla gońca sprawdzamy po której przekątnej będziemy sprawdzać na zasadzie +/- 1 na kierunku poziomym i +/- 1 pionowym. Hetman to połączona wieża i goniec. Pozostałe figury nie mają takich ograniczeń.
+\vspace{\baselineskip}
+\newline
+\textbf{isBeatable(Square* \_square)}
+
+\begin{lstlisting}
+bool Board::isBeatable(Square* _square){
+	this->listOfThreats.clear();
+	
+	int _Row = _square->getRow();
+	int _Col = _square->getCol();
+	
+	//is Rook checking us
+	for(int i = 0; i < 8; i = i+7){
+		if(_Row != i && isSomethingBetween(squares[_Row][_Col], squares[i][_Col], 3)){
+			if(this->squareBetween->getPiece()->getTypeInt() == 3 || this->squareBetween->getPiece()->getTypeInt() == 9){
+				if(this->squares[_Row][_Col]->getPiece()->getColor() != this->squareBetween->getPiece()->getColor()){
+					this->listOfThreats.push_back(this->squareBetween->getRow() * 8 + this->squareBetween->getCol());
+					
+				}
+			}
+		}else{
+			if(_Row != i && this->squares[i][_Col]->getPiece() != nullptr && this->squares[_Row][_Col]->getPiece()->getColor() != this->squares[i][_Col]->getPiece()->getColor()){
+				if(this->squares[i][_Col]->getPiece()->getTypeInt() == 9 || this->squares[i][_Col]->getPiece()->getTypeInt() == 3){
+					this->listOfThreats.push_back(this->squares[i][_Col]->getRow() * 8 + this->squares[i][_Col]->getCol());
+				}
+			}
+		}
+		if(_Col != i && isSomethingBetween(squares[_Row][_Col], squares[_Row][i], 3)){
+			if(this->squareBetween->getPiece()->getTypeInt() == 3 || this->squareBetween->getPiece()->getTypeInt() == 9){
+				if(this->squares[_Row][_Col]->getPiece()->getColor() != this->squareBetween->getPiece()->getColor()){
+					this->listOfThreats.push_back(this->squareBetween->getRow() * 8 + this->squareBetween->getCol());
+				}
+			}
+		}else{
+			if(_Col != i && this->squares[_Row][i]->getPiece() != nullptr && this->squares[_Row][_Col]->getPiece()->getColor() != this->squares[_Row][i]->getPiece()->getColor()){
+				if(this->squares[_Row][i]->getPiece()->getTypeInt() == 9 || this->squares[_Row][i]->getPiece()->getTypeInt() == 3){
+					this->listOfThreats.push_back(this->squares[_Row][i]->getRow() * 8 + this->squares[_Row][i]->getCol());
+				}
+			}
+		}
+		
+	}
+	
+	//is Bishop checking us
+	for(int i = 1; i < 8; i++){
+		if((_Row)- i >=0 && _Col-i >=0){
+			if(squares[_Row-i][_Col-i]->getPiece() != nullptr){
+				if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row-i][_Col-i]->getPiece()->getColor()){
+					if(this->squares[_Row-i][_Col-i]->getPiece()->getTypeInt() == 7 || this->squares[_Row-i][_Col-i]->getPiece()->getTypeInt() == 9){
+						this->listOfThreats.push_back(this->squares[_Row - i][_Col - i]->getRow() * 8 + this->squares[_Row - i][_Col - i]->getCol());
+						continue;
+					}
+				}
+				i = i+10;
+			}
+		}
+	}
+	
+	for(int i = 1; i < 8; i++){
+		if((_Row)- i >=0 && _Col+i <=7){
+			if(squares[_Row-i][_Col+i]->getPiece() != nullptr){
+				if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row-i][_Col+i]->getPiece()->getColor()){
+					if(this->squares[_Row-i][_Col+i]->getPiece()->getTypeInt() == 7 || this->squares[_Row-i][_Col+i]->getPiece()->getTypeInt() == 9){
+						this->listOfThreats.push_back(this->squares[_Row - i][_Col + i]->getRow() * 8 + this->squares[_Row - i][_Col + i]->getCol());
+						continue;
+					}
+				}
+				i = i+10;
+			}
+		}
+	}
+	
+	for(int i = 1; i < 8; i++){
+		if((_Row)+ i <=7 && _Col+i <=7){
+			if(squares[_Row+i][_Col+i]->getPiece() != nullptr){
+				if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row+i][_Col+i]->getPiece()->getColor()){
+					if(this->squares[_Row+i][_Col+i]->getPiece()->getTypeInt() == 7 || this->squares[_Row+i][_Col+i]->getPiece()->getTypeInt() == 9){
+						this->listOfThreats.push_back(this->squares[_Row + i][_Col + i]->getRow() * 8 + this->squares[_Row + i][_Col + i]->getCol());
+						continue;
+					}
+				}
+				i = i+10;
+			}
+		}
+	}
+	
+	for(int i = 1; i < 8; i++){
+		if((_Row)+ i <=7 && _Col-i >=0){
+			if(squares[_Row+i][_Col-i]->getPiece() != nullptr){
+				if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row+i][_Col-i]->getPiece()->getColor()){
+					if(this->squares[_Row+i][_Col-i]->getPiece()->getTypeInt() == 7 || this->squares[_Row+i][_Col-i]->getPiece()->getTypeInt() == 9){
+						this->listOfThreats.push_back(this->squares[_Row + i][_Col - i]->getRow() * 8 + this->squares[_Row + i][_Col - i]->getCol());
+						continue;
+					}
+				}
+				i = i+10;
+			}
+		}
+	}
+	
+	//is Pawn checking us
+	for(int i = -1; i < 2; i = i + 2){
+		if(_Row == 0){
+		}else{
+			if(_Col - i >= 0 && _Col - i <= 7 && squares[_Row - 1][_Col - i]->getPiece() != nullptr){
+				if(this->squares[_Row][_Col]->getPiece()->getColor() != this->squares[_Row - 1][_Col - i]->getPiece()->getColor()){
+					if(this->squares[_Row - 1][_Col - i]->getPiece()->getTypeInt() == 1 && this->squares[_Row - 1][_Col - i]->getPiece()->getColor() == 0){
+						this->listOfThreats.push_back(this->squares[_Row - 1][_Col - i]->getRow() * 8 + this->squares[_Row - 1][_Col - i]->getCol());
+					}
+				}
+			}
+		}
+	}
+	
+	for(int i = -1; i < 2; i = i + 2){
+		if(_Row == 7){
+		}else{
+			if(_Col - i >= 0 && _Col - i <= 7 && squares[_Row + 1][_Col - i]->getPiece() != nullptr){
+				if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + 1][_Col - i]->getPiece()->getColor()){
+					if(this->squares[_Row + 1][_Col - i]->getPiece()->getTypeInt() == 1 && this->squares[_Row + 1][_Col - i]->getPiece()->getColor() == 1){
+						this->listOfThreats.push_back(this->squares[_Row + 1][_Col - i]->getRow() * 8 + this->squares[_Row + 1][_Col - i]->getCol());
+					}
+				}
+			}
+		}
+	}
+	
+	// is Knight checking us
+	for(int i = 0; i < 5; i = i+4){
+		for(int j = 0; j < 3; j = j+2){
+			if(_Row + i  <= 9 && _Row + i >=2 && _Col + j <= 8 && _Col + j >=1 ){
+				if(squares[_Row + i - 2][_Col + j - 1]->getPiece() != nullptr){
+					if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + i - 2][_Col + j - 1]->getPiece()->getColor()){
+						if(this->squares[_Row + i - 2][_Col + j - 1]->getPiece()->getTypeInt() == 5){
+							this->listOfThreats.push_back(this->squares[_Row + i - 2][_Col + j - 1]->getRow() * 8 + this->squares[_Row + i - 2][_Col + j - 1]->getCol());
+						}
+					}
+				}
+			}
+			if(_Row + j <= 8 && _Row + j >=1 && _Col + i <= 9 && _Col + i >= 2){
+				if(squares[_Row + j - 1][_Col + i - 2]->getPiece() != nullptr){
+					if(this->squares[_Row][_Col]->getPiece()->getColor()!= this->squares[_Row + j - 1][_Col + i - 2]->getPiece()->getColor()){
+						if(this->squares[_Row + j - 1][_Col + i - 2]->getPiece()->getTypeInt() == 5){
+							this->listOfThreats.push_back(this->squares[_Row + j - 1][_Col + i - 2]->getRow() * 8 + this->squares[_Row + j - 1][_Col + i - 2]->getCol());
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	// is King checking us
+	if(_square->getPiece()->getColor() == 0){
+		if(abs(this->whiteKing->getCol() - _square->getCol())<=1 && abs(this->whiteKing->getRow() - _square->getRow())<=1){
+			this->listOfThreats.push_back(this->whiteKing->getRow() * 8 + this->whiteKing->getCol());
+		}
+	}else{
+		if(abs(this->blackKing->getCol() - _square->getCol())<=1 && abs(this->blackKing->getRow() - _square->getRow())<=1){
+			this->listOfThreats.push_back(this->blackKing->getRow() * 8 + this->blackKing->getCol());
+		}
+	}
+	if(!this->listOfThreats.empty()){
+		return true;
+	}
+	return false;
+}
+\end{lstlisting}
+\vspace{\baselineskip}
+Metoda działa w taki sposób, że dla pola, które chcemy sprawdzić czy jest atakowane wykonuje po kolei oraz w każdym kierunku isSomethingBetween z type intem odpowiednim w zależności od tego czego szukamy np. przed nami w oddali będziemy poszukiwać hetmana lub wieży zaś po skosie będziemy szukać hetmana lub gońca. Każde pole, z którego można zbić wybrane przez nas pole zapisywane jest do listOfThreats. Wiele podobnych rzeczy co w isSomethingBetween więc nie będziemy się nad nimi rozwodzić. 
+\vspace{\baselineskip}
+\newline
+\textbf{moveSimulation(Square* \_clicked, Square* \_destination)}
+
+\begin{lstlisting}
+bool Board::moveSimulation(Square* _clicked, Square* _destination){
+	bool x = false;
+	if((this->blackKing == _clicked) + (this->whiteKing == _clicked) == 1){
+		if(_clicked->getPiece()->getColor()){
+			this->whiteKing = _destination;
+		}else{
+			this->blackKing = _destination;
+		}
+	}
+	Square* pieceStorage = new Square(-1, -1, 0, board[0][0], nullptr);
+	if(_destination->getPiece() != nullptr){
+		pieceStorage->setPiece(_destination->getPiece());
+	}
+	_destination->setPiece(_clicked->getPiece());
+	_clicked->setPiece(nullptr);
+	if(this->isBeatable(this->squares[whereIsKing()/8][whereIsKing()%8])){
+		x = true;
+	}
+	_clicked->setPiece(_destination->getPiece());
+	if(pieceStorage->getPiece() == nullptr){
+		_destination->setPiece(nullptr);
+	}else{
+		_destination->setPiece(pieceStorage->getPiece());
+	}
+	if((this->blackKing == _destination) + (this->whiteKing == _destination) == 1){
+		if(_clicked->getPiece()->getColor()){
+			this->whiteKing = _clicked;
+		}else{
+			this->blackKing = _clicked;
+		}
+	}
+	delete pieceStorage;
+	return x;
+}
+\end{lstlisting}
+\vspace{\baselineskip}
+Jest to jedna z najistotniejszych metod naszego programu. Jest to sztuczne wywołanie ruchu, poza wzrokiem gracza. Na początek sprawdzamy czy ruszamy się królem jeśli tak to zmieniamy jego pozycje. Następnie wykonujemy prawie, że zwykły ruch. Prawie, bo nie interesują nas wyświetlane obrazki oraz przechowujemy to pole, do którego ktoś próbuje się ruszyć. Robimy to po to by nie stracić informacji o tym co się w nim znajduje. Po wykonaniu ruchu sprawdzamy czy król jest po nim szachowany i tą informacje zwrócimy na koniec programu. Przed zwróceniem tej informacji wracamy ze wszystkim do pozycji początkowej. Funkcja prosta a jednak jakże przydatna.
+\vspace{\baselineskip}
+\newline
+\subsection*{Wkład pracy:}
 \end{flushleft}
 \end{document}          
