@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1705186873 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dapp.cpp
+1707581323 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dapp.cpp
 	"Chess2DApp.h"
 	"Chess2DMain.h"
 	<wx/image.h>
@@ -1509,7 +1509,7 @@
 1697475091 c:\users\szymo\onedrive\pulpit\szymon\studia\programowanie\wxwidgets\wxwidgets-3.2.2.1-mono64\wxwidgets-3.2.2.1-mono64\include\wx\univ\theme.h
 	"wx/string.h"
 
-1707223250 c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.h
+1707581650 c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.h
 	"Square.h"
 	"Board.h"
 	<wx/bmpbuttn.h>
@@ -1613,7 +1613,7 @@
 	"wx/defs.h"
 	"wx/window.h"
 
-1707509691 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
+1707581670 source:c:\users\szymo\onedrive\dokumenty\github\chess2d\chess2dmain.cpp
 	"Chess2DMain.h"
 	<wx/msgdlg.h>
 	<wx/log.h>
